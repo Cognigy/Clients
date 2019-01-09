@@ -1,20 +1,55 @@
 import { SocketClient } from '@cognigy/socket-client';
+import { Options } from '@cognigy/socket-client/lib/interfaces/options';
+import Axios from 'axios';
+import { IWebchatConfig } from './interfaces/webchat-config';
 
 export class WebchatClient extends SocketClient {
-    protected webchatUrl: string;
+    public webchatConfig: IWebchatConfig;
+
+    private static createDefaultWebchatOptions(): Partial<Options> {
+        return {
+            channel: 'webchat-client'
+        }
+    }
+
+    private static createWebchatOptions(options: Partial<Options> = {}): Partial<Options> {
+        return {
+            ...WebchatClient.createDefaultWebchatOptions(),
+            ...options
+        };
+    }
+
+    private static async fetchWebchatConfig(webchatConfigUrl: string) {
+        return (await Axios.get<IWebchatConfig>(webchatConfigUrl)).data;
+    }
+
+    private static getEndpointBaseUrl(webchatConfigUrl: string) {
+        const partials = webchatConfigUrl.split('/');
+        partials.splice(partials.length - 1, 1);
+        return partials.join('/');
+    }
+
+    private static getEndpointUrlToken(webchatConfigUrl: string) {
+        return webchatConfigUrl.split('/').pop();
+    }
+
+
     
-    constructor(webchatUrl: string) {
-        super('', '', {});
-        this.webchatUrl = webchatUrl;
+    constructor(webchatConfigUrl: string, options: Partial<Options> = {}) {
+        const baseUrl = WebchatClient.getEndpointBaseUrl(webchatConfigUrl);
+        const token = WebchatClient.getEndpointUrlToken(webchatConfigUrl);
+        const webchatOptions = WebchatClient.createWebchatOptions(options);
+
+        super(baseUrl, token, webchatOptions);
+    }
+
+    get webchatConfigUrl(): string {
+        return `${this.socketUrl}/${this.socketURLToken}`;
     }
 
     async connect() {
-        console.log(`fetching config for ${this.webchatUrl}...`);
-        await new Promise(r => setTimeout(r, 1000));
-        console.log(`fetched config for ${this.webchatUrl}!`);
-
-        this.socketUrl = 'http://fetched.socket.url';
-        this.socketURLToken = 'some-token';
+        const config = await WebchatClient.fetchWebchatConfig(this.webchatConfigUrl);
+        this.webchatConfig = config;
 
         return super.connect();
     }

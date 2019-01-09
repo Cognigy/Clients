@@ -17,6 +17,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@cognigy/socket-client": "^0.0.0"
+    "@cognigy/socket-client": "^0.0.0",
+    "axios": "^0.18.0"
   }
 }

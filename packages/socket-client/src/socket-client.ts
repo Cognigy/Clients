@@ -199,8 +199,6 @@ export class SocketClient extends EventEmitter {
                 data,
             });
 
-            console.log('sent message', text, data)
-
         } else {
             // we currently have no connection - could be the case that we lost connection
             // e.g. because of a server restart of the AI-server. Buffer all incoming

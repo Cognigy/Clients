@@ -1,0 +1,22 @@
+{
+  "name": "@cognigy/webchat-client",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Robin Schuster <r.schuster@cognigy.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/webchat-client.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@cognigy/socket-client": "^0.0.0"
+  }
+}

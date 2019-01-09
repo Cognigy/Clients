@@ -1,0 +1,26 @@
+{
+  "name": "@cognigy/socket-client",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Robin Schuster <r.schuster@cognigy.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/socket-client.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@types/socket.io-client": "^1.4.32",
+    "@types/uuid": "^3.4.4",
+    "socket.io-client": "^2.2.0",
+    "uuid": "^3.3.2"
+  }
+}

@@ -3,6 +3,7 @@
   "private": true,
   "devDependencies": {
     "@types/node": "^10.12.18",
+    "babel-loader": "^8.0.5",
     "lerna": "^3.10.1",
     "typescript": "^3.2.2"
   }

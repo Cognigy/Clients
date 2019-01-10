@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "tsc": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "@cognigy/socket-client": "^0.0.0",

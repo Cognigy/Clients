@@ -3,6 +3,8 @@ import { Options } from '@cognigy/socket-client/lib/interfaces/options';
 import Axios from 'axios';
 import { IWebchatConfig } from './interfaces/webchat-config';
 
+export { Options }
+
 export class WebchatClient extends SocketClient {
     public webchatConfig: IWebchatConfig;
 

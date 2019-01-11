@@ -4,6 +4,7 @@
    "outDir": "./lib",
    "allowSyntheticDefaultImports": true,
    "jsx": "react",
+   "lib": ["es6", "dom"]
  },
  "include": [
    "./src"

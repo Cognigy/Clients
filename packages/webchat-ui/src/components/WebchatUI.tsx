@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { IMessage } from '../interfaces/message';
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField';
 
 export interface WebchatUIProps {
   messages: IMessage[];
@@ -40,13 +42,13 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         return (
             <div>
                 {messages.map(message => <p>{message.text}</p>)}
-                <input value={text} onChange={this.handleChangeState} />
-                <button
+                <TextField value={text} onChange={this.handleChangeState} />
+                <Button
                     disabled={!text}
                     onClick={this.handleSubmit}
                 >
                     send
-                </button>
+                </Button>
             </div>
         )
     }

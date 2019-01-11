@@ -1,21 +1,22 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { messages } from './message-reducer';
 import { StateType } from 'typesafe-actions';
 import { WebchatClient } from '../../../webchat-client/lib/webchat-client';
-import { createMessageMiddleware } from './message-middleware';
-import { registerMessageHandler } from './message-handler';
+import { createMessageMiddleware } from './messages/message-middleware';
+import { registerMessageHandler } from './messages/message-handler';
+import { optionsMiddleware } from './options/options-middleware';
+import { reducer } from './reducer';
 
-const rootReducer = combineReducers({
-    messages
-});
 
-export type StoreState = StateType<typeof rootReducer>;
+export type StoreState = StateType<typeof reducer>;
 
 // creates a store and connects it to a webchat client
 export const createWebchatStore = (client: WebchatClient) => {
     const store = createStore(
-        rootReducer, 
-        applyMiddleware(createMessageMiddleware(client))    
+        reducer, 
+        applyMiddleware(
+            createMessageMiddleware(client),
+            optionsMiddleware
+        )
     );
 
     registerMessageHandler(store, client);

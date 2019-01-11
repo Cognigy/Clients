@@ -1,5 +1,5 @@
 import { Middleware } from "redux";
-import { StoreState } from "./store";
+import { StoreState } from "../store";
 import { IMessage } from "@cognigy/webchat-ui/lib/interfaces/message";
 import { WebchatClient } from '@cognigy/webchat-client';
 import { addMessage } from "./message-reducer";
@@ -18,7 +18,7 @@ export const createMessageMiddleware = (client: WebchatClient): Middleware<{}, S
             const { message } = action;
             const { text, data } = message;
 
-            client.sendMessage(text, data);
+            client.sendMessage(text || '', data);
 
             return next(addMessage(action.message));
         }

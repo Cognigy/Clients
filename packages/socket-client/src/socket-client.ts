@@ -12,7 +12,7 @@ import { ITypingStatusPayload } from "./interfaces/typingStatus";
 export class SocketClient extends EventEmitter {
     protected socketUrl: string;
     protected socketURLToken: string;
-    protected socketOptions: Options;
+    public socketOptions: Options;
 
     private socket: SocketIOClient.Socket;
     private socketReconnectInterval: NodeJS.Timeout;

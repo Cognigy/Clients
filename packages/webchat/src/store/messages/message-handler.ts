@@ -1,5 +1,5 @@
 import { Store } from "redux";
-import { WebchatClient } from "../../../webchat-client/lib/webchat-client";
+import { WebchatClient } from "@cognigy/webchat-client";
 import { addMessage } from "./message-reducer";
 
 export const registerMessageHandler = (store: Store, client: WebchatClient) => {

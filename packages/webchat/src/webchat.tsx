@@ -6,6 +6,10 @@ const webchatConfigUrl = 'https://endpoint-dev.cognigy.com/a605eda6c0599cdbaee67
 
 const root = document.getElementById('root');
 ReactDOM.render(
-    <Webchat url={webchatConfigUrl} />, 
+    (
+        <div>
+            <Webchat url={webchatConfigUrl} options={{ userId: 'user-robin', sessionId: 'session-a' }} />
+        </div>
+    ),
     root
 );

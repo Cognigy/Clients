@@ -23,9 +23,8 @@ export const optionsMiddleware: Middleware<{}, StoreState> = store => next => (a
             }
         }
     }
-
+    
     const result = next(action);
     localStorage.setItem(key, JSON.stringify(store.getState()));
-    console.log(key)
     return result;
 }

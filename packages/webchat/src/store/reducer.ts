@@ -15,12 +15,11 @@ export const resetState = (state?: StoreState) => ({
 });
 
 export const reducer = (state = rootReducer(undefined, { type: '' }), action) => {
-
     switch (action.type) {
         case 'RESET_STATE': {
             return rootReducer(action.state, { type: '' })
         }
     }
 
-    return state;
+    return rootReducer(state, action);
 }

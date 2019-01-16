@@ -15,11 +15,14 @@
     ],
     "scripts": {
         "test": "echo \"Error: run tests from root\" && exit 1",
-        "build": "webpack"
+        "build": "tsc",
+        "bundle": "webpack",
+        "dev": "webpack-dev-server --content-base dist/ --host 0.0.0.0"
     },
     "dependencies": {
         "@cognigy/webchat-client": "^0.0.0",
-        "@cognigy/webchat-ui": "^0.0.0",
+        "@material-ui/core": "^3.9.0",
+        "@material-ui/styles": "^3.0.0-alpha.8",
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
         "react-redux": "^6.0.0",
@@ -43,6 +46,7 @@
         "typesafe-actions": "^3.0.0",
         "typescript": "^3.2.2",
         "webpack": "^4.28.4",
-        "webpack-cli": "^3.2.1"
+        "webpack-cli": "^3.2.1",
+        "webpack-dev-server": "^3.1.14"
     }
 }

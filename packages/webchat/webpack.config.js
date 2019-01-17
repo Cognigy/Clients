@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
     // Change to your "entry-point".
     mode: 'production',
-    entry: ['babel-polyfill', './src/webchat.tsx'],
+    entry: ['@babel/polyfill', './src/webchat.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'webchat.bundle.js'
@@ -19,21 +19,14 @@ module.exports = {
             loader: 'babel-loader',
             options: {
                 rootMode: 'upward',
-                "presets": [
-                    [
-                        "@babel/env",
-                        {
-                            "targets": {
-                                "ie": 11
-                            }
-                        }
-                    ],
+                presets: [
+                    "@babel/preset-env",
                     "@babel/typescript",
                     "@babel/preset-react"
                 ],
-                "plugins": [
+                plugins: [
                     "@babel/proposal-class-properties",
-                    "@babel/proposal-object-rest-spread"
+                    "@babel/plugin-syntax-dynamic-import"
                 ]
             }
         }],

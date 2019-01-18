@@ -2,12 +2,6 @@ import { styled, IColorProps } from "../../style";
 
 export default styled.div<IColorProps>(({ color, theme }) => {
     switch (color) {
-        case 'action': 
-            return {
-                backgroundColor: theme.actionColor,
-                color: theme.actionContrastColor
-            }
-
         case 'primary':
             return {
                 backgroundColor: theme.primaryColor,
@@ -16,8 +10,8 @@ export default styled.div<IColorProps>(({ color, theme }) => {
 
         default:
             return {
-                backgroundColor: theme.lightGreyColor,
-                color: theme.lightGreyContrastColor
+                backgroundColor: theme.greyColor,
+                color: theme.greyContrastColor
             }
     }
 });

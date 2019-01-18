@@ -1,13 +1,14 @@
 import { Middleware } from "redux";
 import { StoreState } from "../store";
-import { IMessage } from "@cognigy/webchat-ui/lib/interfaces/message";
+import { IMessage } from "../../../common/interfaces/message";
 import { WebchatClient } from '@cognigy/webchat-client';
 import { addMessage } from "./message-reducer";
+import { Omit } from "react-redux";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
-export const sendMessage = (message: IMessage) => ({
+export const sendMessage = (message: Omit<IMessage, 'source'>) => ({
     type: SEND_MESSAGE as 'SEND_MESSAGE',
-    message
+    message: { ...message, source: 'user' } as IMessage
 });
 export type SendMessageAction = ReturnType<typeof sendMessage>;
 

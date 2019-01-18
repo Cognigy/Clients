@@ -54,6 +54,7 @@ export class TextInput extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 />
                 <Button
                     disabled={!text}
+                    color='primary'
                     type='submit'
                 >
                     send

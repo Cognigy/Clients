@@ -5,11 +5,8 @@ export interface IWebchatTheme {
     primaryColor: string;
     primaryContrastColor: string;
 
-    actionColor: string;
-    actionContrastColor: string;
-
-    lightGreyColor: string;
-    lightGreyContrastColor: string;
+    greyColor: string;
+    greyContrastColor: string;
 
     unitSize: number;
     blockSize: number;
@@ -38,18 +35,11 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
         theme.primaryContrastColor = getContrastColor(theme.primaryColor);
 
 
-    if (!theme.actionColor)
-        theme.actionColor = theme.primaryColor;
+    if (!theme.greyColor)
+        theme.greyColor = '#e6e6e6';
 
-    if (!theme.actionContrastColor)
-        theme.actionContrastColor = getContrastColor(theme.actionColor);
-
-
-    if (!theme.lightGreyColor)
-        theme.lightGreyColor = '#e6e6e6';
-
-    if (!theme.lightGreyContrastColor)
-        theme.lightGreyContrastColor = getContrastColor(theme.lightGreyColor);
+    if (!theme.greyContrastColor)
+        theme.greyContrastColor = getContrastColor(theme.greyColor);
 
 
     if (!theme.unitSize)
@@ -69,6 +59,6 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
     return theme as IWebchatTheme;
 }
 
-export interface IColorProps { color?: 'action' | 'primary' };
+export interface IColorProps { color?: 'primary' | 'default' };
 
 export const styled = styledOriginal as CreateStyled<IWebchatTheme>;

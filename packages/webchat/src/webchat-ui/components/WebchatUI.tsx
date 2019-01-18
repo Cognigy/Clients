@@ -6,7 +6,7 @@ import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-c
 import { ThemeProvider } from 'emotion-theming';
 import { IWebchatTheme, createWebchatTheme } from '../style';
 import WebchatRoot from './presentational/WebchatRoot';
-import History from './presentational/History';
+import { History } from './history/History';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -44,9 +44,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
             <ThemeProvider theme={theme}>
                 <WebchatRoot {...restProps}>
                     <Header />
-                    <History>
-                        {messages.map(message => <p>{message.text}</p>)}
-                    </History>
+                    <History messages={messages} />
                     <TextInput onSendMessage={onSendMessage} />
                 </WebchatRoot>
             </ThemeProvider>

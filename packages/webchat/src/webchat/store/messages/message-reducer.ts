@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { IMessage } from '@cognigy/webchat-ui/lib/interfaces/message';
+import { IMessage } from '../../../common/interfaces/message';
 
 export type MessageState = IMessage[]
 

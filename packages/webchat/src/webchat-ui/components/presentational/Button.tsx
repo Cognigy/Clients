@@ -6,11 +6,11 @@ export default styled.button<IColorProps>(({ color, theme }) => {
 
     const backgroundColor = color === 'primary'
         ? theme.primaryColor
-        : theme.actionColor;
+        : theme.greyColor;
 
     const textColor = color === 'primary'
         ? theme.primaryContrastColor
-        : theme.actionContrastColor
+        : theme.greyContrastColor;
 
     return {
         ...interactionCss,
@@ -22,6 +22,10 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         textTransform: 'uppercase',
         border: 'none',
         cursor: 'pointer',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+
+        '&:disabled': {
+            opacity: .4
+        }
     }
 });

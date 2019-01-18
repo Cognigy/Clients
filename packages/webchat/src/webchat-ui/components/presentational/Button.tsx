@@ -1,4 +1,4 @@
-import { styled, IColorProps } from "../../style";
+import { styled, IColorProps } from "../../../common/style";
 
 
 export default styled.button<IColorProps>(({ color, theme }) => {
@@ -19,6 +19,7 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         color: textColor,
         textTransform: 'uppercase',
         border: 'none',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        fontWeight: 'bold'
     }
 });

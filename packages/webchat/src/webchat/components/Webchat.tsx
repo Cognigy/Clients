@@ -7,7 +7,7 @@ import { ConnectedWebchatUI } from './ConnectedWebchatUI';
 import { setOptions } from '../store/options/options-reducer';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 
-interface WebchatProps {
+export interface WebchatProps {
     url: string;
     options?: Partial<Options>;
 }
@@ -51,14 +51,15 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
 
     render() {
+        const { url, options, ...props } = this.props;
         const { store, config } = this.state;
 
         if (!config)
-            return <div>asdf</div>
+            return null;
         
         return (
             <Provider store={store}>
-                <ConnectedWebchatUI config={config} />
+                <ConnectedWebchatUI {...props} config={config} />
             </Provider>
         )
     }

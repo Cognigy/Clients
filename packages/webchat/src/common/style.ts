@@ -18,7 +18,7 @@ export interface IWebchatTheme {
 }
 
 export const transformContrastColor = (color: string) => tinycolor(color)
-    .setAlpha(.9)
+    .setAlpha(.95)
     .toHslString();
 
 export const getContrastColor = (color: string) => transformContrastColor(tinycolor(color).isLight()
@@ -38,7 +38,7 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
 
 
     if (!theme.actionColor)
-        theme.actionColor = getActionColor(theme.primaryColor);
+        theme.actionColor = theme.primaryColor;
 
     if (!theme.actionContrastColor)
         theme.actionContrastColor = getContrastColor(theme.actionColor);

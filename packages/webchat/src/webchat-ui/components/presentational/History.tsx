@@ -1,4 +1,4 @@
-import { styled } from "../../style";
+import { styled } from "../../../common/style";
 
 export default styled.div(({ theme }) => ({
     overflowY: 'auto',

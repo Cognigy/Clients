@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { IInputProps } from './input.interface';
-import Input from '../basic/Input';
-import Button from '../basic/Button';
-import Toolbar from '../basic/Toolbar';
+import Input from '../presentational/Input';
+import Button from '../presentational/Button';
+import Toolbar from '../presentational/Toolbar';
+import { styled } from '../../../common/style';
 
 export interface TextInputProps extends IInputProps { }
 
@@ -10,7 +11,9 @@ export interface TextInputState {
     text: string;
 }
 
-const InputForm = Toolbar.withComponent('form');
+const InputForm = styled(Toolbar)({
+    marginBottom: 0
+}).withComponent('form');
 
 export class TextInput extends React.PureComponent<React.HTMLProps<HTMLDivElement> & TextInputProps, TextInputState> {
     state = { text: '' }

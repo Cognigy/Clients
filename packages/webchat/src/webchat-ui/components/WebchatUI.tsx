@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { IMessage } from '../../interfaces/message';
+import { IMessage } from '../../common/interfaces/message';
 import { TextInput } from './input/TextInput';
 import Header from './Header';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import { ThemeProvider } from 'emotion-theming';
-import { IWebchatTheme, createWebchatTheme } from '../style';
-import CloseIcon from '@material-ui/icons/Close';
-import WebchatRoot from './basic/WebchatRoot';
-import History from './basic/History';
+import { IWebchatTheme, createWebchatTheme } from '../../common/style';
+import WebchatRoot from './presentational/WebchatRoot';
+import History from './presentational/History';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -38,17 +37,13 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, } = props;
+        const { messages, onSendMessage, config, ...restProps } = props;
         const { theme } = state;
 
         return (
             <ThemeProvider theme={theme}>
-                <WebchatRoot>
-                    <Header>
-                        <span>Logo</span>
-                        <span style={{ flexGrow: 1 }}>Webchat</span>
-                        <CloseIcon />
-                    </Header>
+                <WebchatRoot {...restProps}>
+                    <Header />
                     <History>
                         {messages.map(message => <p>{message.text}</p>)}
                     </History>

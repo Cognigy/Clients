@@ -5,7 +5,7 @@
     "author": "Robin Schuster <r.schuster@cognigy.com>",
     "homepage": "",
     "license": "ISC",
-    "main": "lib/webchat.js",
+    "main": "lib/webchat/index.js",
     "directories": {
         "lib": "lib",
         "test": "__tests__"

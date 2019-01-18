@@ -12,8 +12,8 @@ const EmbeddedWebchat = styled(Webchat)({
 
 
     overflow: 'hidden',
-    borderRadius: 10,
+    borderRadius: 4,
     boxShadow: '0px 2px 5px hsla(0, 0%, 0%, .35)'
 });
 
-export { EmbeddedWebchat }
+export default EmbeddedWebchat;

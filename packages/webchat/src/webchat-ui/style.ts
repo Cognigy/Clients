@@ -13,6 +13,7 @@ export interface IWebchatTheme {
 
     unitSize: number;
     blockSize: number;
+    cornerSize: number;
     
     fontFamily: string;
 }
@@ -55,7 +56,10 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
         theme.unitSize = 8;
 
     if (!theme.blockSize)
-        theme.blockSize = 48;
+        theme.blockSize = theme.unitSize * 7;
+
+    if (!theme.cornerSize)
+        theme.cornerSize = theme.unitSize / 2;
 
 
     if (!theme.fontFamily)

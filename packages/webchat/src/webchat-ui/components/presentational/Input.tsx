@@ -1,22 +1,25 @@
 import tinycolor from 'tinycolor2';
 import { styled } from "../../style";
-import { interactionCss } from '../../utils/css';
+import { interactionCss, createTransition } from '../../utils/css';
 
 export default styled.input(({ theme }) => ({
     ...interactionCss,
     boxSizing: 'border-box',
-    borderRadius: theme.unitSize,
+    borderRadius: theme.cornerSize,
     borderColor: 'transparent',
-    borderWidth: 1,
+    borderWidth: 2,
     borderStyle: 'solid',
     outline: 'none',
-    padding: theme.unitSize,
-    backgroundColor: tinycolor('white').setAlpha(.5).toHslString(),
+    padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
+    backgroundColor: tinycolor('white').setAlpha(.7).toHslString(),
     color: tinycolor('black').setAlpha(.8).toHslString(),
-    transition: 'border-color .3s ease-out, background-color .3s ease-out',
+    transition: createTransition('background-color', 'border-color'),
+
+    '&:hover': {
+        borderColor: tinycolor(theme.actionColor).setAlpha(.3).toHslString()
+    },
 
     '&:focus': {
-        backgroundColor: tinycolor('white').setAlpha(.8).toHslString(),
         borderColor: theme.actionColor
     }
 }))

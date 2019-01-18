@@ -1,1 +1,1 @@
-export { WebchatUI, WebchatUIProps } from './components/WebchatUI';
+export * from './components/WebchatUI';

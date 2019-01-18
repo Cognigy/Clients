@@ -14,7 +14,7 @@ export default styled.button<IColorProps>(({ color, theme }) => {
 
     return {
         ...interactionCss,
-        borderRadius: theme.unitSize,
+        borderRadius: theme.cornerSize,
         padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
         boxSizing: 'border-box',
         backgroundColor,

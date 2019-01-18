@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 const initWebchat = async (webchatConfigUrl: string) => {
-    const { EmbeddedWebchat } = await import('./components/presentational/EmbeddedWebchat');
+    const { default: EmbeddedWebchat } = await import('./components/presentational/EmbeddedWebchat');
 
     const webchatRoot = document.createElement('div');
     document.body.appendChild(webchatRoot);

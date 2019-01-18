@@ -16,10 +16,14 @@ export default styled.input(({ theme }) => ({
     transition: createTransition('background-color', 'border-color'),
 
     '&:hover': {
-        borderColor: tinycolor(theme.primaryColor).setAlpha(.3).toHslString()
+        borderColor: theme.primaryWeakColor
     },
 
     '&:focus': {
         borderColor: theme.primaryColor
+    },
+
+    '&:active': {
+        borderColor: theme.primaryStrongColor
     }
 }))

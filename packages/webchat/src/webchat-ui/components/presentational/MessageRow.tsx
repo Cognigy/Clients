@@ -2,11 +2,11 @@ import * as React from 'react';
 import { styled } from '../../style';
 import { CSSProperties } from 'jss/css';
 
-interface MessageRowProps {
+export interface IAlignmentProps {
     align?: 'left' | 'right';
 }
 
-export default styled.div<MessageRowProps>(({ theme, align }) => {
+export default styled.div<IAlignmentProps>(({ theme, align }) => {
     const cssProps: CSSProperties = {
         display: 'flex',
     }

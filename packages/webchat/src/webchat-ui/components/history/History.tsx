@@ -12,7 +12,12 @@ export const History = ({ messages }: HistoryProps) => (
     <HistoryWrapper>
         {messages.map(({ text, source }) => (
             <MessageRow align={source === 'bot' ? 'left' : 'right'}>
-                <MessageBubble color={source === 'bot' ? 'primary' : 'default'}>{text}</MessageBubble>
+                <MessageBubble
+                    color={source === 'bot' ? 'primary' : 'default'}
+                    align={source === 'bot' ? 'left' : 'right'}
+                >
+                    {text}
+                </MessageBubble>
             </MessageRow>
         ))}
     </HistoryWrapper>

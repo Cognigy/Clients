@@ -67,4 +67,4 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
 
 export interface IColorProps { color?: 'action' | 'primary' };
 
-export const styled = styledOriginal as CreateStyled<IWebchatTheme>
+export const styled = styledOriginal as CreateStyled<IWebchatTheme>;

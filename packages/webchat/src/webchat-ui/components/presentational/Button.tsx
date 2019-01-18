@@ -1,4 +1,5 @@
-import { styled, IColorProps } from "../../../common/style";
+import { styled, IColorProps } from "../../style";
+import { interactionCss } from "../../utils/css";
 
 
 export default styled.button<IColorProps>(({ color, theme }) => {
@@ -12,8 +13,9 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         : theme.actionContrastColor
 
     return {
+        ...interactionCss,
         borderRadius: theme.unitSize,
-        padding: theme.unitSize,
+        padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
         boxSizing: 'border-box',
         backgroundColor,
         color: textColor,

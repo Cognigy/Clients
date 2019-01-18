@@ -1,4 +1,4 @@
-import { styled, IColorProps } from "../../../common/style";
+import { styled, IColorProps } from "../../style";
 import Background from "./Background";
 
 export default styled(Background)(({ theme }) => ({
@@ -13,7 +13,6 @@ export default styled(Background)(({ theme }) => ({
     boxSizing: 'border-box',
 
     '&>*': {
-        marginLeft: theme.unitSize,
-        marginRight: theme.unitSize
+        margin: theme.unitSize
     }
 }));

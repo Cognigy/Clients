@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled } from '../../../common/style';
+import styled from '@emotion/styled';
 import { Webchat } from '../../../webchat';
 
 const EmbeddedWebchat = styled(Webchat)({

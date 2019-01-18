@@ -3,7 +3,7 @@ import { IInputProps } from './input.interface';
 import Input from '../presentational/Input';
 import Button from '../presentational/Button';
 import Toolbar from '../presentational/Toolbar';
-import { styled } from '../../../common/style';
+import { styled } from '../../style';
 
 export interface TextInputProps extends IInputProps { }
 

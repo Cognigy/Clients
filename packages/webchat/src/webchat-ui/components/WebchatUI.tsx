@@ -4,7 +4,7 @@ import { TextInput } from './input/TextInput';
 import Header from './Header';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import { ThemeProvider } from 'emotion-theming';
-import { IWebchatTheme, createWebchatTheme } from '../../common/style';
+import { IWebchatTheme, createWebchatTheme } from '../style';
 import WebchatRoot from './presentational/WebchatRoot';
 import History from './presentational/History';
 

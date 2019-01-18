@@ -1,4 +1,4 @@
-import { styled } from "../../../common/style";
+import { styled } from "../../style";
 
 export default styled.div(({ theme }) => ({
     display: 'flex',

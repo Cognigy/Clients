@@ -1,7 +1,9 @@
 import tinycolor from 'tinycolor2';
-import { styled } from "../../../common/style";
+import { styled } from "../../style";
+import { interactionCss } from '../../utils/css';
 
 export default styled.input(({ theme }) => ({
+    ...interactionCss,
     boxSizing: 'border-box',
     borderRadius: theme.unitSize,
     borderColor: 'transparent',

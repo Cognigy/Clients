@@ -1,4 +1,4 @@
-import { styled, IColorProps } from "../../../common/style";
+import { styled, IColorProps } from "../../style";
 
 export default styled.div<IColorProps>(({ color, theme }) => {
     switch (color) {

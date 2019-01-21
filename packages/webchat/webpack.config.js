@@ -2,7 +2,6 @@ var path = require('path');
 
 module.exports = {
     // Change to your "entry-point".
-    mode: 'production',
     entry: ['@babel/polyfill', './src/webchat-embed/index.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { styled, IColorProps } from '../../style';
-import { interactionCss } from '../../utils/css';
 import { IAlignmentProps } from './MessageRow';
 
 export default styled.div<IColorProps & IAlignmentProps>(({ color, theme, align }) => ({
@@ -8,7 +7,10 @@ export default styled.div<IColorProps & IAlignmentProps>(({ color, theme, align 
 
     borderRadius: theme.unitSize,
     ...({ [align === 'left' ? 'borderBottomLeftRadius' : 'borderBottomRightRadius']: 0 }),
+    borderWidth: 1,
+    borderStyle: 'solid',
 
     backgroundColor: color === 'primary' ? theme.primaryColor : theme.greyColor,
+    borderColor: color === 'primary' ? theme.primaryStrongColor : theme.greyStrongColor,
     color: color === 'primary' ? theme.primaryContrastColor : theme.greyContrastColor
 }))

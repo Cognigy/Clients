@@ -7,6 +7,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { IWebchatTheme, createWebchatTheme } from '../style';
 import WebchatRoot from './presentational/WebchatRoot';
 import { History } from './history/History';
+import SpeechInput from './input/SpeechInput';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -45,6 +46,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 <WebchatRoot {...restProps}>
                     <Header />
                     <History messages={messages} />
+                    <SpeechInput onSendMessage={onSendMessage} />
                     <TextInput onSendMessage={onSendMessage} />
                 </WebchatRoot>
             </ThemeProvider>

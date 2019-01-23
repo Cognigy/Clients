@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { css, Global,  } from '@emotion/core';
 import { IMessage } from '../../common/interfaces/message';
 import { TextInput } from './input/TextInput';
 import Header from './Header';
@@ -11,6 +12,7 @@ import { History } from './history/History';
 import SpeechInput from './input/SpeechInput';
 import ButtonInput from './input/ButtonInput';
 import createCache from '@emotion/cache';
+import { reset } from '../utils/css';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -30,7 +32,9 @@ const HistoryWrapper = styled(History)({
     overflowY: 'auto',
     flexGrow: 1,
     minHeight: 0,
-})
+});
+
+const cssReset = css(reset as any);
 
 export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElement> & WebchatUIProps, WebchatUIState> {
     state = { theme: createWebchatTheme() }
@@ -74,7 +78,9 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         return (
             <CacheProvider value={styleCache}>
                 <ThemeProvider theme={theme}>
-                    <WebchatRoot {...restProps}>
+                    <>
+                    <Global styles={cssReset} />
+                    <WebchatRoot data-cognigy-webchat-root {...restProps}>
                         <Header
                             connected={config.active}
                             logoUrl={config.settings.headerLogoUrl}
@@ -83,6 +89,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                         <HistoryWrapper messages={messages} />
                         {this.renderInput()}
                     </WebchatRoot>
+                    </>
                 </ThemeProvider>
             </CacheProvider>
         )

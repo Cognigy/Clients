@@ -1,6 +1,7 @@
 import { styled } from "../../style";
+import ResetCSS from "./ResetCSS";
 
-export default styled.div(({ theme }) => ({
+export default styled(ResetCSS)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
 

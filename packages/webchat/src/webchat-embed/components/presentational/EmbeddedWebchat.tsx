@@ -6,6 +6,7 @@ const mqLargerThanPhone = '@media (min-width: 576px)'
 
 const EmbeddedWebchat = styled(Webchat)({
     position: 'fixed',
+    zIndex: 9999,
     
     left: 0,
     top: 0,
@@ -15,19 +16,19 @@ const EmbeddedWebchat = styled(Webchat)({
 
     overflow: 'hidden',
 
-    // [mqLargerThanPhone]: {
-    //     left: 'auto',
-    //     top: 'auto',
-    //     bottom: 64,
-    //     right: 64,
+    [mqLargerThanPhone]: {
+        left: 'auto',
+        top: 'auto',
+        bottom: 64,
+        right: 64,
         
-    //     width: 480,
-    //     height: 640,
+        width: 480,
+        height: 640,
 
-    //     borderRadius: 4,
+        borderRadius: 4,
 
-    //     boxShadow: '0px 2px 5px hsla(0, 0%, 0%, .35)',
-    // }
+        boxShadow: '0px 2px 5px hsla(0, 0%, 0%, .35)',
+    }
 });
 
 export default EmbeddedWebchat;

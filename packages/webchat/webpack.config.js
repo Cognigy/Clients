@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
@@ -10,6 +11,11 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']
     },
+    plugins: [
+        new webpack.optimize.LimitChunkCountPlugin({
+            maxChunks: 1
+        })
+    ],
     module: {
         rules: [{
             // Include ts, tsx, js, and jsx files.

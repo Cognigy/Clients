@@ -4,11 +4,13 @@ import { TextInput } from './input/TextInput';
 import Header from './Header';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import { ThemeProvider } from 'emotion-theming';
-import { IWebchatTheme, createWebchatTheme } from '../style';
+import { CacheProvider } from '@emotion/core';
+import { IWebchatTheme, createWebchatTheme, styled } from '../style';
 import WebchatRoot from './presentational/WebchatRoot';
 import { History } from './history/History';
 import SpeechInput from './input/SpeechInput';
 import ButtonInput from './input/ButtonInput';
+import createCache from '@emotion/cache';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -20,7 +22,15 @@ interface WebchatUIState {
     theme: IWebchatTheme;
 }
 
+const styleCache = createCache({
+    key: 'CognigyWebchat'
+});
 
+const HistoryWrapper = styled(History)({
+    overflowY: 'auto',
+    flexGrow: 1,
+    minHeight: 0,
+})
 
 export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElement> & WebchatUIProps, WebchatUIState> {
     state = { theme: createWebchatTheme() }
@@ -62,17 +72,19 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         const { theme } = state;
 
         return (
-            <ThemeProvider theme={theme}>
-                <WebchatRoot {...restProps}>
-                    <Header
-                        connected={config.active}
-                        logoUrl={config.settings.headerLogoUrl}
-                        title='Webchat'
-                    />
-                    <History messages={messages} />
-                    {this.renderInput()}
-                </WebchatRoot>
-            </ThemeProvider>
+            <CacheProvider value={styleCache}>
+                <ThemeProvider theme={theme}>
+                    <WebchatRoot {...restProps}>
+                        <Header
+                            connected={config.active}
+                            logoUrl={config.settings.headerLogoUrl}
+                            title='Webchat'
+                        />
+                        <HistoryWrapper messages={messages} />
+                        {this.renderInput()}
+                    </WebchatRoot>
+                </ThemeProvider>
+            </CacheProvider>
         )
     }
 }

@@ -11,6 +11,7 @@ export default styled(Background)(({ theme }) => ({
     
     minHeight: theme.blockSize,
     boxSizing: 'border-box',
+    flexBasis: theme.blockSize,
 
     '&>*': {
         margin: theme.unitSize

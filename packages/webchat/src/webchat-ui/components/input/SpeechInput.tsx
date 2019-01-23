@@ -3,10 +3,11 @@ import { IInputProps } from './input.interface';
 import Toolbar from '../presentational/Toolbar';
 import Button from '../presentational/Button';
 
-import MicIcon from '@material-ui/icons/Mic';
-import MicOffIcon from '@material-ui/icons/MicOff';
-import MicNoneIcon from '@material-ui/icons/MicNone';
 import Input from '../presentational/Input';
+
+const MicIcon = () => <span>Mic On</span>
+const MicOffIcon = () => <span>Mic Off</span>
+const MicNoneIcon = () => <span>Mic NA</span>
 
 
 

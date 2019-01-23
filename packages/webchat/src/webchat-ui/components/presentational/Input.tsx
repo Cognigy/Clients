@@ -15,15 +15,15 @@ export default styled.input(({ theme }) => ({
     color: tinycolor('black').setAlpha(.8).toHslString(),
     transition: createTransition('background-color', 'border-color'),
 
-    '&:hover': {
+    ':not(:disabled)&:hover': {
         borderColor: theme.primaryWeakColor
     },
 
-    '&:focus': {
+    ':not(:disabled)&:focus': {
         borderColor: theme.primaryColor
     },
 
-    '&:active': {
+    ':not(:disabled)&:active': {
         borderColor: theme.primaryStrongColor
     }
 }))

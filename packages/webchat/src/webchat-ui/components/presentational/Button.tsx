@@ -22,7 +22,7 @@ export default styled.button<IColorProps>(({ color, theme }) => {
 
         cursor: 'pointer',
 
-        transition: createTransition('background-color', 'transform'),
+        transition: createTransition('background-color', 'transform', 'box-shadow'),
         transform: 'translate(0px, 0px)',
 
         '&:disabled': {
@@ -31,8 +31,9 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         },
 
         '&:hover:not(:disabled)': {
-            transform: 'translate(0px, -1px)',
+            transform: 'translate(0px, -0px)',
             backgroundColor: theme.primaryStrongColor,
+            boxShadow: '0 1px 1px hsla(0, 0%, 0%, .2)'
         },
 
         '&:active:not(:disabled)': {

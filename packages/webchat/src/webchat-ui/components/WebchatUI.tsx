@@ -8,6 +8,7 @@ import { IWebchatTheme, createWebchatTheme } from '../style';
 import WebchatRoot from './presentational/WebchatRoot';
 import { History } from './history/History';
 import SpeechInput from './input/SpeechInput';
+import ButtonInput from './input/ButtonInput';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -36,6 +37,25 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         return null;
     }
 
+    renderInput = () => {
+        const { messages, config, onSendMessage } = this.props;
+
+        if (messages.length === 0) {
+            const { getStartedButtonText, getStartedPayload, getStartedText } = config.settings;
+
+            if (!!getStartedButtonText && !!getStartedPayload && !!getStartedText) {
+                return <ButtonInput config={config} onSendMessage={onSendMessage} />
+            }
+        }
+
+        return (
+            <>
+                <SpeechInput config={config} onSendMessage={onSendMessage} />
+                <TextInput config={config} onSendMessage={onSendMessage} />
+            </>
+        )
+    }
+
     render() {
         const { props, state } = this;
         const { messages, onSendMessage, config, ...restProps } = props;
@@ -44,10 +64,13 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         return (
             <ThemeProvider theme={theme}>
                 <WebchatRoot {...restProps}>
-                    <Header />
+                    <Header
+                        connected={config.active}
+                        logoUrl={config.settings.headerLogoUrl}
+                        title='Webchat'
+                    />
                     <History messages={messages} />
-                    <SpeechInput onSendMessage={onSendMessage} />
-                    <TextInput onSendMessage={onSendMessage} />
+                    {this.renderInput()}
                 </WebchatRoot>
             </ThemeProvider>
         )

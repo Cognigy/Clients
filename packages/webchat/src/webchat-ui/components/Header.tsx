@@ -1,6 +1,7 @@
 import * as React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import Toolbar from './presentational/Toolbar';
+import Logo from './presentational/Logo';
 
 interface HeaderProps {
     title: string;
@@ -8,10 +9,10 @@ interface HeaderProps {
     logoUrl?: string;
 }
 
-export default (props) => (
+export default ({ logoUrl, connected, title, ...props }: HeaderProps) => (
     <Toolbar color='primary' {...props}>
-        <span>Logo</span>
-        <span style={{ flexGrow: 1 }}>Webchat</span>
+        {logoUrl && <Logo src={logoUrl} />}
+        <span style={{ flexGrow: 1 }}>{title}</span>
         <CloseIcon />
     </Toolbar>
 );

@@ -1,11 +1,5 @@
-# `webchat`
+# Description
 
-> TODO: description
+This package is used to deploy a graphical webchat.
 
-## Usage
-
-```
-const webchat = require('webchat');
-
-// TODO: DEMONSTRATE API
-```
+# Usage

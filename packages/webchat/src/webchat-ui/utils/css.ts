@@ -1,4 +1,5 @@
 import { CSSProperties } from "@emotion/serialize";
+import { StylisPlugin } from '@emotion/cache';
 
 export const interactionCss: CSSProperties = {
     minWidth: 40,
@@ -62,3 +63,8 @@ const prefixJssObject = (jssObject, selector: string) => {
 }
 
 export const reset = prefixJssObject(meyerResetJss, '[data-cognigy-webchat-root]')
+
+export const isolate = (prefix: string): StylisPlugin => (context, content) => 
+    context === -2
+        ? `${prefix} ${content}`
+        : content

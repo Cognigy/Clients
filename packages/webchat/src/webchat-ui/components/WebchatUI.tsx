@@ -12,7 +12,7 @@ import { History } from './history/History';
 import SpeechInput from './input/SpeechInput';
 import ButtonInput from './input/ButtonInput';
 import createCache from '@emotion/cache';
-import { reset } from '../utils/css';
+import { reset, isolate } from '../utils/css';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -25,16 +25,23 @@ interface WebchatUIState {
 }
 
 const styleCache = createCache({
-    key: 'CognigyWebchat'
+    key: 'CognigyWebchat',
+    stylisPlugins: [
+        isolate('[data-cognigy-webchat-root]')
+    ]
 });
 
-const HistoryWrapper = styled(History)({
+const HistoryWrapper = styled(History)(({ theme }) => ({
     overflowY: 'auto',
     flexGrow: 1,
     minHeight: 0,
-});
+    height: theme.blockSize
+}));
 
 const cssReset = css(reset as any);
+const baseStyles = css({
+    fontFamily: 'sans-serif'
+})
 
 export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElement> & WebchatUIProps, WebchatUIState> {
     state = { theme: createWebchatTheme() }
@@ -80,6 +87,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 <ThemeProvider theme={theme}>
                     <>
                     <Global styles={cssReset} />
+                    <Global styles={baseStyles} />
                     <WebchatRoot data-cognigy-webchat-root {...restProps}>
                         <Header
                             connected={config.active}

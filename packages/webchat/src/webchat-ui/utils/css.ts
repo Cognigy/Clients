@@ -64,7 +64,10 @@ const prefixJssObject = (jssObject, selector: string) => {
 
 export const reset = prefixJssObject(meyerResetJss, '[data-cognigy-webchat-root]')
 
-export const isolate = (prefix: string): StylisPlugin => (context, content) => 
+// this will cause all css selectors to be prefixed by a string. 
+// .classA { ... }
+// .somePrefix .classA {...}
+export const isolate = (prefix: string): StylisPlugin => (context, content: string, selectors) => 
     context === -2
-        ? `${prefix} ${content}`
+        ? content.split(selectors[0]).join(`${prefix} ${selectors[0]}`)
         : content

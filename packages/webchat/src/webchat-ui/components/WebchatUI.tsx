@@ -27,7 +27,7 @@ interface WebchatUIState {
 const styleCache = createCache({
     key: 'CognigyWebchat',
     stylisPlugins: [
-        isolate('[data-cognigy-webchat-root]')
+        isolate('[data-cognigy-webchat-root]'),
     ]
 });
 
@@ -71,7 +71,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
         return (
             <>
-                <SpeechInput config={config} onSendMessage={onSendMessage} />
+                {/* <SpeechInput config={config} onSendMessage={onSendMessage} /> */}
                 <TextInput config={config} onSendMessage={onSendMessage} />
             </>
         )

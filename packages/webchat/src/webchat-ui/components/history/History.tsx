@@ -9,8 +9,13 @@ export interface HistoryProps {
     messages: IMessage[]
 }
 
+const StyledChatScroller = styled(ChatScroller)(({ theme }) =>({
+    paddingTop: theme.unitSize * 2,
+    paddingBottom: theme.unitSize * 2
+}))
+
 export const History = ({ messages, ref, ...props }: HistoryProps & React.HTMLProps<HTMLDivElement>) => (
-    <ChatScroller {...props} lastRelevantMessageId={JSON.stringify(messages.slice(-1)[0])}>
+    <StyledChatScroller {...props} lastRelevantMessageId={JSON.stringify(messages.slice(-1)[0])}>
         {messages.map(({ text, source }) => (
             <MessageRow align={source === 'bot' ? 'left' : 'right'}>
                 <MessageBubble
@@ -21,5 +26,5 @@ export const History = ({ messages, ref, ...props }: HistoryProps & React.HTMLPr
                 </MessageBubble>
             </MessageRow>
         ))}
-    </ChatScroller>
+    </StyledChatScroller>
 )

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { HTMLProps } from 'react';
 import { WebchatUI, WebchatUIProps } from "../../webchat-ui";
 import { connect } from "react-redux";
 import { StoreState } from "../store/store";

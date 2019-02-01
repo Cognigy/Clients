@@ -29,6 +29,7 @@
         "react": "^16.7.0",
         "react-dom": "^16.7.0",
         "react-emotion": "^10.0.0",
+        "react-player": "^1.9.3",
         "react-redux": "^6.0.0",
         "redux": "^4.0.1",
         "styled-jss": "^2.2.3",

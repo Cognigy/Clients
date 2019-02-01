@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { css, Global,  } from '@emotion/core';
+import { css, Global, } from '@emotion/core';
 import { IMessage } from '../../common/interfaces/message';
 import { TextInput } from './input/TextInput';
 import Header from './Header';
@@ -83,23 +83,23 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         const { theme } = state;
 
         return (
-            <CacheProvider value={styleCache}>
-                <ThemeProvider theme={theme}>
-                    <>
+            <ThemeProvider theme={theme}>
+                <>
                     <Global styles={cssReset} />
                     <Global styles={baseStyles} />
                     <WebchatRoot data-cognigy-webchat-root {...restProps}>
-                        <Header
-                            connected={config.active}
-                            logoUrl={config.settings.headerLogoUrl}
-                            title='Webchat'
-                        />
-                        <HistoryWrapper messages={messages} />
-                        {this.renderInput()}
+                        <CacheProvider value={styleCache}>
+                            <Header
+                                connected={config.active}
+                                logoUrl={config.settings.headerLogoUrl}
+                                title='Webchat'
+                            />
+                            <HistoryWrapper messages={messages} />
+                            {this.renderInput()}
+                        </CacheProvider>
                     </WebchatRoot>
-                    </>
-                </ThemeProvider>
-            </CacheProvider>
+                </>
+            </ThemeProvider>
         )
     }
 }

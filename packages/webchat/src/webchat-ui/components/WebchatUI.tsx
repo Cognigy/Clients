@@ -94,7 +94,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                                 logoUrl={config.settings.headerLogoUrl}
                                 title='Webchat'
                             />
-                            <HistoryWrapper messages={messages} />
+                            <HistoryWrapper messages={messages} onSendMessage={onSendMessage} config={config} />
                             {this.renderInput()}
                         </CacheProvider>
                     </WebchatRoot>

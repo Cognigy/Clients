@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import { MessengerFrame } from '../MessengerFrame';
 import { IFBMMediaTemplatePayload, IFBMMediaTemplateUrlElement } from '../../interfaces/MediaTemplatePayload.interface';
 import { IWithFBMActionEventHandler } from '../../MessengerPreview.interface';
-import { styled } from '../../../../webchat-ui/style';
+import { styled } from '../../../../../webchat-ui/style';
 
 interface IProps extends IWithFBMActionEventHandler {
     payload: IFBMMediaTemplatePayload;

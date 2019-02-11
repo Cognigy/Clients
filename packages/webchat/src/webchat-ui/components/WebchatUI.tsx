@@ -15,9 +15,11 @@ import createCache from '@emotion/cache';
 import { reset, isolate } from '../utils/css';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { regularMessagePlugin } from './messages/regular';
+import Message from './history/Message';
 
 export interface WebchatUIProps {
     messages: IMessage[];
+    fullscreenMessage?: IMessage;
     onSendMessage: (text?: string, data?: any) => void;
     config: IWebchatConfig;
 
@@ -50,7 +52,7 @@ const baseStyles = css({
 })
 
 export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElement> & WebchatUIProps, WebchatUIState> {
-    state = { 
+    state = {
         theme: createWebchatTheme(),
         plugins: []
     };
@@ -95,7 +97,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, open, ...restProps } = props;
+        const { messages, onSendMessage, config, open, fullscreenMessage, ...restProps } = props;
         const { theme, plugins } = state;
 
         return (
@@ -107,18 +109,32 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                         {open && (
                             <WebchatRoot data-cognigy-webchat-root {...restProps}>
                                 <CacheProvider value={styleCache}>
-                                    <Header
-                                        connected={config.active}
-                                        logoUrl={config.settings.headerLogoUrl}
-                                        title='Webchat'
-                                    />
-                                    <HistoryWrapper 
-                                        messages={messages} 
-                                        onSendMessage={onSendMessage} 
-                                        config={config}
-                                        plugins={plugins}
-                                    />
-                                    {this.renderInput()}
+                                    {!fullscreenMessage
+                                        ? (
+                                            <>
+                                                <Header
+                                                    connected={config.active}
+                                                    logoUrl={config.settings.headerLogoUrl}
+                                                    title='Webchat'
+                                                />
+                                                <HistoryWrapper
+                                                    messages={messages}
+                                                    onSendMessage={onSendMessage}
+                                                    config={config}
+                                                    plugins={plugins}
+                                                />
+                                                {this.renderInput()}
+                                            </>
+                                        )
+                                        : (
+                                            <Message
+                                                onSendMessage={onSendMessage}
+                                                config={config}
+                                                plugins={plugins}
+                                                message={fullscreenMessage}
+                                            />
+                                        )
+                                    }
                                 </CacheProvider>
                             </WebchatRoot>
                         )}

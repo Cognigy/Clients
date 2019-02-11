@@ -13,6 +13,8 @@ import SpeechInput from './input/SpeechInput';
 import ButtonInput from './input/ButtonInput';
 import createCache from '@emotion/cache';
 import { reset, isolate } from '../utils/css';
+import { MessagePlugin } from '../../common/interfaces/message-plugin';
+import { regularMessagePlugin } from './messages/regular';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -20,10 +22,12 @@ export interface WebchatUIProps {
     config: IWebchatConfig;
 
     open: boolean;
+    plugins?: MessagePlugin[];
 }
 
 interface WebchatUIState {
     theme: IWebchatTheme;
+    plugins: MessagePlugin[];
 }
 
 const styleCache = createCache({
@@ -46,18 +50,28 @@ const baseStyles = css({
 })
 
 export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElement> & WebchatUIProps, WebchatUIState> {
-    state = { theme: createWebchatTheme() }
+    state = { 
+        theme: createWebchatTheme(),
+        plugins: []
+    };
 
     static getDerivedStateFromProps(props: WebchatUIProps, state: WebchatUIState): WebchatUIState | null {
         const color = props.config && props.config.settings && props.config.settings.colorScheme;
 
         if (!!color && color !== state.theme.primaryColor) {
             return {
+                ...state,
                 theme: createWebchatTheme({ primaryColor: color })
             }
         }
 
         return null;
+    }
+
+    componentDidMount() {
+        this.setState({
+            plugins: [...this.props.plugins || [], regularMessagePlugin]
+        });
     }
 
     renderInput = () => {
@@ -82,7 +96,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
     render() {
         const { props, state } = this;
         const { messages, onSendMessage, config, open, ...restProps } = props;
-        const { theme } = state;
+        const { theme, plugins } = state;
 
         return (
             <>
@@ -98,7 +112,12 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                                         logoUrl={config.settings.headerLogoUrl}
                                         title='Webchat'
                                     />
-                                    <HistoryWrapper messages={messages} onSendMessage={onSendMessage} config={config} />
+                                    <HistoryWrapper 
+                                        messages={messages} 
+                                        onSendMessage={onSendMessage} 
+                                        config={config}
+                                        plugins={plugins}
+                                    />
                                     {this.renderInput()}
                                 </CacheProvider>
                             </WebchatRoot>

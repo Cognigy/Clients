@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import messenger from '../plugins/messenger';
 
 const initWebchat = async (webchatConfigUrl: string) => {
 
     // load messenger plugin
     const messengerPlugin = (await import('../plugins/messenger')).default;
+    const datePickerPlugin = (await import('../plugins/date-picker')).default;
     // @ts-ignore
-    window.webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin];
+    const webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin, datePickerPlugin];
 
     const { default: EmbeddedWebchat } = await import('./components/presentational/EmbeddedWebchat');
 
@@ -16,7 +16,7 @@ const initWebchat = async (webchatConfigUrl: string) => {
 
     ReactDOM.render(
         (
-            <EmbeddedWebchat url={webchatConfigUrl} options={{ userId: 'user-robin', sessionId: 'session-a' }} />
+            <EmbeddedWebchat url={webchatConfigUrl} options={{ userId: 'user-robin', sessionId: 'session-a' }} plugins={webchatPlugins} />
         ),
         webchatRoot
     );

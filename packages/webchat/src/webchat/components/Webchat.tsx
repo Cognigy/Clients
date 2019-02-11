@@ -7,10 +7,12 @@ import { ConnectedWebchatUI } from './ConnectedWebchatUI';
 import { setOptions } from '../store/options/options-reducer';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import { createBrowserApi } from '../store/api';
+import { MessagePlugin } from '../../common/interfaces/message-plugin';
 
 export interface WebchatProps {
     url: string;
     options?: Partial<Options>;
+    plugins?: MessagePlugin[];
 }
 
 interface WebchatState {

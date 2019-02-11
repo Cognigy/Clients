@@ -18,6 +18,6 @@ interface MessagePluginOptions {
 
 export interface MessagePlugin {
     match: Matcher;
-    component: (props: MessagePluginComponentProps) => JSX.Element;
-    options?: Partial<MessagePluginOptions>
+    component: ((props: MessagePluginComponentProps) => JSX.Element) | React.ComponentClass<MessagePluginComponentProps>;
+    options?: Partial<MessagePluginOptions>;
 }

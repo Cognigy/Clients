@@ -46,6 +46,7 @@ export class WebchatClient extends SocketClient {
     }
 
     get webchatConfigUrl(): string {
+		// @ts-ignore
         return `${this.socketUrl}/${this.socketURLToken}`;
     }
 

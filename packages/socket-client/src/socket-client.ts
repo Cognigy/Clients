@@ -10,8 +10,8 @@ import { ITypingStatusPayload } from "./interfaces/typingStatus";
 
 
 export class SocketClient extends EventEmitter {
-    protected socketUrl: string;
-    protected socketURLToken: string;
+    public socketUrl: string;
+    public socketURLToken: string;
     public socketOptions: Options;
 
     private socket: SocketIOClient.Socket;
@@ -118,7 +118,7 @@ export class SocketClient extends EventEmitter {
 
 
 
-    public async connect(): Promise<SocketClient> {
+    public async connect(): Promise<any> {
         const socket = SocketIOClient.connect(this.socketUrl, {
             reconnection: false,
             upgrade: true,

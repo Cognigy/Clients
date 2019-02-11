@@ -6,8 +6,10 @@ const initWebchat = async (webchatConfigUrl: string) => {
     // load messenger plugin
     const messengerPlugin = (await import('../plugins/messenger')).default;
     const datePickerPlugin = (await import('../plugins/date-picker')).default;
+    const ratingPlugin = (await import('../plugins/rating')).default;
+    const ratingResponsePlugin = (await import('../plugins/rating-response')).default;
     // @ts-ignore
-    const webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin, datePickerPlugin];
+    const webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin, datePickerPlugin, ratingPlugin, ratingResponsePlugin];
 
     const { default: EmbeddedWebchat } = await import('./components/presentational/EmbeddedWebchat');
 
@@ -19,7 +21,10 @@ const initWebchat = async (webchatConfigUrl: string) => {
             <EmbeddedWebchat url={webchatConfigUrl} options={{ userId: 'user-robin', sessionId: 'session-a' }} plugins={webchatPlugins} />
         ),
         webchatRoot
-    );
+	);
+	
+	// @ts-ignore
+	window.cognigyWebchat.open();
 };
 
 // @ts-ignore

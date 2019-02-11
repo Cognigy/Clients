@@ -29,7 +29,7 @@ export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Me
 
         const lastMessage = state.messages.slice(-1)[0];
 
-        const fullscreenMessage = isFullscreenPlugin(getPluginForMessage(lastMessage, props.plugins))
+        const fullscreenMessage = lastMessage && isFullscreenPlugin(getPluginForMessage(lastMessage, props.plugins))
             ? lastMessage
             : undefined
 

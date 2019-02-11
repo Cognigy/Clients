@@ -18,6 +18,8 @@ export interface WebchatUIProps {
     messages: IMessage[];
     onSendMessage: (text?: string, data?: any) => void;
     config: IWebchatConfig;
+
+    open: boolean;
 }
 
 interface WebchatUIState {
@@ -79,27 +81,31 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, ...restProps } = props;
+        const { messages, onSendMessage, config, open, ...restProps } = props;
         const { theme } = state;
 
         return (
-            <ThemeProvider theme={theme}>
-                <>
-                    <Global styles={cssReset} />
-                    <Global styles={baseStyles} />
-                    <WebchatRoot data-cognigy-webchat-root {...restProps}>
-                        <CacheProvider value={styleCache}>
-                            <Header
-                                connected={config.active}
-                                logoUrl={config.settings.headerLogoUrl}
-                                title='Webchat'
-                            />
-                            <HistoryWrapper messages={messages} onSendMessage={onSendMessage} config={config} />
-                            {this.renderInput()}
-                        </CacheProvider>
-                    </WebchatRoot>
-                </>
-            </ThemeProvider>
+            <>
+                <ThemeProvider theme={theme}>
+                    <>
+                        <Global styles={cssReset} />
+                        <Global styles={baseStyles} />
+                        {open && (
+                            <WebchatRoot data-cognigy-webchat-root {...restProps}>
+                                <CacheProvider value={styleCache}>
+                                    <Header
+                                        connected={config.active}
+                                        logoUrl={config.settings.headerLogoUrl}
+                                        title='Webchat'
+                                    />
+                                    <HistoryWrapper messages={messages} onSendMessage={onSendMessage} config={config} />
+                                    {this.renderInput()}
+                                </CacheProvider>
+                            </WebchatRoot>
+                        )}
+                    </>
+                </ThemeProvider>
+            </>
         )
     }
 }

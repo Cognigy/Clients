@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { ConnectedWebchatUI } from './ConnectedWebchatUI';
 import { setOptions } from '../store/options/options-reducer';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
+import { createBrowserApi } from '../store/api';
 
 export interface WebchatProps {
     url: string;
@@ -26,6 +27,9 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
         const client = new WebchatClient(url, options);
         const store = createWebchatStore(client);
+        
+        // @ts-ignore
+        window.cognigyWebchat = createBrowserApi(store);
 
         this.state = {
             client,
@@ -36,6 +40,7 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
     componentDidMount() {
         const { client, store } = this.state;
+
         client.connect()
             .then(() => {
                 store.dispatch(setOptions(client.socketOptions));

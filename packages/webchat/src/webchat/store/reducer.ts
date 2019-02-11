@@ -1,11 +1,13 @@
 import { combineReducers } from "redux";
 import { options } from "./options/options-reducer";
 import { messages } from "./messages/message-reducer";
+import { ui } from "./ui/ui-reducer";
 import { StoreState } from "./store";
 
 const rootReducer = combineReducers({
     messages,
-    options
+    options,
+    ui
 });
 
 const RESET_STATE = 'RESET_STATE';

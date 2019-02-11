@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import { StateType } from 'typesafe-actions';
-import { WebchatClient } from '../../../webchat-client/lib/webchat-client';
+import { WebchatClient } from '../../../../webchat-client/lib/webchat-client';
 import { createMessageMiddleware } from './messages/message-middleware';
 import { registerMessageHandler } from './messages/message-handler';
 import { optionsMiddleware } from './options/options-middleware';

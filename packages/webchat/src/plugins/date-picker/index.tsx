@@ -1,13 +1,13 @@
 import * as React from "react";
 import DayPicker, { DayPickerProps } from "react-day-picker";
 import "react-day-picker/lib/style.css";
-import { MessagePluginComponentProps, MessagePlugin } from "../../common/interfaces/message-plugin";
+import { MessageComponentProps, MessagePlugin } from "../../common/interfaces/message-plugin";
 
 interface State {
     selectedDay: Date | null;
 }
 
-class DatePicker extends React.Component<MessagePluginComponentProps, State> {
+class DatePicker extends React.Component<MessageComponentProps, State> {
   constructor(props) {
     super(props);
     this.handleDayClick = this.handleDayClick.bind(this);
@@ -30,8 +30,9 @@ class DatePicker extends React.Component<MessagePluginComponentProps, State> {
   }
 
   render() {
+    const { onSendMessage, message, config, attributes } = this.props;
     return (
-      <div>
+      <div {...attributes}>
         <DayPicker
           selectedDays={this.state.selectedDay}
           onDayClick={this.handleDayClick}

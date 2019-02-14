@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { MessagePlugin, MessagePluginComponentProps } from '../../../../common/interfaces/message-plugin';
+import { MessagePlugin, MessageComponentProps } from '../../../../common/interfaces/message-plugin';
 import MessageBubble from '../../presentational/MessageBubble';
 
-const RegularMessage = ({ message: { text, source } }: MessagePluginComponentProps) => (
+const RegularMessage = ({ message: { text, source } }: MessageComponentProps) => (
     <MessageBubble
         color={source === 'bot' ? 'primary' : 'default'}
         align={source === 'bot' ? 'left' : 'right'}

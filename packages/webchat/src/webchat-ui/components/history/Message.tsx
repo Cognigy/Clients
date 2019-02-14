@@ -4,14 +4,14 @@ import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-c
 import { MessageSender } from '../input/input.interface';
 import { MessagePlugin } from '../../../common/interfaces/message-plugin';
 
-interface MessageProps {
+export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
     message: IMessage;
     config: IWebchatConfig;
     onSendMessage: MessageSender;
     plugins: MessagePlugin[];
 }
 
-export default ({ message, config, onSendMessage, plugins }: MessageProps): JSX.Element | null => {
+export default ({ message, config, onSendMessage, plugins, ...props }: MessageProps): JSX.Element | null => {
     for (const { match, component: Component } of plugins) {
         if (match(message)) {
             return (
@@ -19,6 +19,7 @@ export default ({ message, config, onSendMessage, plugins }: MessageProps): JSX.
                     config={config}
                     message={message}
                     onSendMessage={onSendMessage}
+                    attributes={props}
                 />
             )
         }

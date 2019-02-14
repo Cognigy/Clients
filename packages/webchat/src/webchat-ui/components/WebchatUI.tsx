@@ -9,13 +9,12 @@ import { CacheProvider } from '@emotion/core';
 import { IWebchatTheme, createWebchatTheme, styled } from '../style';
 import WebchatRoot from './presentational/WebchatRoot';
 import { History } from './history/History';
-import SpeechInput from './input/SpeechInput';
 import ButtonInput from './input/ButtonInput';
 import createCache from '@emotion/cache';
 import { reset, isolate } from '../utils/css';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { regularMessagePlugin } from './messages/regular';
-import Message from './history/Message';
+import FullScreenMessage from './history/FullScreenMessage';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -127,7 +126,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                                             </>
                                         )
                                         : (
-                                            <Message
+                                            <FullScreenMessage
                                                 onSendMessage={onSendMessage}
                                                 config={config}
                                                 plugins={plugins}

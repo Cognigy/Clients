@@ -1,8 +1,8 @@
 import * as React from "react";
-import { MessagePlugin } from "../../../lib/common/interfaces/message-plugin";
-import { MessagePluginComponentProps } from "../../common/interfaces/message-plugin";
+import { MessagePlugin } from "../../common/interfaces/message-plugin";
+import { MessageComponentProps } from "../../common/interfaces/message-plugin";
 
-const RatingResponse = (props: MessagePluginComponentProps) => (
+const RatingResponse = (props: MessageComponentProps) => (
 	<span>{props.message.data.rate} / 5 stars!</span>
 );
 

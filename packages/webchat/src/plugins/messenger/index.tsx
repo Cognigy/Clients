@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { MessagePlugin, MessagePluginComponentProps } from "../../common/interfaces/message-plugin";
+import { MessagePlugin, MessageComponentProps } from "../../common/interfaces/message-plugin";
 import { MessengerPreview } from "./MessengerPreview/MessengerPreview";
 
-const MessengerPreviewComponent = ({ message, onSendMessage }: MessagePluginComponentProps) => (
+const MessengerPreviewComponent = ({ message, onSendMessage }: MessageComponentProps) => (
     <MessengerPreview 
         message={message.data._cognigy._facebook.message}
         onAction={(e, action) => {

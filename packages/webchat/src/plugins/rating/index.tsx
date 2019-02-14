@@ -1,8 +1,8 @@
 import * as React from "react";
-import { MessagePlugin } from "../../../lib/common/interfaces/message-plugin";
-import { MessagePluginComponentProps } from "../../common/interfaces/message-plugin";
+import { MessagePlugin } from "../../common/interfaces/message-plugin";
+import { MessageComponentProps } from "../../common/interfaces/message-plugin";
 
-const RatingMessage = (props: MessagePluginComponentProps) => (
+const RatingMessage = (props: MessageComponentProps) => (
 	<div>
 		<span onClick={() => props.onSendMessage("", { rate: 1 })}>★</span>
 		<span onClick={() => props.onSendMessage("", { rate: 2 })}>★</span>

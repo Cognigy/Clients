@@ -11,7 +11,7 @@ export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
     plugins: MessagePlugin[];
 }
 
-export default ({ message, config, onSendMessage, plugins, ...props }: MessageProps): JSX.Element | null | undefined => {
+export default ({ message, config, onSendMessage, plugins, ...props }: MessageProps): JSX.Element => {
     const results: any[] = [];
 
     const attributes = Object.keys(props).length > 0
@@ -33,9 +33,6 @@ export default ({ message, config, onSendMessage, plugins, ...props }: MessagePr
                 break;
         }
     }
-
-    if (results.length === 0)
-        return null;
 
     return (<>{results}</>);
 }

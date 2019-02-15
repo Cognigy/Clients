@@ -7,6 +7,7 @@ import { MessageSender } from '../input/input.interface';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import Message from './Message';
 import { MessagePlugin } from '../../../common/interfaces/message-plugin';
+import TypingIndicator from './TypingIndicator';
 
 export interface HistoryProps {
     messages: IMessage[];
@@ -22,7 +23,7 @@ const StyledChatScroller = styled(ChatScroller)(({ theme }) => ({
 }));
 
 export const History = ({ messages, ref, onSendMessage, config, plugins, typingIndicator, ...props }: HistoryProps & React.HTMLProps<HTMLDivElement>) => (
-    <StyledChatScroller {...props} lastRelevantMessageId={JSON.stringify(messages.slice(-1)[0])+typingIndicator}>
+    <StyledChatScroller {...props} lastRelevantMessageId={JSON.stringify(messages.slice(-1)[0]) + typingIndicator}>
         {messages.map(message => (
             <MessageRow align={message.source === 'bot' ? 'left' : 'right'}>
                 <Message
@@ -33,6 +34,10 @@ export const History = ({ messages, ref, onSendMessage, config, plugins, typingI
                 />
             </MessageRow>
         ))}
-        {typingIndicator && (<div>typing...</div>)}
+        {typingIndicator && (
+            <MessageRow align='left'>
+                <TypingIndicator />
+            </MessageRow>
+        )}
     </StyledChatScroller>
 )

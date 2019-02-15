@@ -13,6 +13,7 @@ export interface HistoryProps {
     onSendMessage: MessageSender;
     config: IWebchatConfig;
     plugins: MessagePlugin[];
+    typingIndicator: boolean;
 }
 
 const StyledChatScroller = styled(ChatScroller)(({ theme }) => ({
@@ -20,8 +21,8 @@ const StyledChatScroller = styled(ChatScroller)(({ theme }) => ({
     paddingBottom: theme.unitSize * 2
 }));
 
-export const History = ({ messages, ref, onSendMessage, config, plugins, ...props }: HistoryProps & React.HTMLProps<HTMLDivElement>) => (
-    <StyledChatScroller {...props} lastRelevantMessageId={JSON.stringify(messages.slice(-1)[0])}>
+export const History = ({ messages, ref, onSendMessage, config, plugins, typingIndicator, ...props }: HistoryProps & React.HTMLProps<HTMLDivElement>) => (
+    <StyledChatScroller {...props} lastRelevantMessageId={JSON.stringify(messages.slice(-1)[0])+typingIndicator}>
         {messages.map(message => (
             <MessageRow align={message.source === 'bot' ? 'left' : 'right'}>
                 <Message
@@ -32,5 +33,6 @@ export const History = ({ messages, ref, onSendMessage, config, plugins, ...prop
                 />
             </MessageRow>
         ))}
+        {typingIndicator && (<div>typing...</div>)}
     </StyledChatScroller>
 )

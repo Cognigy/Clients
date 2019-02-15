@@ -22,8 +22,6 @@ export const MessengerListTemplate = ({ payload, onAction, ...divProps }: IMesse
         ? elements[0]
         : null;
 
-    console.log({ payload, top_element_style })
-
     const button = buttons && buttons[0];
 
     return (

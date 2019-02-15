@@ -21,6 +21,7 @@ export interface WebchatUIProps {
     fullscreenMessage?: IMessage;
     onSendMessage: (text?: string, data?: any) => void;
     config: IWebchatConfig;
+    typingIndicator: boolean;
 
     open: boolean;
     plugins?: MessagePlugin[];
@@ -96,7 +97,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, open, fullscreenMessage, ...restProps } = props;
+        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, ...restProps } = props;
         const { theme, plugins } = state;
 
         return (
@@ -121,6 +122,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                                                     onSendMessage={onSendMessage}
                                                     config={config}
                                                     plugins={plugins}
+                                                    typingIndicator={typingIndicator}
                                                 />
                                                 {this.renderInput()}
                                             </>

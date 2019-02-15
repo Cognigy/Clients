@@ -7,13 +7,13 @@ import { toggleOpen } from '../store/ui/ui-reducer';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { IMessage } from '../../common/interfaces/message';
 
-type FromState = Pick<WebchatUIProps, 'messages' | 'open'>;
+type FromState = Pick<WebchatUIProps, 'messages' | 'open' | 'typingIndicator'>;
 type FromDispatch = Pick<WebchatUIProps, 'onSendMessage'>;
 type FromProps = Pick<WebchatUIProps, 'config' | 'plugins'>;
 type Merge = FromState & FromDispatch & FromProps & Pick<WebchatUIProps, 'fullscreenMessage'>;
 
 export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Merge, StoreState>(
-    ({ messages, ui: { open } }) => ({ messages, open }),
+    ({ messages, ui: { open, typing } }) => ({ messages, open, typingIndicator: typing }),
     dispatch => ({ 
         onSendMessage: (text, data) => dispatch(sendMessage({ text, data }))
     }),

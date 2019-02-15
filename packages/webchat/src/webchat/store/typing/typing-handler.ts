@@ -1,6 +1,6 @@
 import { WebchatClient } from "@cognigy/webchat-client";
 import { Store } from "redux";
-import { setTyping } from "./typing-reducer";
+import { setTyping } from "../ui/ui-reducer";
 
 
 export const registerTypingHandler = (store: Store, client: WebchatClient) => {

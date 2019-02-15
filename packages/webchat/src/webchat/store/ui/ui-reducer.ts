@@ -2,6 +2,7 @@ import { Reducer } from "redux";
 
 export interface UIState {
     open: boolean;
+    typing: boolean;
 }
 
 const SET_OPEN = 'SET_OPEN';
@@ -17,11 +18,21 @@ export const toggleOpen = () => ({
 });
 export type ToggleOpenAction = ReturnType<typeof toggleOpen>;
 
+const SET_TYPING = 'SET_TYPING';
+export const setTyping = (typing: boolean) => ({
+    type: SET_TYPING as 'SET_TYPING',
+    typing
+});
+type SetTypingAction = ReturnType<typeof setTyping>;
+
+
 const getInitialState = (): UIState => ({
-    open: false
+    open: false,
+    typing: false
 });
 
-export const ui: Reducer<UIState, SetOpenAction | ToggleOpenAction> = (state = getInitialState(), action) => {
+
+export const ui: Reducer<UIState, SetOpenAction | ToggleOpenAction | SetTypingAction> = (state = getInitialState(), action) => {
     switch (action.type) {
         case SET_OPEN: {
             return {
@@ -34,6 +45,13 @@ export const ui: Reducer<UIState, SetOpenAction | ToggleOpenAction> = (state = g
             return {
                 ...state,
                 open: !state.open
+            }
+        }
+
+        case SET_TYPING: {
+            return {
+                ...state,
+                typing: action.typing
             }
         }
     }

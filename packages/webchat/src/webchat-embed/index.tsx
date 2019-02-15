@@ -8,9 +8,8 @@ const initWebchat = async (webchatConfigUrl: string) => {
     const datePickerPlugin = (await import('../plugins/date-picker')).default;
     const ratingPlugin = (await import('../plugins/rating')).default;
     const ratingResponsePlugin = (await import('../plugins/rating-response')).default;
-    const loggingPlugin = (await import('../plugins/logging')).default;
     // @ts-ignore
-    const webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin, datePickerPlugin, ratingPlugin, ratingResponsePlugin, loggingPlugin];
+    const webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin, datePickerPlugin, ratingPlugin, ratingResponsePlugin];
 
     const { default: EmbeddedWebchat } = await import('./components/presentational/EmbeddedWebchat');
 

@@ -3,10 +3,12 @@ import { options } from "./options/options-reducer";
 import { messages } from "./messages/message-reducer";
 import { ui } from "./ui/ui-reducer";
 import { StoreState } from "./store";
+import { typing } from "./typing/typing-reducer";
 
 const rootReducer = combineReducers({
     messages,
     options,
+    typing: typing as any,
     ui
 });
 

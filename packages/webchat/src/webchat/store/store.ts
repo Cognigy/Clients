@@ -5,6 +5,7 @@ import { createMessageMiddleware } from './messages/message-middleware';
 import { registerMessageHandler } from './messages/message-handler';
 import { optionsMiddleware } from './options/options-middleware';
 import { reducer } from './reducer';
+import { registerTypingHandler } from './typing/typing-handler';
 
 
 export type StoreState = StateType<typeof reducer>;
@@ -21,6 +22,7 @@ export const createWebchatStore = (client: WebchatClient) => {
     );
 
     registerMessageHandler(store, client);
+    registerTypingHandler(store, client);
 
     return store;
 }

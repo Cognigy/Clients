@@ -30,7 +30,8 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
 
     return {
         display: 'flex',
-        flexDirection,
+		flexDirection,
+		alignItems: "flex-end",
         paddingLeft,
         paddingRight,
 

@@ -8,18 +8,18 @@ export interface MessageComponentProps {
     message: IMessage;
     config: IWebchatConfig;
     onSendMessage: MessageSender;
-    attributes: React.HTMLProps<HTMLDivElement>;
+    attributes?: React.HTMLProps<HTMLDivElement>;
 }
 
 type Matcher = (message: IMessage) => boolean;
 
 interface MessagePluginOptions {
     fullscreen: boolean;
+    passthrough: boolean;
 }
 
-type MessageComponent = (props: MessageComponentProps) => JSX.Element
-    | React.ComponentClass<MessageComponentProps>
-    | React.Component<MessageComponentProps>;
+type MessageComponent = ((props: MessageComponentProps) => JSX.Element | null)
+    | React.ComponentClass<MessageComponentProps>;
 
 export interface MessagePlugin {
     match: Matcher;

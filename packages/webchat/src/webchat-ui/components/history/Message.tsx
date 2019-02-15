@@ -11,19 +11,31 @@ export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
     plugins: MessagePlugin[];
 }
 
-export default ({ message, config, onSendMessage, plugins, ...props }: MessageProps): JSX.Element | null => {
-    for (const { match, component: Component } of plugins) {
+export default ({ message, config, onSendMessage, plugins, ...props }: MessageProps): JSX.Element | null | undefined => {
+    const results: any[] = [];
+
+    const attributes = Object.keys(props).length > 0
+        ? props
+        : undefined;
+
+    for (const { match, component: Component, options } of plugins) {
         if (match(message)) {
-            return (
+            results.push(
                 <Component
                     config={config}
                     message={message}
                     onSendMessage={onSendMessage}
-                    attributes={props}
+                    attributes={attributes}
                 />
-            )
+            );
+
+            if (!(options && options.passthrough))
+                break;
         }
     }
 
-    return null;
+    if (results.length === 0)
+        return null;
+
+    return (<>{results}</>);
 }

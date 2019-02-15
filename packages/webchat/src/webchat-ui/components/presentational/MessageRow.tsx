@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled } from '../../style';
-import { CSSProperties } from 'jss/css';
+import { CSSProperties } from 'react';
 
 export interface IAlignmentProps {
     align?: 'left' | 'right';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled } from '../../../../webchat-ui/style';
+import { styled } from '../../../../../webchat-ui/style';
 
 export const Divider = styled.div(({ theme }) => ({
     borderBottomWidth: 1,

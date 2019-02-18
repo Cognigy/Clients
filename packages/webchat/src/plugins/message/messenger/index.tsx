@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { MessagePlugin, MessageComponentProps } from "../../common/interfaces/message-plugin";
+import { MessagePlugin, MessageComponentProps } from "../../../common/interfaces/message-plugin";
 import { MessengerPreview } from "./MessengerPreview/MessengerPreview";
-import { createMessagePlugin } from '../helper';
+import { createMessagePlugin } from '../../helper';
 
 const MessengerPreviewComponent = ({ message, onSendMessage }: MessageComponentProps) => (
     <MessengerPreview 

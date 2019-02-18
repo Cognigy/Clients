@@ -3,7 +3,7 @@ import { IFBMListTemplateElement } from '../../../interfaces/ListTemplatePayload
 import { MessengerTitle } from '../../MessengerTitle';
 import { MessengerSubtitle } from '../../MessengerSubtitle';
 import { IWithFBMActionEventHandler } from '../../../MessengerPreview.interface';
-import { styled } from '../../../../../../webchat-ui/style';
+import { styled } from '../../../../../../../webchat-ui/style';
 
 interface IMessengerListTemplateHeaderElementProps extends IWithFBMActionEventHandler {
     element: IFBMListTemplateElement;

@@ -1,8 +1,8 @@
 import * as React from "react";
 import DayPicker, { DayPickerProps } from "react-day-picker";
 import "react-day-picker/lib/style.css";
-import { MessageComponentProps, MessagePlugin } from "../../common/interfaces/message-plugin";
-import { createMessagePlugin } from "../helper";
+import { MessageComponentProps, MessagePlugin } from "../../../common/interfaces/message-plugin";
+import { createMessagePlugin } from "../../helper";
 
 interface State {
     selectedDay: Date | null;

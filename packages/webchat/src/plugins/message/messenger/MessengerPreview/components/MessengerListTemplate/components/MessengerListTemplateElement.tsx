@@ -5,7 +5,7 @@ import { MessengerSubtitle } from '../../MessengerSubtitle';
 import { MessengerContent } from '../../MessengerContent';
 import { getButtonLabel } from '../../MessengerButton/lib/messengerButtonHelpers';
 import { IWithFBMActionEventHandler } from '../../../MessengerPreview.interface';
-import { styled } from '../../../../../../webchat-ui/style';
+import { styled } from '../../../../../../../webchat-ui/style';
 
 interface IMessengerListTemplateElementProps extends IWithFBMActionEventHandler {
     element: IFBMListTemplateElement;

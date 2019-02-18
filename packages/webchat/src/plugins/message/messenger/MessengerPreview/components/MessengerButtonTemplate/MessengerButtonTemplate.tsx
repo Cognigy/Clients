@@ -3,7 +3,7 @@ import { MessengerButton } from '../MessengerButton/MessengerButton';
 import { MessengerFrame } from '../MessengerFrame';
 import { IFBMButtonTemplatePayload } from '../../interfaces/ButtonTemplatePayload.interface';
 import { IWithFBMActionEventHandler } from '../../MessengerPreview.interface';
-import { styled } from '../../../../../webchat-ui/style';
+import { styled } from '../../../../../../webchat-ui/style';
 import { Divider } from '../Divider';
 
 interface IMessengerButtonTemplateProps extends IWithFBMActionEventHandler {

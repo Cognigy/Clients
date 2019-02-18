@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled } from '../../../../webchat-ui/style';
+import { styled } from '../../../../../webchat-ui/style';
 
 export const MessengerSubtitle = styled.p({
     margin: 0,

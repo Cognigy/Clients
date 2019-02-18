@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IFBMButton } from '../../interfaces/Button.interface';
 import { getButtonLabel } from './lib/messengerButtonHelpers';
-import { styled } from '../../../../../webchat-ui/style';
+import { styled } from '../../../../../../webchat-ui/style';
 
 interface IMessengerButtonProps {
     button: IFBMButton;

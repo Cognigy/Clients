@@ -4,7 +4,7 @@ import { IFBMRegularMessage } from '../../interfaces/Message.interface';
 import { IFBMTextQuickReply, IFBMQuickReply } from '../../interfaces/QuickReply.interface';
 import { MessengerQuickReply } from '../MessengerQuickReply';
 import { IWithFBMActionEventHandler } from '../../MessengerPreview.interface';
-import { styled } from '../../../../../webchat-ui/style';
+import { styled } from '../../../../../../webchat-ui/style';
 
 interface Props extends IWithFBMActionEventHandler {
     message: IFBMRegularMessage;

@@ -6,7 +6,7 @@ import { MessengerTitle } from '../MessengerTitle';
 import { MessengerSubtitle } from '../MessengerSubtitle';
 import { MessengerContent } from '../MessengerContent';
 import { IWithFBMActionEventHandler } from '../../MessengerPreview.interface';
-import { styled } from '../../../../../webchat-ui/style';
+import { styled } from '../../../../../../webchat-ui/style';
 import { Divider } from '../Divider';
 
 export interface IMessengerGenericTemplateProps extends IWithFBMActionEventHandler {

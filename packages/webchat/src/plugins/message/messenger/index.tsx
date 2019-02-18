@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MessagePlugin, MessageComponentProps } from "../../common/interfaces/message-plugin";
 import { MessengerPreview } from "./MessengerPreview/MessengerPreview";
+import { createMessagePlugin } from '../helper';
 
 const MessengerPreviewComponent = ({ message, onSendMessage }: MessageComponentProps) => (
     <MessengerPreview 
@@ -17,11 +18,11 @@ const MessengerPreviewComponent = ({ message, onSendMessage }: MessageComponentP
             }
         }}
     />
-)
+);
 
-const messengerPlugin: MessagePlugin = {
-    match: ({ data }) => data && data._cognigy && data._cognigy._facebook,
-    component: MessengerPreviewComponent
-}
+const messengerPlugin = createMessagePlugin(
+    ({ data }) => data && data._cognigy && data._cognigy._facebook,
+    MessengerPreviewComponent
+)
 
 export default messengerPlugin;

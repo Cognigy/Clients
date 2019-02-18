@@ -2,6 +2,7 @@ import * as React from "react";
 import DayPicker, { DayPickerProps } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import { MessageComponentProps, MessagePlugin } from "../../common/interfaces/message-plugin";
+import { createMessagePlugin } from "../helper";
 
 interface State {
     selectedDay: Date | null;
@@ -43,12 +44,6 @@ class DatePicker extends React.Component<MessageComponentProps, State> {
   }
 }
 
-const datePickerPlugin: MessagePlugin = {
-  match: ({ data }) =>  data && data._plugin && data._plugin.type === "date-picker",
-  component: DatePicker,
-  options: {
-      fullscreen: true
-  }
-};
+const datePickerPlugin = createMessagePlugin('date-picker', DatePicker, { fullscreen: true });
 
 export default datePickerPlugin;

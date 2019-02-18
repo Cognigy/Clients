@@ -1,6 +1,7 @@
 import * as React from "react";
 import { MessagePlugin } from "../../common/interfaces/message-plugin";
 import { MessageComponentProps } from "../../common/interfaces/message-plugin";
+import { createMessagePlugin } from "../helper";
 
 const RatingMessage = (props: MessageComponentProps) => (
 	<div>
@@ -12,9 +13,6 @@ const RatingMessage = (props: MessageComponentProps) => (
 	</div>
 );
 
-const ratingPlugin: MessagePlugin = {
-	match: ({ data }) => data && data._plugin && data._plugin.type === "rating",
-    component: RatingMessage
-}
+const ratingPlugin = createMessagePlugin('rating', RatingMessage);
 
 export default ratingPlugin;

@@ -1,4 +1,4 @@
-import { createInputPlugin } from "../../../../plugins/helper";
+import { createInputPlugin } from "../../../../../plugins/helper";
 import { TextInput } from "./TextInput";
 
 const textInputPlugin = createInputPlugin(

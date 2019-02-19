@@ -1,6 +1,6 @@
-import { createInputPlugin } from "../../../../plugins/helper";
+import { createInputPlugin } from "../../../../../plugins/helper";
 import GetStartedInput from "./GetStartedInput";
-import { InputMatcher } from "../../../../common/interfaces/input-plugin";
+import { InputMatcher } from "../../../../../common/interfaces/input-plugin";
 
 const match: InputMatcher = ({ config: { settings: { displayGetStartedButton, getStartedButtonText, getStartedPayload, getStartedText } }, messages }) =>
     messages.length === 0

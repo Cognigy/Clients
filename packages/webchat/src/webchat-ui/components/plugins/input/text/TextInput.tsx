@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Input from '../../presentational/Input';
-import Button from '../../presentational/Button';
-import Toolbar from '../../presentational/Toolbar';
-import { styled } from '../../../style';
-import { InputComponentProps } from '../../../../common/interfaces/input-plugin';
+import Input from '../../../presentational/Input';
+import Button from '../../../presentational/Button';
+import Toolbar from '../../../presentational/Toolbar';
+import { styled } from '../../../../style';
+import { InputComponentProps } from '../../../../../common/interfaces/input-plugin';
 
 export interface TextInputState {
     text: string;

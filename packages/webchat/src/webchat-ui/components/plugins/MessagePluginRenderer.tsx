@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { IMessage } from '../../../common/interfaces/message';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
-import { MessageSender } from '../input/input.interface';
 import { MessagePlugin } from '../../../common/interfaces/message-plugin';
 
 export interface MessageProps extends React.HTMLProps<HTMLDivElement> {

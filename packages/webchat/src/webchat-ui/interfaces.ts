@@ -1,0 +1,1 @@
+export type MessageSender = (text?: string, data?: any) => void;

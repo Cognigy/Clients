@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { InputComponentProps, InputPlugin } from '../../common/interfaces/input-plugin';
-import { IMessage } from '../../common/interfaces/message';
+import { InputComponentProps, InputPlugin } from '../../../common/interfaces/input-plugin';
+import { IMessage } from '../../../common/interfaces/message';
 
 export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDivElement> {
     plugins: InputPlugin[];

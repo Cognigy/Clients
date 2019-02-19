@@ -14,17 +14,24 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
     let paddingLeft = theme.unitSize * 2;
     let paddingRight = theme.unitSize * 2;
     let flexDirection;
+    let childMargin: CSSProperties = {};
     
     switch (align) {
         case 'right': {
             paddingLeft = theme.blockSize;
             flexDirection = 'row-reverse';
+            childMargin = {
+                marginLeft: theme.unitSize
+            }
             break;
         }
 
         case 'left':
         default: {
             paddingRight = theme.blockSize;
+            childMargin = {
+                marginRight: theme.unitSize
+            }
         }
     }
 
@@ -38,6 +45,8 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
         '&>*': {
             marginTop: theme.unitSize,
             marginBottom: theme.unitSize
-        }
+        },
+
+        '&>*:nth-child(n+1)': childMargin
     }
 })

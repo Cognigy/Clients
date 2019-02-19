@@ -3,7 +3,7 @@ import { Reducer } from "redux";
 export interface UIState {
     open: boolean;
     typing: boolean;
-    input: string;
+    inputMode: string;
 }
 
 const SET_OPEN = 'SET_OPEN';
@@ -26,15 +26,24 @@ export const setTyping = (typing: boolean) => ({
 });
 type SetTypingAction = ReturnType<typeof setTyping>;
 
+const SET_INPUT_MODE = 'SET_INPUT_MODE';
+export const setInputMode = (inputMode: string) => ({
+    type: SET_INPUT_MODE as 'SET_INPUT_MODE',
+    inputMode
+});
+type SetInputModeAction = ReturnType<typeof setInputMode>;
+
 
 const getInitialState = (): UIState => ({
     open: false,
     typing: false,
-    input: 'text'
+    inputMode: 'text'
 });
 
+type UIAction = SetOpenAction | ToggleOpenAction | SetTypingAction | SetInputModeAction;
 
-export const ui: Reducer<UIState, SetOpenAction | ToggleOpenAction | SetTypingAction> = (state = getInitialState(), action) => {
+
+export const ui: Reducer<UIState, UIAction> = (state = getInitialState(), action) => {
     switch (action.type) {
         case SET_OPEN: {
             return {
@@ -54,6 +63,13 @@ export const ui: Reducer<UIState, SetOpenAction | ToggleOpenAction | SetTypingAc
             return {
                 ...state,
                 typing: action.typing
+            }
+        }
+
+        case SET_INPUT_MODE: {
+            return {
+                ...state,
+                inputMode: action.inputMode
             }
         }
     }

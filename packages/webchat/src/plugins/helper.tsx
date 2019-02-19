@@ -1,5 +1,5 @@
 import { MessagePlugin, MessageComponent, MessagePluginOptions, MessageMatcher } from "../common/interfaces/message-plugin";
-import { InputPlugin, InputComponent, InputPluginOptions, InputMatcher } from "../common/interfaces/input-plugin";
+import { InputPlugin, InputComponent, InputPluginOptions, InputRule } from "../common/interfaces/input-plugin";
 
 const createStringMatcher = (name: string): MessageMatcher => message => message.data
     && message.data._plugin
@@ -28,9 +28,9 @@ export const createMessagePlugin: MessagePluginCreator = (match, component, opti
 
 
 
-const createInputMatcher = (type: string): InputMatcher => ({ type: currentType }) => type === currentType
+const createInputMatcher = (type: string): InputRule => ({ type: currentType }) => type === currentType
 
-type InputPluginCreator = (match: InputMatcher | string, component: InputComponent, options?: Partial<InputPluginOptions>) => InputPlugin;
+type InputPluginCreator = (match: InputRule | string, component: InputComponent, options?: Partial<InputPluginOptions>) => InputPlugin;
 export const createInputPlugin: InputPluginCreator = (match, component, options = {}) => {
     if (typeof match === 'string')
         match = createInputMatcher(match);

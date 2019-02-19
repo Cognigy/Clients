@@ -1,8 +1,7 @@
-import React, { ComponentSpec } from 'react';
+import React from 'react';
 import { IMessage } from "./message";
 import { IWebchatConfig } from "@cognigy/webchat-client/lib/interfaces/webchat-config";
-import { MessageSender } from "../../webchat-ui/components/input/input.interface";
-import { ReactComponentLike } from 'prop-types';
+import { MessageSender } from '../../webchat-ui/interfaces';
 
 export interface MessageComponentProps {
     message: IMessage;

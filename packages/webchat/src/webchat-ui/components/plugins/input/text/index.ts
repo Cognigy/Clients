@@ -1,9 +1,10 @@
-import { createInputPlugin } from "../../../../../plugins/helper";
 import { TextInput } from "./TextInput";
+import { InputPlugin } from "../../../../../common/interfaces/input-plugin";
 
-const textInputPlugin = createInputPlugin(
-    () => true,
-    TextInput
-);
+const textInputPlugin: InputPlugin = {
+    type: 'select',
+    id: 'text',
+    component: TextInput
+};
 
 export default textInputPlugin;

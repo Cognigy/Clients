@@ -1,16 +1,16 @@
-import { createInputPlugin } from "../../../../../plugins/helper";
 import GetStartedInput from "./GetStartedInput";
-import { InputMatcher } from "../../../../../common/interfaces/input-plugin";
+import { InputRule, InputPlugin } from "../../../../../common/interfaces/input-plugin";
 
-const match: InputMatcher = ({ config: { settings: { displayGetStartedButton, getStartedButtonText, getStartedPayload, getStartedText } }, messages }) =>
+const rule: InputRule = ({ config: { settings: { displayGetStartedButton, getStartedButtonText, getStartedPayload, getStartedText } }, messages }) =>
     messages.length === 0
     && displayGetStartedButton
     && !!getStartedButtonText
     && (!!getStartedPayload || !!getStartedText)
 
-const getStartedInputPlugin = createInputPlugin(
-    match,
-    GetStartedInput
-);
+const getStartedInputPlugin: InputPlugin = {
+    type: 'rule',
+    rule,
+    component: GetStartedInput
+};
 
 export default getStartedInputPlugin;

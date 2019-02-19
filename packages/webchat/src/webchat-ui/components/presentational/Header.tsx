@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Toolbar from './presentational/Toolbar';
-import Logo from './presentational/Logo';
+import Toolbar from './Toolbar';
+import Logo from './Logo';
 
 interface HeaderProps {
     title: string;

@@ -9,7 +9,7 @@ import { IMessage } from '../../common/interfaces/message';
 
 type FromState = Pick<WebchatUIProps, 'messages' | 'open' | 'typingIndicator' | 'inputMode'>;
 type FromDispatch = Pick<WebchatUIProps, 'onSendMessage' | 'onSetInputMode'>;
-type FromProps = Pick<WebchatUIProps, 'config' | 'plugins'>;
+type FromProps = Pick<WebchatUIProps, 'config' | 'messagePlugins' | 'inputPlugins'>;
 type Merge = FromState & FromDispatch & FromProps & Pick<WebchatUIProps, 'fullscreenMessage'>;
 
 export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Merge, StoreState>(
@@ -30,7 +30,7 @@ export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Me
 
         const lastMessage = state.messages.slice(-1)[0];
 
-        const fullscreenMessage = lastMessage && isFullscreenPlugin(getPluginForMessage(lastMessage, props.plugins))
+        const fullscreenMessage = lastMessage && isFullscreenPlugin(getPluginForMessage(lastMessage, props.messagePlugins))
             ? lastMessage
             : undefined
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { MessageComponentProps } from "../../../common/interfaces/message-plugin";
-import { createMessagePlugin } from "../../helper";
+import { createMessagePlugin, registerMessagePlugin } from "../../helper";
 
 const RatingMessage = (props: MessageComponentProps) => (
 	<div>
@@ -13,5 +13,7 @@ const RatingMessage = (props: MessageComponentProps) => (
 );
 
 const ratingPlugin = createMessagePlugin('rating', RatingMessage);
+
+registerMessagePlugin(ratingPlugin);
 
 export default ratingPlugin;

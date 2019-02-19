@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { MessagePlugin, MessageComponentProps } from "../../../common/interfaces/message-plugin";
-import { createMessagePlugin } from '../../helper';
+import { createMessagePlugin, registerMessagePlugin } from '../../helper';
 
 class Component extends React.PureComponent<MessageComponentProps> {
     render() {
@@ -14,5 +14,7 @@ const loggingPlugin = createMessagePlugin(
     Component,
     { passthrough: true }
 )
+
+registerMessagePlugin(loggingPlugin);
 
 export default loggingPlugin;

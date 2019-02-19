@@ -16,36 +16,35 @@ export const createMessagePlugin: MessagePluginCreator = (match, component, opti
         options
     }
 
+    return plugin;
+};
+
+export const registerMessagePlugin = (plugin: MessagePlugin) => {
     if (window) {
         // @ts-ignore
         window.cognigyWebchatMessagePlugins = [...(window.cognigyWebchatMessagePlugins || []), plugin];
         console.log('added cognigy message plugin');
     }
-
-    return plugin;
-};
+}
 
 
 
 
-const createInputMatcher = (type: string): InputRule => ({ type: currentType }) => type === currentType
+// type InputPluginCreator = (match: InputRule | string, component: InputComponent, options?: Partial<InputPluginOptions>) => InputPlugin;
+// export const createInputPlugin: InputPluginCreator = (match, component, options = {}) => {
+//     const plugin = {
+//         match,
+//         component,
+//         options
+//     }
 
-type InputPluginCreator = (match: InputRule | string, component: InputComponent, options?: Partial<InputPluginOptions>) => InputPlugin;
-export const createInputPlugin: InputPluginCreator = (match, component, options = {}) => {
-    if (typeof match === 'string')
-        match = createInputMatcher(match);
+//     return plugin;
+// };
 
-    const plugin = {
-        match,
-        component,
-        options
-    }
-
+export const registerInputPlugin = (plugin: InputPlugin) => {
     if (window) {
         // @ts-ignore
         window.cognigyWebchatInputPlugins = [...(window.cognigyWebchatInputPlugins || []), plugin];
-        console.log('added cognigy input plugin', plugin);
+        console.log('added cognigy input plugin');
     }
-
-    return plugin;
-};
+}

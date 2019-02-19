@@ -8,11 +8,13 @@ import { setOptions } from '../store/options/options-reducer';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import { createBrowserApi } from '../store/api';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
+import { InputPlugin } from '../../common/interfaces/input-plugin';
 
 export interface WebchatProps {
     url: string;
     options?: Partial<Options>;
-    plugins?: MessagePlugin[];
+    messagePlugins?: MessagePlugin[];
+    inputPlugins?: InputPlugin[];
 }
 
 interface WebchatState {
@@ -29,7 +31,7 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
         const client = new WebchatClient(url, options);
         const store = createWebchatStore(client);
-        
+
         // @ts-ignore
         window.cognigyWebchat = createBrowserApi(store);
 
@@ -58,15 +60,20 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
 
     render() {
-        const { url, options, ...props } = this.props;
+        const { url, options, messagePlugins = [], inputPlugins = [], ...props } = this.props;
         const { store, config } = this.state;
 
         if (!config)
             return null;
-        
+
         return (
             <Provider store={store}>
-                <ConnectedWebchatUI {...props} config={config} />
+                <ConnectedWebchatUI
+                    {...props}
+                    messagePlugins={messagePlugins}
+                    inputPlugins={inputPlugins}
+                    config={config}
+                />
             </Provider>
         )
     }

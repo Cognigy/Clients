@@ -3,6 +3,7 @@ import { Reducer } from "redux";
 export interface UIState {
     open: boolean;
     typing: boolean;
+    input: string;
 }
 
 const SET_OPEN = 'SET_OPEN';
@@ -28,7 +29,8 @@ type SetTypingAction = ReturnType<typeof setTyping>;
 
 const getInitialState = (): UIState => ({
     open: false,
-    typing: false
+    typing: false,
+    input: 'text'
 });
 
 

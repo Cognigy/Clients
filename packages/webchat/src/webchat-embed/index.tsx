@@ -1,17 +1,21 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+// load plugins
+// import '../plugins/input/get-started';
+import '../plugins/input/speech';
+import '../plugins/message/date-picker';
+import '../plugins/message/messenger';
+import '../plugins/message/rating-response';
+import '../plugins/message/rating';
+
+import EmbeddedWebchat from './components/presentational/EmbeddedWebchat';
+
+
+
 const initWebchat = async (webchatConfigUrl: string) => {
-
-    // load messenger plugin
-    const messengerPlugin = (await import('../plugins/message/messenger')).default;
-    const datePickerPlugin = (await import('../plugins/message/date-picker')).default;
-    const ratingPlugin = (await import('../plugins/message/rating')).default;
-    const ratingResponsePlugin = (await import('../plugins/message/rating-response')).default;
     // @ts-ignore
-    const webchatPlugins = [...(window.webchatPlugins || []), messengerPlugin, datePickerPlugin, ratingPlugin, ratingResponsePlugin];
-
-    const { default: EmbeddedWebchat } = await import('./components/presentational/EmbeddedWebchat');
+    const webchatPlugins = window.cognigyWebchatMessagePlugins || [];
 
     const webchatRoot = document.createElement('div');
     document.body.appendChild(webchatRoot);

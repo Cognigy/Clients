@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { css, Global, } from '@emotion/core';
 import { IMessage } from '../../common/interfaces/message';
-import { TextInput } from './input/TextInput';
 import Header from './Header';
 import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
 import { ThemeProvider } from 'emotion-theming';
@@ -15,6 +14,9 @@ import { reset, isolate } from '../utils/css';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { regularMessagePlugin } from './messages/regular';
 import FullScreenMessage from './history/FullScreenMessage';
+import Input from './Input';
+import textInputPlugin from './inputs/text';
+import getStartedInputPlugin from './inputs/get-started';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -24,6 +26,7 @@ export interface WebchatUIProps {
     typingIndicator: boolean;
 
     open: boolean;
+    input: string;
     plugins?: MessagePlugin[];
 }
 
@@ -49,7 +52,10 @@ const HistoryWrapper = styled(History)(({ theme }) => ({
 const cssReset = css(reset as any);
 const baseStyles = css({
     fontFamily: 'sans-serif'
-})
+});
+
+
+const inputPlugins = [getStartedInputPlugin, textInputPlugin];
 
 export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElement> & WebchatUIProps, WebchatUIState> {
     state = {
@@ -77,22 +83,14 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
     }
 
     renderInput = () => {
-        const { messages, config, onSendMessage } = this.props;
-
-        if (messages.length === 0) {
-            const { getStartedButtonText, getStartedPayload, getStartedText } = config.settings;
-
-            if (!!getStartedButtonText && !!getStartedPayload && !!getStartedText) {
-                return <ButtonInput config={config} onSendMessage={onSendMessage} />
-            }
-        }
-
         return (
-            <>
-                {/* <SpeechInput config={config} onSendMessage={onSendMessage} /> */}
-                <TextInput config={config} onSendMessage={onSendMessage} />
-            </>
-        )
+            <Input
+                plugins={inputPlugins}
+                messages={this.props.messages}
+                onSendMessage={this.props.onSendMessage}
+                config={this.props.config}
+            />
+        );
     }
 
     render() {
@@ -110,31 +108,8 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                             <WebchatRoot data-cognigy-webchat-root {...restProps}>
                                 <CacheProvider value={styleCache}>
                                     {!fullscreenMessage
-                                        ? (
-                                            <>
-                                                <Header
-                                                    connected={config.active}
-                                                    logoUrl={config.settings.headerLogoUrl}
-                                                    title='Webchat'
-                                                />
-                                                <HistoryWrapper
-                                                    messages={messages}
-                                                    onSendMessage={onSendMessage}
-                                                    config={config}
-                                                    plugins={plugins}
-                                                    typingIndicator={typingIndicator}
-                                                />
-                                                {this.renderInput()}
-                                            </>
-                                        )
-                                        : (
-                                            <FullScreenMessage
-                                                onSendMessage={onSendMessage}
-                                                config={config}
-                                                plugins={plugins}
-                                                message={fullscreenMessage}
-                                            />
-                                        )
+                                        ? this.renderRegularLayout()
+                                        : this.renderFullscreenMessageLayout()
                                     }
                                 </CacheProvider>
                             </WebchatRoot>
@@ -142,6 +117,43 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                     </>
                 </ThemeProvider>
             </>
+        )
+    }
+
+    renderRegularLayout() {
+        const { config, messages, onSendMessage, typingIndicator } = this.props;
+        const { plugins } = this.state;
+
+        return (
+            <>
+                <Header
+                    connected={config.active}
+                    logoUrl={config.settings.headerLogoUrl}
+                    title='Webchat'
+                />
+                <HistoryWrapper
+                    messages={messages}
+                    onSendMessage={onSendMessage}
+                    config={config}
+                    plugins={plugins}
+                    typingIndicator={typingIndicator}
+                />
+                {this.renderInput()}
+            </>
+        )
+    }
+
+    renderFullscreenMessageLayout() {
+        const { onSendMessage, config, fullscreenMessage } = this.props;
+        const { plugins } = this.state;
+
+        return (
+            <FullScreenMessage
+                onSendMessage={onSendMessage}
+                config={config}
+                plugins={plugins}
+                message={fullscreenMessage as IMessage}
+            />
         )
     }
 }

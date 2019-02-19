@@ -1,10 +1,9 @@
 import * as React from 'react';
-import Toolbar from '../presentational/Toolbar';
-import Button from '../presentational/Button';
-import { IInputProps } from './input.interface';
-import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
+import Toolbar from '../../presentational/Toolbar';
+import Button from '../../presentational/Button';
+import { InputComponentProps } from '../../../../../lib/common/interfaces/input-plugin';
 
-export default ({ onSendMessage, config }: IInputProps) => (
+export default ({ onSendMessage, config }: InputComponentProps) => (
     <Toolbar>
         <Button
             style={{ flexGrow: 1 }}

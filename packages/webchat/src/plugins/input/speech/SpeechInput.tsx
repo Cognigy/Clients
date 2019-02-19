@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { IInputProps } from './input.interface';
-import Toolbar from '../presentational/Toolbar';
-import Button from '../presentational/Button';
+import { InputComponentProps } from '../../../common/interfaces/input-plugin';
+import Toolbar from '../../../webchat-ui/components/presentational/Toolbar';
+import Input from '../../../webchat-ui/components/presentational/Input';
+import Button from '../../../webchat-ui/components/presentational/Button';
 
 const MicIcon = () => <span>Mic On</span>
 const MicOffIcon = () => <span>Mic Off</span>
@@ -30,7 +31,7 @@ export const getSpeechRecognition = (): SpeechRecognition | null => {
     return null;
 }
 
-export default class SpeechInput extends React.Component<IInputProps, ISpeechInputState> {
+export default class SpeechInput extends React.Component<InputComponentProps, ISpeechInputState> {
     constructor(props) {
         super(props);
 
@@ -97,8 +98,6 @@ export default class SpeechInput extends React.Component<IInputProps, ISpeechInp
 
     render() {
         const { result, isFinalResult } = this.state;
-
-        let MicIcon
 
         return (
             <Toolbar>

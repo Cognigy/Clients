@@ -9,18 +9,24 @@ export interface InputComponentProps {
     attributes?: React.HTMLProps<HTMLDivElement>;
 }
 
-type Matcher = (message: IMessage) => boolean;
+interface MatcherArgs {
+    config: IWebchatConfig,
+    messages: IMessage[];
+    type: string;
+}
 
-export interface MessagePluginOptions {
+export type InputMatcher = (args: MatcherArgs) => boolean;
+
+export interface InputPluginOptions {
     // fullscreen: boolean;
     // passthrough: boolean;
 }
 
-export type MessageComponent = ((props: InputComponentProps) => JSX.Element | null)
+export type InputComponent = ((props: InputComponentProps) => JSX.Element | null)
     | React.ComponentClass<InputComponentProps>;
 
-export interface MessagePlugin {
-    match: Matcher;
-    component: MessageComponent;
-    options?: Partial<MessagePluginOptions>;
+export interface InputPlugin {
+    match: InputMatcher;
+    component: InputComponent;
+    options?: Partial<InputPluginOptions>;
 }

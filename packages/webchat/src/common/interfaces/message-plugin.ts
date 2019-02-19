@@ -11,7 +11,7 @@ export interface MessageComponentProps {
     attributes?: React.HTMLProps<HTMLDivElement>;
 }
 
-type Matcher = (message: IMessage) => boolean;
+export type MessageMatcher = (message: IMessage) => boolean;
 
 export interface MessagePluginOptions {
     fullscreen: boolean;
@@ -22,7 +22,7 @@ export type MessageComponent = ((props: MessageComponentProps) => JSX.Element | 
     | React.ComponentClass<MessageComponentProps>;
 
 export interface MessagePlugin {
-    match: Matcher;
+    match: MessageMatcher;
     component: MessageComponent;
     options?: Partial<MessagePluginOptions>;
 }

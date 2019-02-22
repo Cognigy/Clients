@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { InputComponentProps, InputPlugin, RuleInputPlugin, SelectInputPlugin } from '../../../common/interfaces/input-plugin';
 import { IMessage } from '../../../common/interfaces/message';
+import Toolbar from '../presentational/Toolbar';
+import { styled } from '../../style';
 
 export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDivElement> {
     plugins: InputPlugin[];
@@ -8,6 +10,10 @@ export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDiv
     onSetInputMode: (inputMode: string) => void;
     inputMode: string
 }
+
+const SmallToolbar = styled(Toolbar)({
+    minHeight: 0
+})
 
 export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInputMode, ...props }: InputProps): JSX.Element => {
     const results: any[] = [];
@@ -38,11 +44,11 @@ export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInpu
 
 
     const tabs = selectInputs.length > 1 && (
-        <div>
+        <SmallToolbar>
             {selectInputs.map(input => (
-                <span onClick={() => onSetInputMode(input.id)}>{input.label || input.id}</span>
+                <input.button active={input === matchedSelectInput} onClick={() => onSetInputMode(input.id)} />
             ))}
-        </div>
+        </SmallToolbar>
     );
 
     return (

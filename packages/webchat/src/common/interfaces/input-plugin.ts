@@ -3,6 +3,10 @@ import { IMessage } from "./message";
 import { IWebchatConfig } from "@cognigy/webchat-client/lib/interfaces/webchat-config";
 import { MessageSender } from '../../webchat-ui/interfaces';
 
+export interface InputButtonProps extends React.HTMLProps<HTMLButtonElement> {
+    active: boolean;
+}
+
 export interface InputComponentProps {
     config: IWebchatConfig;
     onSendMessage: MessageSender;
@@ -21,8 +25,11 @@ export interface InputPluginOptions {
     // passthrough: boolean;
 }
 
-export type InputComponent = ((props: InputComponentProps) => JSX.Element | null)
-    | React.ComponentClass<InputComponentProps>;
+type Component<P>  = ((props: P) => JSX.Element | null)
+    | React.ComponentClass<P>;
+
+export type InputComponent = Component<InputComponentProps>;
+export type InputButtonComponent = Component<InputButtonProps>;
 
 type InputPluginType = 'select' | 'rule';
 
@@ -40,7 +47,7 @@ export interface RuleInputPlugin extends InputPluginBase {
 export interface SelectInputPlugin extends InputPluginBase {
     type: 'select';
     id: string;
-    label?: string;
+    button: InputButtonComponent;
 }
 
 export type InputPlugin = RuleInputPlugin | SelectInputPlugin;

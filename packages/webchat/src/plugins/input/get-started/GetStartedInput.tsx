@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Toolbar from '../../../presentational/Toolbar';
-import Button from '../../../presentational/Button';
-import { InputComponentProps } from '../../../../../common/interfaces/input-plugin';
+import { InputComponentProps } from '../../../common/interfaces/input-plugin';
+import Toolbar from '../../../webchat-ui/components/presentational/Toolbar';
+import Button from '../../../webchat-ui/components/presentational/Button';
 
 export default ({ onSendMessage, config }: InputComponentProps) => (
     <Toolbar>

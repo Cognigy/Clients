@@ -105,6 +105,7 @@ export default class SpeechInput extends React.Component<InputComponentProps, IS
                 <Button
                     disabled={!this.isSupported()}
                     onClick={this.toggle}
+                    color='primary'
                 >
                     {this.renderMicIcon()}
                 </Button>

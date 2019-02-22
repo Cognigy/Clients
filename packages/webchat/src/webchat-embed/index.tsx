@@ -2,13 +2,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 // load plugins
-// import '../plugins/input/get-started';
+import '../plugins/input/get-started';
 import '../plugins/input/speech';
 
 import '../plugins/message/date-picker';
 import '../plugins/message/messenger';
-import '../plugins/message/rating-response';
-import '../plugins/message/rating';
+// import '../plugins/message/rating-response';
+// import '../plugins/message/rating';
 
 import EmbeddedWebchat from './components/presentational/EmbeddedWebchat';
 

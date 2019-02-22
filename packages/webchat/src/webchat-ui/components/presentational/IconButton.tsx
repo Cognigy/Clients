@@ -1,6 +1,6 @@
 import { styled, IColorProps } from "../../style";
 import { interactionCss, createTransition } from "../../utils/css";
-
+import tinycolor from 'tinycolor2'
 
 export default styled.button<IColorProps>(({ color, theme }) => {
 
@@ -21,23 +21,20 @@ export default styled.button<IColorProps>(({ color, theme }) => {
     return {
         ...interactionCss,
 
-        borderRadius: theme.cornerSize,
-        padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
+        borderRadius: theme.blockSize,
+        padding: theme.unitSize,
+        margin: `${-theme.unitSize}px 0`,
         boxSizing: 'border-box',
-
-        backgroundColor: colors.main,
-        color: colors.contrast,
-
-        textTransform: 'uppercase',
-        fontWeight: 'bold',
+        color: theme.greyContrastColor,
+        fill: theme.greyContrastColor,
+        backgroundColor: 'transparent',
 
         border: 'none',
         outline: 'none',
 
         cursor: 'pointer',
 
-        transition: createTransition('background-color', 'transform', 'box-shadow'),
-        transform: 'translate(0px, 0px)',
+        transition: createTransition('background-color', 'color', 'fill'),
 
         '&:disabled': {
             opacity: .4,
@@ -45,14 +42,15 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         },
 
         '&:hover:not(:disabled)': {
-            transform: 'translate(0px, -0px)',
-            backgroundColor: colors.strong,
-            boxShadow: '0 1px 1px hsla(0, 0%, 0%, .2)'
+            backgroundColor: tinycolor(colors.main).setAlpha(.8).toHslString(),
+            color: colors.contrast,
+            fill: colors.contrast
         },
 
         '&:active:not(:disabled)': {
-            transform: 'translate(0px, 1px)',
-            backgroundColor: colors.weak,
+            backgroundColor: tinycolor(colors.main).setAlpha(.5).toHslString(),
+            color: colors.contrast,
+            fill: colors.contrast
         }
     }
 });

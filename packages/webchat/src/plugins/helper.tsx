@@ -1,4 +1,4 @@
-import { MessagePlugin, MessageComponent, MessagePluginOptions, MessageMatcher } from "../common/interfaces/message-plugin";
+import { MessagePlugin, MessageComponent, MessagePluginOptions, MessageMatcher, MessagePluginFactory } from "../common/interfaces/message-plugin";
 import { InputPlugin, InputComponent, InputPluginOptions, InputRule } from "../common/interfaces/input-plugin";
 
 const createStringMatcher = (name: string): MessageMatcher => message => message.data
@@ -19,7 +19,7 @@ export const createMessagePlugin: MessagePluginCreator = (match, component, opti
     return plugin;
 };
 
-export const registerMessagePlugin = (plugin: MessagePlugin) => {
+export const registerMessagePlugin = (plugin: MessagePlugin | MessagePluginFactory) => {
     if (window) {
         // @ts-ignore
         window.cognigyWebchatMessagePlugins = [...(window.cognigyWebchatMessagePlugins || []), plugin];

@@ -32,7 +32,7 @@ export const getSpeechRecognition = (): SpeechRecognition | null => {
 }
 
 export default class SpeechInput extends React.Component<InputComponentProps, ISpeechInputState> {
-    constructor(props) {
+    constructor(props: InputComponentProps) {
         super(props);
 
         const speechRecognition = getSpeechRecognition();
@@ -40,7 +40,11 @@ export default class SpeechInput extends React.Component<InputComponentProps, IS
         if (speechRecognition) {
             speechRecognition.continuous = true;
             speechRecognition.interimResults = true;
-            speechRecognition.onresult = this.handleResult
+            speechRecognition.onresult = this.handleResult;
+
+            if (props.config.settings.STTLanguage) {
+                speechRecognition.lang = props.config.settings.STTLanguage
+            }
         }
 
         this.state = {
@@ -50,6 +54,12 @@ export default class SpeechInput extends React.Component<InputComponentProps, IS
             result: '',
             isFinalResult: false
         } as ISpeechInputState;
+    }
+
+    componentDidUpdate() {
+        if (this.state.speechRecognition && this.props.config.settings.STTLanguage) {
+            this.state.speechRecognition.lang = this.props.config.settings.STTLanguage
+        }
     }
 
     handleResult = (e: SpeechRecognitionEvent) => {

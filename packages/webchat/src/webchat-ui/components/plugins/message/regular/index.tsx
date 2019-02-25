@@ -12,7 +12,7 @@ const RegularMessage = ({ message: { text, source } }: MessageComponentProps) =>
 )
 
 const regularMessagePlugin: MessagePlugin = {
-    match: ({ text, data }) => text || data,
+    match: ({ text }) => !!text,
     component: RegularMessage
 }
 

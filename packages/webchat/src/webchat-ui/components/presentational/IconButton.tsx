@@ -3,7 +3,6 @@ import { interactionCss, createTransition } from "../../utils/css";
 import tinycolor from 'tinycolor2'
 
 export default styled.button<IColorProps>(({ color, theme }) => {
-
     const colors = {
         weak: theme.greyWeakColor,
         main: theme.greyColor,
@@ -19,7 +18,7 @@ export default styled.button<IColorProps>(({ color, theme }) => {
     }
 
     return {
-        ...interactionCss,
+        // ...interactionCss,
 
         borderRadius: theme.blockSize,
         padding: theme.unitSize,

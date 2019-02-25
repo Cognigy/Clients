@@ -12,7 +12,10 @@ export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDiv
 }
 
 const SmallToolbar = styled(Toolbar)({
-    minHeight: 0
+    minHeight: 0,
+    '&>*': {
+        flexShrink: 0
+    }
 })
 
 export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInputMode, ...props }: InputProps): JSX.Element => {

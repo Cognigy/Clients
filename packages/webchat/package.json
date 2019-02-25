@@ -16,7 +16,13 @@
     "scripts": {
         "build": "tsc",
         "bundle": "webpack",
-        "dev": "webpack-dev-server --content-base dist/ --host 0.0.0.0 --disable-host-check"
+        "dev": "webpack-dev-server --content-base dist/ --host 0.0.0.0 --disable-host-check",
+        "bundle:rating": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating.tsx --output dist/rating.plugin.js",
+        "bundle:rating-fullscreen": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-fullscreen.tsx --output dist/rating-fullscreen.plugin.js",
+        "bundle:rating-react": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-react.tsx --output dist/rating-react.plugin.js",
+        "bundle:rating-styled": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-styled.tsx --output dist/rating-styled.plugin.js",
+        "bundle:uppercase": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/uppercase.tsx --output dist/uppercase.plugin.js",
+        "bundle:plugins": "npm run bundle:rating && npm run bundle:rating-fullscreen && npm run bundle:rating-react && npm run bundle:rating-styled && npm run bundle:uppercase"
     },
     "dependencies": {
         "@cognigy/webchat-client": "^0.0.0",

@@ -2,6 +2,7 @@ import React from 'react';
 import { IMessage } from "./message";
 import { IWebchatConfig } from "@cognigy/webchat-client/lib/interfaces/webchat-config";
 import { MessageSender } from '../../webchat-ui/interfaces';
+import { styled } from '../../webchat-ui/style';
 
 export interface MessageComponentProps {
     message: IMessage;
@@ -21,7 +22,14 @@ export type MessageComponent = ((props: MessageComponentProps) => JSX.Element | 
     | React.ComponentClass<MessageComponentProps>;
 
 export interface MessagePlugin {
-    match: MessageMatcher;
+    match: MessageMatcher | string;
     component: MessageComponent;
     options?: Partial<MessagePluginOptions>;
 }
+
+interface MessagePluginCreatorProps {
+    React: typeof React;
+    styled: typeof styled;
+}
+
+export type MessagePluginFactory = (props: MessagePluginCreatorProps) => MessagePlugin;

@@ -11,6 +11,8 @@ export default styled(ResetCSS)(({ theme }) => ({
     height: theme.blockSize * 8,
     overflow: 'hidden',
 
+    fontSize: 16,
+
     fontFamily: theme.fontFamily,
 
     '&>.content': {

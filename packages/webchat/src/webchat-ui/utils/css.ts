@@ -62,7 +62,7 @@ const prefixJssObject = (jssObject, selector = '') => {
     return ret;
 }
 
-export const reset = prefixJssObject(meyerResetJss, /*'[data-cognigy-webchat-root]'*/)
+export const reset = prefixJssObject(meyerResetJss, '[data-cognigy-webchat-root]')
 
 // this will cause all css selectors to be prefixed by a string. 
 // .classA { ... }

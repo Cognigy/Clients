@@ -30,7 +30,7 @@ const VideoPlayer = styled(ReactPlayer)({
     backgroundColor: 'black'
 })
 
-export const MessengerMediaTemplate = ({ payload, ...divProps }: IProps & React.HTMLProps<HTMLDivElement>) => {
+export const MessengerMediaTemplate = ({ payload, onAction, ...divProps }: IProps & React.HTMLProps<HTMLDivElement>) => {
     const { elements } = payload;
     const element = elements && elements[0];
 

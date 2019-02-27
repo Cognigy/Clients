@@ -42,6 +42,6 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
             marginBottom: theme.unitSize
         },
 
-        '&>*:nth-child(n+1)': childMargin
+        '&>*:nth-of-type(n+1)': childMargin
     }
 })

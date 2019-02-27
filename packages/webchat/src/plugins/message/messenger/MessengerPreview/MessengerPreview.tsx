@@ -20,7 +20,7 @@ export interface IMessengerPreviewProps extends React.HTMLProps<HTMLDivElement> 
 }
 
 export const MessengerPreview = (props: IMessengerPreviewProps) => {
-    const { message, ...divProps } = props;
+    const { message, onAction: handleAction, ...divProps } = props;
 
     const { attachment } = message as IFBMAttachmentMessage;
 

@@ -49,7 +49,10 @@ export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInpu
     const tabs = selectInputs.length > 1 && (
         <SmallToolbar>
             {selectInputs.map(input => (
-                <input.button active={input === matchedSelectInput} onClick={() => onSetInputMode(input.id)} />
+                <input.button
+                    key={input.id}
+                    active={input === matchedSelectInput} onClick={() => onSetInputMode(input.id)}
+                />
             ))}
         </SmallToolbar>
     );

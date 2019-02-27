@@ -19,7 +19,7 @@ const Root = styled.div<{ url: string }>(({ url }) => ({
 
 const DarkLayer = styled.div({
     display: 'block',
-    content: ' ',
+    content: '" "',
     position: 'absolute',
     left: 0,
     top: 0,

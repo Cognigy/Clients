@@ -18,10 +18,13 @@ export default ({ message, config, onSendMessage, plugins, ...props }: MessagePr
         ? props
         : undefined;
 
+    let counter = 0;
     for (const { match, component: Component, options } of plugins) {
+        counter++;
         if (match(message)) {
             results.push(
                 <Component
+                    key={counter}
                     config={config}
                     message={message}
                     onSendMessage={onSendMessage}

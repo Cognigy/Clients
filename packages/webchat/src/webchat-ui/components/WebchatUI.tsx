@@ -108,7 +108,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, ...restProps } = props;
+        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, ...restProps } = props;
         const { theme } = state;
 
         return (
@@ -173,8 +173,8 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
         return (
             <>
-                {messages.map(message => (
-                    <MessageRow align={message.source === 'bot' ? 'left' : 'right'}>
+                {messages.map((message, index) => (
+                    <MessageRow key={`${index}:${JSON.stringify(message)}`} align={message.source === 'bot' ? 'left' : 'right'}>
                         <Avatar
                             src={
                                 message.source === 'bot'

@@ -26,15 +26,15 @@ const Dot = styled.div(({ theme }) => ({
     marginRight: theme.unitSize / 2,
     backgroundColor: theme.primaryWeakColor,
 
-    '&:nth-child(1)': {
+    '&:nth-of-type(1)': {
         animationDelay: '200ms'
     },
 
-    '&:nth-child(2)': {
+    '&:nth-of-type(2)': {
         animationDelay: '300ms'
     },
 
-    '&:nth-child(3)': {
+    '&:nth-of-type(3)': {
         animationDelay: '400ms'
     },
 }));

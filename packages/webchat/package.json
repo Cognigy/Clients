@@ -10,10 +10,7 @@
         "bundle": "webpack --config webpack.production.js",
         "bundle:legacy": "webpack --config webpack.production.legacy.js",
         "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check",
-        "bundle:rating": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating.tsx --output dist/rating.plugin.js",
-        "bundle:rating-fullscreen": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-fullscreen.tsx --output dist/rating-fullscreen.plugin.js",
-        "bundle:rating-react": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-react.tsx --output dist/rating-react.plugin.js",
-        "bundle:rating-styled": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-styled.tsx --output dist/rating-styled.plugin.js",
+        "bundle:messenger-plugin": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.plugin.js",
         "bundle:uppercase": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/uppercase.tsx --output dist/uppercase.plugin.js",
         "bundle:plugins": "npm run bundle:rating && npm run bundle:rating-fullscreen && npm run bundle:rating-react && npm run bundle:rating-styled && npm run bundle:uppercase"
     },

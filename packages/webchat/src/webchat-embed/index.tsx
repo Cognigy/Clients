@@ -7,7 +7,7 @@ import '../plugins/input/get-started';
 import '../plugins/input/speech';
 
 // import '../plugins/message/date-picker';
-import '../plugins/message/messenger';
+// import '../plugins/message/messenger';
 // import '../plugins/message/demos/rating';
 // import '../plugins/message/demos/rating-fullscreen';
 // import '../plugins/message/demos/rating-react';

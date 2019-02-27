@@ -1,7 +1,10 @@
-import * as React from 'react';
-import { styled } from '../../../../../webchat-ui/style';
+import { MessagePluginFactoryProps } from '../../../../../common/interfaces/message-plugin';
 
-export const MessengerContent = styled.div({
-    padding: 10,
-    wordWrap: 'break-word'
-});
+export const getMessengerContent = ({ React, styled }: MessagePluginFactoryProps) => {
+    const MessengerContent = styled.div({
+        padding: 10,
+        wordWrap: 'break-word'
+    });
+
+    return MessengerContent;
+}

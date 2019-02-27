@@ -27,9 +27,9 @@ export interface MessagePlugin {
     options?: Partial<MessagePluginOptions>;
 }
 
-interface MessagePluginCreatorProps {
+export interface MessagePluginFactoryProps {
     React: typeof React;
     styled: typeof styled;
 }
 
-export type MessagePluginFactory = (props: MessagePluginCreatorProps) => MessagePlugin;
+export type MessagePluginFactory = (props: MessagePluginFactoryProps) => MessagePlugin;

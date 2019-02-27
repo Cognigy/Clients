@@ -6,5 +6,22 @@
     "babel-loader": "^8.0.5",
     "lerna": "^3.10.7",
     "typescript": "^3.3.1"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "",
+  "author": "Robin Schuster <r.schuster@cognigy.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/socket-client",
+    "packages/webchat-client",
+    "packages/webchat"
+  ],
+  "scripts": {
+    "build:socket-client": "cd packages/socket-client && npm run build",
+    "build:webchat-client": "cd packages/webchat-client && npm run build",
+    "build:webchat": "cd packages/webchat && npm run bundle",
+    "build:webchat-legacy": "cd packages/webchat && npm run bundle:legacy",
+    "build": "npm run build:socket-client && npm run build:webchat-client && npm run build:webchat && npm run build:webchat-legacy"
   }
 }

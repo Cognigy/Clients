@@ -1,9 +1,7 @@
-var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    // Change to your "entry-point".
-    entry: ['@babel/polyfill', './src/webchat-embed/index.tsx'],
+    entry: ['./src/webchat-embed/index.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'webchat.bundle.js'
@@ -11,11 +9,6 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']
     },
-    plugins: [
-        new webpack.optimize.LimitChunkCountPlugin({
-            maxChunks: 1
-        })
-    ],
     module: {
         rules: [
             {
@@ -26,13 +19,11 @@ module.exports = {
                 options: {
                     rootMode: 'upward',
                     presets: [
-                        "@babel/preset-env",
                         "@babel/typescript",
                         "@babel/preset-react"
                     ],
                     plugins: [
-                        "@babel/proposal-class-properties",
-                        "@babel/plugin-syntax-dynamic-import"
+                        "@babel/proposal-class-properties"
                     ]
                 }
             },

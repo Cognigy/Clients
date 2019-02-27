@@ -8,8 +8,11 @@ import '../plugins/input/speech';
 
 // import '../plugins/message/date-picker';
 import '../plugins/message/messenger';
-// import '../plugins/message/rating-response';
-// import '../plugins/message/rating';
+// import '../plugins/message/demos/rating';
+// import '../plugins/message/demos/rating-fullscreen';
+// import '../plugins/message/demos/rating-react';
+// import '../plugins/message/demos/rating-styled';
+// import '../plugins/message/demos/uppercase';
 
 import EmbeddedWebchat from './components/presentational/EmbeddedWebchat';
 

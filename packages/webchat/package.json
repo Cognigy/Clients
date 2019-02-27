@@ -7,12 +7,12 @@
     "main": "lib/webchat/index.js",
     "scripts": {
         "build": "tsc",
-        "bundle": "webpack --config webpack.production.js",
-        "bundle:legacy": "webpack --config webpack.production.legacy.js",
-        "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check",
-        "bundle:messenger-plugin": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.plugin.js",
-        "bundle:uppercase": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/uppercase.tsx --output dist/uppercase.plugin.js",
-        "bundle:plugins": "npm run bundle:rating && npm run bundle:rating-fullscreen && npm run bundle:rating-react && npm run bundle:rating-styled && npm run bundle:uppercase"
+        "bundle": "npm run bundle:webchat && npm run bundle:webchat-legacy && npm run bundle:messenger-plugin && npm run bundle:messenger-plugin-legacy",
+        "bundle:webchat": "webpack --config webpack.production.js",
+        "bundle:webchat-legacy": "webpack --config webpack.production.legacy.js --output dist/webchat.legacy.js",
+        "bundle:messenger-plugin": "webpack --config webpack.production.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.js",
+        "bundle:messenger-plugin-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.legacy.js",
+        "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check"
     },
     "dependencies": {
         "@cognigy/webchat-client": "1.0.0",

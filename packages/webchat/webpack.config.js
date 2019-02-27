@@ -5,7 +5,7 @@ module.exports = {
     entry: ['./src/webchat-embed/index.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'webchat.bundle.js'
+        filename: 'webchat.js'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json']

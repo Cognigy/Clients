@@ -1,6 +1,5 @@
 import { SocketClient } from '@cognigy/socket-client';
 import { Options } from '@cognigy/socket-client/lib/interfaces/options';
-import Axios from 'axios';
 import { IWebchatConfig } from './interfaces/webchat-config';
 
 export { Options }
@@ -22,7 +21,8 @@ export class WebchatClient extends SocketClient {
     }
 
     private static async fetchWebchatConfig(webchatConfigUrl: string) {
-        return (await Axios.get<IWebchatConfig>(webchatConfigUrl)).data;
+        // @ts-ignore
+        return (await window.fetch(webchatConfigUrl)).json();
     }
 
     private static getEndpointBaseUrl(webchatConfigUrl: string) {

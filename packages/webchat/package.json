@@ -30,8 +30,7 @@
         "react-redux": "^6.0.0",
         "redux": "^4.0.1",
         "styled-jss": "^2.2.3",
-        "tinycolor2": "^1.4.1",
-        "webpack-bundle-analyzer": "^3.0.4"
+        "tinycolor2": "^1.4.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
@@ -61,7 +60,6 @@
         "typesafe-actions": "^3.0.0",
         "typescript": "^3.2.2",
         "webpack": "^4.28.4",
-        "webpack-bundle-analyzer": "^3.0.4",
         "webpack-cli": "^3.2.1",
         "webpack-dev-server": "^3.1.14"
     }

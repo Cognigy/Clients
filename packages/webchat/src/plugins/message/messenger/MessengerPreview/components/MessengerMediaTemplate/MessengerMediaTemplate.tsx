@@ -54,7 +54,6 @@ export const MessengerMediaTemplate = ({ payload, ...divProps }: IProps & React.
                 <Video>
                     <VideoPlayer
                         url={url}
-                        playing
                         controls
                         width="100%"
                         height="100%"
@@ -69,7 +68,6 @@ export const MessengerMediaTemplate = ({ payload, ...divProps }: IProps & React.
             <MessengerFrame {...divProps}>
                 <ReactPlayer
                     url={url}
-                    playing
                     controls
                     width="100%"
                     height="50px"

@@ -1,6 +1,7 @@
 var path = require('path');
 
 module.exports = {
+    mode: 'development',
     entry: ['./src/webchat-embed/index.tsx'],
     output: {
         path: path.resolve(__dirname, 'dist'),

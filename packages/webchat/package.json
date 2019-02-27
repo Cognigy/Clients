@@ -7,9 +7,9 @@
     "main": "lib/webchat/index.js",
     "scripts": {
         "build": "tsc",
-        "bundle": "webpack",
-        "bundle:legacy": "webpack --config webpack.legacy-config.js",
-        "dev": "webpack-dev-server --content-base dist/ --host 0.0.0.0 --disable-host-check",
+        "bundle": "webpack --config webpack.production.js",
+        "bundle:legacy": "webpack --config webpack.production.legacy.js",
+        "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check",
         "bundle:rating": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating.tsx --output dist/rating.plugin.js",
         "bundle:rating-fullscreen": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-fullscreen.tsx --output dist/rating-fullscreen.plugin.js",
         "bundle:rating-react": "webpack --config webpack.config.js --entry ./src/plugins/message/demos/rating-react.tsx --output dist/rating-react.plugin.js",
@@ -33,7 +33,8 @@
         "react-redux": "^6.0.0",
         "redux": "^4.0.1",
         "styled-jss": "^2.2.3",
-        "tinycolor2": "^1.4.1"
+        "tinycolor2": "^1.4.1",
+        "webpack-bundle-analyzer": "^3.0.4"
     },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
@@ -63,6 +64,7 @@
         "typesafe-actions": "^3.0.0",
         "typescript": "^3.2.2",
         "webpack": "^4.28.4",
+        "webpack-bundle-analyzer": "^3.0.4",
         "webpack-cli": "^3.2.1",
         "webpack-dev-server": "^3.1.14"
     }

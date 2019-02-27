@@ -44,7 +44,7 @@ interface WebchatUIState {
 }
 
 const styleCache = createCache({
-    key: 'CognigyWebchat',
+    key: 'cognigy-webchat',
     stylisPlugins: [
         isolate('[data-cognigy-webchat-root]'),
     ]

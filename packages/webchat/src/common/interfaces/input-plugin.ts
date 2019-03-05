@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { IMessage } from "./message";
 import { IWebchatConfig } from "@cognigy/webchat-client/lib/interfaces/webchat-config";
 import { MessageSender } from '../../webchat-ui/interfaces';
+import { MessagePluginFactoryProps } from './message-plugin';
 
 export interface InputButtonProps extends React.HTMLProps<HTMLButtonElement> {
     active: boolean;
@@ -47,7 +48,9 @@ export interface RuleInputPlugin extends InputPluginBase {
 export interface SelectInputPlugin extends InputPluginBase {
     type: 'select';
     id: string;
-    button: InputButtonComponent;
+    icon: Component<React.HTMLProps<HTMLOrSVGElement>>;
 }
 
 export type InputPlugin = RuleInputPlugin | SelectInputPlugin;
+export type InputPluginFactoryProps = MessagePluginFactoryProps
+export type InputPluginFactory = (props: InputPluginFactoryProps) => InputPlugin;

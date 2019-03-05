@@ -1,13 +1,19 @@
 import { registerInputPlugin } from "../../helper";
-import SpeechInput from "./SpeechInput";
-import { InputPlugin } from "../../../common/interfaces/input-plugin";
+import { getSpeechInput } from "./SpeechInput";
+import { InputPlugin, InputPluginFactory } from "../../../common/interfaces/input-plugin";
 import Button from "./Button";
 
-const speechInput: InputPlugin = {
-    type: 'select',
-    id: 'speech',
-    component: SpeechInput,
-    button: Button
+const speechInput: InputPluginFactory = ({ React, styled }) => {
+    const icon = require('./baseline-keyboard_voice-24px.svg');
+
+    const Input = getSpeechInput({ React, styled })
+
+    return {
+        type: 'select',
+        id: 'speech',
+        component: Input,
+        icon
+    }
 }
 
 registerInputPlugin(speechInput);

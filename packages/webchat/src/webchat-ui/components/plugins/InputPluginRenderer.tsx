@@ -3,6 +3,7 @@ import { InputComponentProps, InputPlugin, RuleInputPlugin, SelectInputPlugin } 
 import { IMessage } from '../../../common/interfaces/message';
 import Toolbar from '../presentational/Toolbar';
 import { styled } from '../../style';
+import IconButton from '../presentational/IconButton';
 
 export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDivElement> {
     plugins: InputPlugin[];
@@ -49,10 +50,13 @@ export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInpu
     const tabs = selectInputs.length > 1 && (
         <SmallToolbar>
             {selectInputs.map(input => (
-                <input.button
+                <IconButton
                     key={input.id}
-                    active={input === matchedSelectInput} onClick={() => onSetInputMode(input.id)}
-                />
+                    disabled={input === matchedSelectInput}
+                    onClick={() => onSetInputMode(input.id)}
+                >
+                    <input.icon />
+                </IconButton>
             ))}
         </SmallToolbar>
     );

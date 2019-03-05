@@ -1,12 +1,12 @@
 import { TextInput } from "./TextInput";
 import { InputPlugin } from "../../../../../common/interfaces/input-plugin";
-import Button from "./Button";
+import KeyboardIcon from './baseline-keyboard-24px.svg';
 
 const textInputPlugin: InputPlugin = {
     type: 'select',
     id: 'text',
     component: TextInput,
-    button: Button
+    icon: KeyboardIcon
 };
 
 export default textInputPlugin;

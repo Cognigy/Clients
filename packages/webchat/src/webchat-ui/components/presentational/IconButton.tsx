@@ -24,8 +24,8 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         padding: theme.unitSize,
         margin: `${-theme.unitSize}px 0`,
         boxSizing: 'border-box',
-        color: theme.greyContrastColor,
-        fill: theme.greyContrastColor,
+        color: colors.contrast,
+        fill: colors.contrast,
         backgroundColor: 'transparent',
 
         border: 'none',
@@ -36,18 +36,17 @@ export default styled.button<IColorProps>(({ color, theme }) => {
         transition: createTransition('background-color', 'color', 'fill'),
 
         '&:disabled': {
-            opacity: .4,
             cursor: 'default',
         },
 
         '&:hover:not(:disabled)': {
-            backgroundColor: tinycolor(colors.main).setAlpha(.8).toHslString(),
-            color: colors.contrast,
-            fill: colors.contrast
+            backgroundColor: tinycolor(colors.main).setAlpha(.7).toHslString(),
+            color: tinycolor(colors.contrast).setAlpha(.7).toHslString(),
+            fill: tinycolor(colors.contrast).setAlpha(.7).toHslString(),
         },
 
         '&:active:not(:disabled)': {
-            backgroundColor: tinycolor(colors.main).setAlpha(.5).toHslString(),
+            backgroundColor: colors.main,
             color: colors.contrast,
             fill: colors.contrast
         }

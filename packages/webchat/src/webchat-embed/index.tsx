@@ -21,17 +21,21 @@ import EmbeddedWebchat from './components/presentational/EmbeddedWebchat';
 const initWebchat = async (webchatConfigUrl: string) => {
     // @ts-ignore
     const messagePlugins = (window.cognigyWebchatMessagePlugins || [])
-        .map(plugin => typeof plugin === 'function' 
-            ? plugin({ React, styled }) 
+        .map(plugin => typeof plugin === 'function'
+            ? plugin({ React, styled })
             : plugin
-            )
-        .map(plugin => typeof plugin.match === 'string' 
+        )
+        .map(plugin => typeof plugin.match === 'string'
             ? { ...plugin, match: ({ data }) => data && data._plugin && data._plugin.type === plugin.match }
             : plugin
         );
 
     // @ts-ignore
-    const inputPlugins = window.cognigyWebchatInputPlugins || [];
+    const inputPlugins = (window.cognigyWebchatInputPlugins || [])
+        .map(plugin => typeof plugin === 'function'
+            ? plugin({ React, styled })
+            : plugin
+        );
 
     const webchatRoot = document.createElement('div');
     document.body.appendChild(webchatRoot);

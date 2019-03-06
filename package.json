@@ -20,7 +20,7 @@
   "scripts": {
     "build:socket-client": "cd packages/socket-client && npm run build",
     "build:webchat-client": "cd packages/webchat-client && npm run build",
-    "build:webchat": "cd packages/webchat && npm run bundle",
+    "build:webchat": "cd packages/webchat && npm run bundle && npm run bundle:datepicker-plugin",
     "build": "npm run build:socket-client && npm run build:webchat-client && npm run build:webchat",
     "clean": "rm -rf ./packages/*/lib && rm -f ./packages/webchat/dist/*.js"
   }

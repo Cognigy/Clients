@@ -11,6 +11,7 @@
         "bundle:webchat": "webpack --config webpack.production.js",
         "bundle:webchat-legacy": "webpack --config webpack.production.legacy.js --output dist/webchat.legacy.js",
         "bundle:messenger-plugin": "webpack --config webpack.production.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.js",
+        "bundle:datepicker-plugin": "webpack --config webpack.production.js --entry ./src/plugins/message/date-picker/index.tsx --output dist/date-picker.webchat-plugin.js",
         "bundle:messenger-plugin-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.legacy.js",
         "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check"
     },

@@ -1,0 +1,17 @@
+/* [data-cognigy-webchat-root] button {
+    border-radius: 5%;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    width: 25%;
+    height: 5%;
+}
+*/
+
+[data-cognigy-webchat-root] .datepicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

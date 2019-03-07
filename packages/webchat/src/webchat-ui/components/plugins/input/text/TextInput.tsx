@@ -49,6 +49,7 @@ export class TextInput extends React.PureComponent<InputComponentProps, TextInpu
                     value={text}
                     onChange={this.handleChangeState}
                     style={{ flexGrow: 1 }}
+                    placeholder={props.config.settings.inputPlaceholder}
                 />
                 <Button
                     disabled={!text}

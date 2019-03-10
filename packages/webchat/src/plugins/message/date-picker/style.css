@@ -1,17 +1,57 @@
-/* [data-cognigy-webchat-root] button {
-    border-radius: 5%;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    width: 25%;
-    height: 5%;
+ [data-cognigy-webchat-root] .info {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    padding: 3%;
+    background-color: white;
 }
-*/
+
+[data-cognigy-webchat-root] .title {
+    font-size: 200%;
+    font-family: Helvetica, sans-serif;
+    font-weight: bolder;
+    color: rgb(0,0,0,0.7);
+}
+
+/* Date Picker */
 
 [data-cognigy-webchat-root] .datepicker {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    flex-grow: inherit;
+    background-color: rgb(240, 240, 240);
+    font-family: Helvetica, sans-serif;
+    padding-top: 5%;
 }
 
+/* Buttons */
+
+[data-cognigy-webchat-root] .controlButtons {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    height: 5%;
+    padding: 3%;
+}
+
+[data-cognigy-webchat-root] .cancelButton {
+    width: 20%;
+    color: rgb(0,0,0,0.7);
+    background-color: transparent;
+    border: 1px solid rgb(0,0,0,0.7);
+    font-size: 100%;
+    font-family: Helvetica;
+    border-radius: 3%;
+    cursor: pointer;
+}
+
+[data-cognigy-webchat-root] .submitButton {
+    width: 40%;
+    color: white;
+    background-color: rgb(47, 129, 206);
+    border: none;
+    font-size: 100%;
+    font-family: Helvetica;
+    border-radius: 3%;
+    cursor: pointer;
+}

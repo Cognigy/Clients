@@ -42,25 +42,29 @@ class DatePicker extends React.Component<MessageComponentProps, State> {
 
   render() {
     const { onSendMessage, message, config, attributes } = this.props;
+    const event = message.data._plugin.event;
     return (
-      <div {...attributes} className="datepicker">
-        <div>
+      <div {...attributes} style={{ display: "flex", flexDirection: "column"}}>
+        <div className="info">
+          <h2 className="title">Date for Meeting</h2>
+        </div>
+        <div className="datepicker">
           <DayPicker
             selectedDays={this.state.selectedDay}
             onDayClick={this.handleDayClick}
           />
         </div>
-        <div>
-          <button onClick={this.handleAbort} >cancel</button>
-          <button onClick={this.handleSubmit} disabled={!this.state.selectedDay}>submit</button>
+        <div className="controlButtons">
+          <button onClick={this.handleAbort} className="cancelButton">cancel</button>
+          <button onClick={this.handleSubmit} className="submitButton" disabled={!this.state.selectedDay}>submit</button>
         </div>
       </div>
- 
+
     );
   }
 }
 
-const datePickerPlugin = createMessagePlugin('date-picker', DatePicker, { fullscreen: false });
+const datePickerPlugin = createMessagePlugin('date-picker', DatePicker, { fullscreen: true });
 
 registerMessagePlugin(datePickerPlugin);
 

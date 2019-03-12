@@ -65,34 +65,34 @@ class DatePicker extends React.Component<MessageComponentProps, State> {
 
     return (
       <div {...attributes} style={{ display: "flex", flexDirection: "column" }}>
-        <Flatpickr data-enable-time
-          value={this.state}
-          onChange={date => { this.setState(this.state) }} />
-        {/* <div className="info">
+        <div className="info">
           <h2 className="title">{event}</h2>
         </div>
         <div className="datepicker">
-          <DayPicker
+          {/* <DayPicker
             selectedDays={this.state.selectedDay}
             onDayClick={this.handleDayClick}
             disabledDays={{ daysOfWeek: [0, 6] }} //disable sunday, saturday
             firstDayOfWeek={firstDayOfWeek}
             locale={"de"}
             localeUtils={MomentLocaleUtils}
-          />
-          
+          /> */}
+          <Flatpickr data-enable-time
+            value={this.state}
+            onChange={date => { this.setState(this.state) }} />
+
         </div>
         <div className="controlButtons">
           <button onClick={this.handleAbort} className="cancelButton">cancel</button>
           <button onClick={this.handleSubmit} className="submitButton" disabled={!this.state.selectedDay}>submit</button>
-        </div> */}
+        </div>
       </div>
 
     );
   }
 }
 
-const datePickerPlugin = createMessagePlugin('date-picker', DatePicker, { fullscreen: false });
+const datePickerPlugin = createMessagePlugin('date-picker', DatePicker, { fullscreen: true });
 
 registerMessagePlugin(datePickerPlugin);
 

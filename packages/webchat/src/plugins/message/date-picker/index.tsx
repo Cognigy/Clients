@@ -44,16 +44,23 @@ class DatePicker extends React.Component<MessageComponentProps, State> {
   render() {
     const { onSendMessage, message, config, attributes } = this.props;
     const event = message.data._plugin.event;
+    const firstDayOfWeek = message.data._plugin.firstDayOfWeek;
+    // include locale with moment.js -> https://react-day-picker.js.org/docs/localization#localization-props
+    const locale = message.data._plugin.locale;
+    console.log(message.data)
+
     return (
-      <div {...attributes} style={{ display: "flex", flexDirection: "column"}}>
+      <div {...attributes} style={{ display: "flex", flexDirection: "column" }}>
         <div className="info">
-          <h2 className="title">Date for Meeting</h2>
+          <h2 className="title">{event}</h2>
         </div>
         <div className="datepicker">
           <DayPicker
             selectedDays={this.state.selectedDay}
             onDayClick={this.handleDayClick}
-            disabledDays={{daysOfWeek: [0,6]}} //disable sunday, saturday
+            disabledDays={{ daysOfWeek: [0, 6] }} //disable sunday, saturday
+            firstDayOfWeek={firstDayOfWeek}
+            locale={locale}
           />
         </div>
         <div className="controlButtons">

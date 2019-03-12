@@ -6,6 +6,15 @@ import "./style.css";
 import { MessageComponentProps, MessagePlugin } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
 
+// Include the locale utils designed for moment
+import MomentLocaleUtils from 'react-day-picker/moment';
+
+// Make sure moment.js has the required locale data
+import 'moment/locale/ja';
+import 'moment/locale/ar';
+import 'moment/locale/it';
+import 'moment/locale/de';
+
 interface State {
   selectedDay: Date | null;
 }
@@ -60,7 +69,8 @@ class DatePicker extends React.Component<MessageComponentProps, State> {
             onDayClick={this.handleDayClick}
             disabledDays={{ daysOfWeek: [0, 6] }} //disable sunday, saturday
             firstDayOfWeek={firstDayOfWeek}
-            locale={locale}
+            locale={"de"}
+            localeUtils={MomentLocaleUtils}
           />
         </div>
         <div className="controlButtons">

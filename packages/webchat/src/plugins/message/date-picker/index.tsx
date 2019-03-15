@@ -46,6 +46,8 @@ class DatePicker extends React.Component<MessageComponentProps> {
     const mode = message.data._plugin.data.mode;
     const disable = message.data._plugin.data.disable;
     const event = message.data._plugin.data.event;
+    const minDate = message.data._plugin.data.minDate;
+    const maxDate = message.data._plugin.data.maxDate;
 
 
     const { date } = this.state;
@@ -56,7 +58,6 @@ class DatePicker extends React.Component<MessageComponentProps> {
           <h2 className="title">{event}</h2>
         </div>
         <div className="datepicker">
-          {/* <button id="flatpickerButton">Choose Date</button> */}
           <Flatpickr
             value={date}
             onChange={date => { this.setState({ date }) }}
@@ -66,6 +67,9 @@ class DatePicker extends React.Component<MessageComponentProps> {
                 static: true,
                 enableTime: enableTime,
                 mode: mode,
+                disable: disable,
+                minDate: minDate,
+                maxDate: maxDate
               }
             }
           />

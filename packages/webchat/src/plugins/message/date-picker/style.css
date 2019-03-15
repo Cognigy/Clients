@@ -1,3 +1,9 @@
+ /* Flatpickr */
+ [data-cognigy-webchat-root] .flatpickr-input{
+     display: none;
+ }
+ 
+ 
  [data-cognigy-webchat-root] .info {
     display: flex;
     flex-direction: column;

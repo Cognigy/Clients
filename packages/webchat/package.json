@@ -7,7 +7,7 @@
     "main": "lib/webchat/index.js",
     "scripts": {
         "build": "tsc",
-        "bundle": "npm run bundle:webchat && npm run bundle:webchat-legacy && npm run bundle:messenger-plugin && npm run bundle:messenger-plugin-legacy",
+        "bundle": "npm run bundle:webchat && npm run bundle:webchat-legacy && npm run bundle:messenger-plugin && npm run bundle:messenger-plugin-legacy && npm run bundle:datepicker-plugin",
         "bundle:webchat": "webpack --config webpack.production.js",
         "bundle:webchat-legacy": "webpack --config webpack.production.legacy.js --output dist/webchat.legacy.js",
         "bundle:messenger-plugin": "webpack --config webpack.production.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.js",
@@ -24,7 +24,6 @@
         "emotion": "^10.0.6",
         "emotion-theming": "^10.0.6",
         "react": "^16.7.0",
-        "react-day-picker": "^7.2.4",
         "react-dom": "^16.7.0",
         "react-emotion": "^10.0.0",
         "react-player": "^1.9.3",

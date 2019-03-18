@@ -5,11 +5,8 @@ import "./style.css";
 import Flatpickr from 'react-flatpickr'
 import './flatpickr.css';
 
-// Flatpickr Plugins
-import confirmDatePlugin from './flatpicker-plugins/confirmDate/confirmDate';
-
-// Flatpickr class
-//import flatpickr from "flatpickr";
+// languages
+import l10n from './langHelper';
 
 import { MessageComponentProps, MessagePlugin } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
@@ -18,7 +15,7 @@ class DatePicker extends React.Component<MessageComponentProps> {
   constructor(props) {
     super(props);
     this.state = {
-      date: new Date()
+      date: new Date(),
     };
   }
 
@@ -45,11 +42,10 @@ class DatePicker extends React.Component<MessageComponentProps> {
     const enableTime = message.data._plugin.data.enableTime;
     const mode = message.data._plugin.data.mode;
     const disable = message.data._plugin.data.disable;
-    const event = message.data._plugin.data.event;
+    const event = message.data._plugin.data.eventName;
     const minDate = message.data._plugin.data.minDate;
     const maxDate = message.data._plugin.data.maxDate;
-
-
+    const locale = message.data._plugin.data.locale;
     const { date } = this.state;
 
     return (
@@ -63,6 +59,7 @@ class DatePicker extends React.Component<MessageComponentProps> {
             onChange={date => { this.setState({ date }) }}
             options={
               {
+                locale: l10n[locale],
                 inline: true,
                 static: true,
                 enableTime: enableTime,

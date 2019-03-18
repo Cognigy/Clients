@@ -7,20 +7,29 @@ import './flatpickr.css';
 
 // languages
 import l10n from './langHelper';
+import moment from 'moment';
 
 import { MessageComponentProps, MessagePlugin } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
 
-class DatePicker extends React.Component<MessageComponentProps> {
+interface IState {
+  date: Date[]
+}
+
+class DatePicker extends React.Component<MessageComponentProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      date: new Date(),
+      date: [new Date()],
     };
   }
 
   handleSubmit = () => {
-    this.props.onSendMessage("", {
+    const { message } = this.props
+    moment.locale(message.data._plugin.data.locale);
+    console.log(this.state.date)
+
+    this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
       _plugin: "date-picker",
       date: this.state.date,
       abort: false
@@ -37,7 +46,7 @@ class DatePicker extends React.Component<MessageComponentProps> {
 
   render() {
     const { onSendMessage, message, config, attributes } = this.props;
-
+   
     // Message Data
     const enableTime = message.data._plugin.data.enableTime;
     const mode = message.data._plugin.data.mode;

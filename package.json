@@ -25,6 +25,7 @@
     "clean": "rm -rf ./packages/*/lib && rm -f ./packages/webchat/dist/*.js"
   },
   "dependencies": {
+    "moment": "^2.24.0",
     "react-flatpickr": "^3.7.1"
   }
 }

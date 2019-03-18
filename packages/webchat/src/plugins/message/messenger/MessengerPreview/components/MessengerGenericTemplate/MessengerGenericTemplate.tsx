@@ -1,4 +1,4 @@
-import { IFBMGenericTemplatePayload } from '../../interfaces/GenericTemplatePayload.interface';
+import { IFBMGenericTemplatePayload, IFBMGenericTemplateElement } from '../../interfaces/GenericTemplatePayload.interface';
 import { IWithFBMActionEventHandler } from '../../MessengerPreview.interface';
 import { getDivider } from '../Divider';
 import { MessagePluginFactoryProps } from '../../../../../../common/interfaces/message-plugin';
@@ -7,6 +7,10 @@ import { getMessengerContent } from '../MessengerContent';
 import { getMessengerFrame } from '../MessengerFrame';
 import { getMessengerTitle } from '../MessengerTitle';
 import { getMessengerSubtitle } from '../MessengerSubtitle';
+import { Carousel } from 'react-responsive-carousel';
+
+import './carousel.css';
+import { element } from 'prop-types';
 
 export interface IMessengerGenericTemplateProps extends IWithFBMActionEventHandler {
     payload: IFBMGenericTemplatePayload;
@@ -24,7 +28,13 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
     const MessengerButton = getMessengerButton({ React, styled });
     const Divider = getDivider({ React, styled });
 
-    const Root = styled(MessengerFrame)({
+    const ElementRoot = styled.div(({ theme }) => ({
+        display: 'flex',
+        // justifyContent: 'center',
+        marginRight: -theme.unitSize * 2
+    }));
+
+    const Frame = styled(MessengerFrame)({
         backgroundColor: 'white'
     });
 
@@ -35,141 +45,71 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
         backgroundImage: `url('${url}')`
     }));
 
-    const Pagination = styled.div({
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginTop: -8,
-        marginBottom: -8,
-    });
-
-    const PaginationButton = styled.button({
-        color: 'hsla(0, 0%, 0%, .54)'
-    });
-
     const MessengerGenericTemplate = class MessengerGenericTemplate extends React.Component<IMessengerGenericTemplateProps & React.HTMLProps<HTMLDivElement>, IMessengerGenericTemplateState> {
-        state: IMessengerGenericTemplateState = {
-            index: 0
-        }
-
-        static getDerivedStateFromProps(props: IMessengerGenericTemplateProps, state: IMessengerGenericTemplateState) {
-
-            const { index } = state;
-            const { payload } = props;
-            const { elements } = payload;
-
-            if (elements.length > 0 && index >= elements.length) {
-                const newState: IMessengerGenericTemplateState = {
-                    index: 0
-                }
-
-                return newState;
-            }
-
-            return null;
-        }
-
-        getCurrentElement() {
-            const { index } = this.state;
-            const { payload } = this.props;
-            const { elements } = payload;
-
-            return elements[index];
-        }
-
-        getCurrentImageStyles() {
+        getImageStyles(element: IFBMGenericTemplateElement) {
             const styles: React.CSSProperties = {
-                backgroundImage: `url('${this.getCurrentElement().image_url}')`
+                backgroundImage: `url('${element.image_url}')`
             }
 
             return styles;
         }
 
-        next = () => {
-            this.setState({
-                index: this.state.index + 1
-            })
-        }
+        renderElement(element: IFBMGenericTemplateElement) {
 
-        prev = () => {
-            this.setState({
-                index: this.state.index - 1
-            })
-        }
+            const { onAction, ...divProps } = this.props;
+            const { image_url, title, subtitle, buttons, default_action } = element;
 
-        canNext() {
-            const { index } = this.state;
-            const { payload } = this.props;
-            const { elements } = payload;
-
-            return index < elements.length - 1;
-        }
-
-        canPrev() {
-            const { index } = this.state;
-
-            return index > 0;
+            return (
+                <ElementRoot>
+                    <Frame>
+                        {image_url && (
+                            <>
+                                <Image
+                                    url={image_url}
+                                    onClick={e => default_action && onAction(e, default_action)}
+                                />
+                                <Divider />
+                            </>
+                        )}
+                        <MessengerContent
+                            onClick={e => default_action && onAction(e, default_action)}
+                        >
+                            <MessengerTitle>{title}</MessengerTitle>
+                            <MessengerSubtitle>{subtitle}</MessengerSubtitle>
+                        </MessengerContent>
+                        {buttons && buttons.map((button, index) => (
+                            <React.Fragment key={index}>
+                                <Divider />
+                                <MessengerButton
+                                    button={button}
+                                    onClick={e => onAction(e, button)}
+                                />
+                            </React.Fragment>
+                        ))}
+                    </Frame>
+                </ElementRoot>
+            );
         }
 
         render() {
-            const { onAction, ...divProps } = this.props;
+            const elements = this.props.payload.elements;
 
-            const element = this.getCurrentElement();
-            const { image_url, title, subtitle, buttons, default_action } = element;
+            if (elements.length === 0)
+                return null;
 
-            const canNext = this.canNext();
-            const canPrev = this.canPrev();
-
-            const canPaginate = canNext || canPrev;
+            if (elements.length === 1)
+                return this.renderElement(elements[0]);
 
             return (
-                <Root
-                    {...divProps}
+                <Carousel
+                    showThumbs={false}
+                    showIndicators={false}
+                    showStatus={false}
+                    centerMode={true}
+                // width='250px'
                 >
-                    {image_url && (
-                        <>
-                            <Image
-                                url={this.getCurrentElement().image_url}
-                                onClick={e => default_action && onAction(e, default_action)}
-                            />
-                            <Divider />
-                        </>
-                    )}
-                    {canPaginate && (
-                        <>
-                            <Pagination>
-                                <PaginationButton
-                                    disabled={!canPrev}
-                                    onClick={this.prev}
-                                >
-                                    prev
-                            </PaginationButton>
-                                <PaginationButton
-                                    disabled={!canNext}
-                                    onClick={this.next}
-                                >
-                                    next
-                            </PaginationButton>
-                            </Pagination>
-                            <Divider />
-                        </>
-                    )}
-                    <MessengerContent
-                        onClick={e => default_action && onAction(e, default_action)}
-                    >
-                        <MessengerTitle>{title}</MessengerTitle>
-                        <MessengerSubtitle>{subtitle}</MessengerSubtitle>
-                    </MessengerContent>
-                    {buttons && buttons.map((button, index) => (
-                        <React.Fragment key={index}>
-                            <Divider />
-                            <MessengerButton
-                                button={button}
-                                onClick={e => onAction(e, button)}
-                            />
-                        </React.Fragment>
-                    ))}
-                </Root>
+                    {elements.map(element => this.renderElement(element))}
+                </Carousel>
             )
         }
     }

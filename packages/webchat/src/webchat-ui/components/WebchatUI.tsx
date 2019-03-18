@@ -20,6 +20,7 @@ import MessagePluginRenderer from './plugins/MessagePluginRenderer';
 import TypingIndicator from './presentational/TypingIndicator';
 import regularMessagePlugin from './plugins/message/regular';
 import { InputPlugin } from '../../common/interfaces/input-plugin';
+import MessageBubble from './presentational/MessageBubble';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -192,7 +193,10 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 ))}
                 {typingIndicator && (
                     <MessageRow align='left'>
-                        <TypingIndicator />
+                        <Avatar src='bot' />
+                        <MessageBubble align='left'>
+                            <TypingIndicator />
+                        </MessageBubble>
                     </MessageRow>
                 )}
             </>

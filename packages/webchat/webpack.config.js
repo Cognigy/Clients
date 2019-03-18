@@ -13,6 +13,7 @@ module.exports = {
     node: {
         Buffer: false
     },
+    // devtool: 'source-map',
     module: {
         rules: [
             {

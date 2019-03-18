@@ -7,12 +7,18 @@
     "main": "lib/webchat/index.js",
     "scripts": {
         "build": "tsc",
-        "bundle": "npm run bundle:webchat && npm run bundle:webchat-legacy && npm run bundle:messenger-plugin && npm run bundle:messenger-plugin-legacy",
-        "bundle:webchat": "webpack --config webpack.production.js",
-        "bundle:webchat-legacy": "webpack --config webpack.production.legacy.js --output dist/webchat.legacy.js",
-        "bundle:messenger-plugin": "webpack --config webpack.production.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.js",
-        "bundle:messenger-plugin-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.legacy.js",
-        "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check"
+        "bundle": "yarn webchat && yarn webchat-legacy && yarn messenger && yarn messenger-legacy && yarn speech-input && yarn speech-input-legacy && yarn speech-output && yarn speech-output-legacy && yarn persistent-menu && yarn persistent-menu-legacy",
+        "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check",
+        "webchat": "webpack --config webpack.production.js",
+        "webchat-legacy": "webpack --config webpack.production.legacy.js --output dist/webchat.legacy.js",
+        "messenger": "webpack --config webpack.production.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.js",
+        "messenger-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.legacy.js",
+        "speech-input": "webpack --config webpack.production.js --entry ./src/plugins/input/speech/index.tsx --output dist/speech-input.webchat-plugin.js",
+        "speech-input-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/input/speech/index.tsx --output dist/speech-input.webchat-plugin.legacy.js",
+        "speech-output": "webpack --config webpack.production.js --entry ./src/plugins/message/speech-output/index.tsx --output dist/speech-output.webchat-plugin.js",
+        "speech-output-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/speech-output/index.tsx --output dist/speech-output.webchat-plugin.legacy.js",
+        "persistent-menu": "webpack --config webpack.production.js --entry ./src/plugins/input/persistent-menu/index.tsx --output dist/persistent-menu.webchat-plugin.js",
+        "persistent-menu-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/input/persistent-menu/index.tsx --output dist/persistent-menu.webchat-plugin.legacy.js"
     },
     "dependencies": {
         "@cognigy/webchat-client": "1.0.0",
@@ -28,6 +34,7 @@
         "react-emotion": "^10.0.0",
         "react-player": "^1.9.3",
         "react-redux": "^6.0.0",
+        "react-responsive-carousel": "^3.1.47",
         "redux": "^4.0.1",
         "styled-jss": "^2.2.3",
         "tinycolor2": "^1.4.1"

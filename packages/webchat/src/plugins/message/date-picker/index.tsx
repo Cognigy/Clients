@@ -103,10 +103,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       const maxDate = message.data._plugin.data.maxDate;
       const locale = message.data._plugin.data.locale;
   
-  
-      const dateButtonText = "Pick a date";
-      const cancelButtonText = "Cancel";
-      const submitButtonText = "Submit";
+      const dateButtonText = message.data._plugin.data.openPickerButtonText;
+      const cancelButtonText = message.data._plugin.data.cancelButtonText;
+      const submitButtonText = message.data._plugin.data.submitButtonText;
       const { date } = this.state;
   
       if (!isFullscreen) {

@@ -9,11 +9,12 @@ export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
     message: IMessage;
     config: IWebchatConfig;
     onSendMessage: MessageSender;
+    onSetFullscreen: () => void;
     plugins: MessagePlugin[];
     isFullscreen?: boolean;
 }
 
-export default ({ message, config, onSendMessage, plugins, isFullscreen, ...props }: MessageProps): JSX.Element => {
+export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFullscreen, ...props }: MessageProps): JSX.Element => {
     const attributes = Object.keys(props).length > 0
         ? props
         : undefined;
@@ -28,6 +29,7 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, ...prop
                     config={config}
                     message={message}
                     onSendMessage={onSendMessage}
+                    onSetFullscreen={onSetFullscreen}
                     attributes={attributes}
                     isFullscreen={isFullscreen}
                 />

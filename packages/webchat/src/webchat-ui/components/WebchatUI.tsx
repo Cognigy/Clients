@@ -25,6 +25,8 @@ import TypingIndicatorBubble from './presentational/TypingIndicatorBubble';
 export interface WebchatUIProps {
     messages: IMessage[];
     fullscreenMessage?: IMessage;
+    onSetFullscreenMessage: (message: IMessage) => void;
+
     onSendMessage: (text?: string, data?: any) => void;
     config: IWebchatConfig;
     typingIndicator: boolean;
@@ -109,7 +111,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, ...restProps } = props;
+        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, onSetFullscreenMessage, ...restProps } = props;
         const { theme } = state;
 
         return (
@@ -163,6 +165,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 onSendMessage={onSendMessage}
                 config={config}
                 plugins={messagePlugins}
+                onSetFullscreen={() => {}}
                 message={fullscreenMessage as IMessage}
             />
         )
@@ -190,6 +193,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                         <MessagePluginRenderer
                             message={message}
                             onSendMessage={onSendMessage}
+                            onSetFullscreen={() => this.props.onSetFullscreenMessage(message)}
                             config={config}
                             plugins={messagePlugins}
                         />

@@ -1,9 +1,11 @@
 import { Reducer } from "redux";
+import { IMessage } from "../../../common/interfaces/message";
 
 export interface UIState {
     open: boolean;
     typing: boolean;
     inputMode: string;
+    fullscreenMessage: IMessage | undefined;
 }
 
 const SET_OPEN = 'SET_OPEN';
@@ -33,14 +35,22 @@ export const setInputMode = (inputMode: string) => ({
 });
 type SetInputModeAction = ReturnType<typeof setInputMode>;
 
+const SET_FULLSCREEN_MESSAGE = 'SET_FULLSCREEN_MESSAGE';
+export const setFullscreenMessage = (fullscreenMessage: IMessage | undefined) => ({
+    type: SET_FULLSCREEN_MESSAGE as 'SET_FULLSCREEN_MESSAGE',
+    fullscreenMessage
+});
+type SetFullscreenMessageAction = ReturnType<typeof setFullscreenMessage>;
+
 
 const getInitialState = (): UIState => ({
     open: false,
     typing: false,
-    inputMode: 'text'
+    inputMode: 'text',
+    fullscreenMessage: undefined
 });
 
-type UIAction = SetOpenAction | ToggleOpenAction | SetTypingAction | SetInputModeAction;
+type UIAction = SetOpenAction | ToggleOpenAction | SetTypingAction | SetInputModeAction | SetFullscreenMessageAction;
 
 
 export const ui: Reducer<UIState, UIAction> = (state = getInitialState(), action) => {
@@ -70,6 +80,13 @@ export const ui: Reducer<UIState, UIAction> = (state = getInitialState(), action
             return {
                 ...state,
                 inputMode: action.inputMode
+            }
+        }
+
+        case SET_FULLSCREEN_MESSAGE: {
+            return {
+                ...state,
+                fullscreenMessage: action.fullscreenMessage
             }
         }
     }

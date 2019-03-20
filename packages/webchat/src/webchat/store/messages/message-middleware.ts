@@ -4,6 +4,7 @@ import { IMessage } from "../../../common/interfaces/message";
 import { WebchatClient } from '@cognigy/webchat-client';
 import { addMessage } from "./message-reducer";
 import { Omit } from "react-redux";
+import { setFullscreenMessage } from "../ui/ui-reducer";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 export const sendMessage = (message: Omit<IMessage, 'source'>) => ({
@@ -21,6 +22,7 @@ export const createMessageMiddleware = (client: WebchatClient): Middleware<{}, S
 
             client.sendMessage(text || '', data);
 
+            next(setFullscreenMessage(undefined));
             return next(addMessage(action.message));
         }
     }

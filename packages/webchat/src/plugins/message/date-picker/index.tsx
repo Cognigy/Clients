@@ -2,7 +2,7 @@ import * as React from "react";
 import "./style.css";
 
 // Flatpickr Datepicker
-import Flatpickr from 'react-flatpickr'
+import Flatpickr from './components/react-flatpickr';
 import './flatpickr.css';
 
 // languages
@@ -55,6 +55,9 @@ class DatePicker extends React.Component<MessageComponentProps, IState> {
     const minDate = message.data._plugin.data.minDate;
     const maxDate = message.data._plugin.data.maxDate;
     const locale = message.data._plugin.data.locale;
+
+    const primaryColor = "red"
+
     const { date } = this.state;
 
     return (
@@ -82,10 +85,11 @@ class DatePicker extends React.Component<MessageComponentProps, IState> {
         </div>
         <div className="controlButtons">
           <button onClick={this.handleAbort} className="cancelButton">cancel</button>
-          <button onClick={this.handleSubmit} className="submitButton" >submit</button>
+          <button onClick={this.handleSubmit} className="submitButton" style={{    
+            backgroundColor: `${primaryColor}`
+          }} >submit</button>
         </div>
       </div>
-
     );
   }
 }

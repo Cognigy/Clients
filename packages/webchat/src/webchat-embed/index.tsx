@@ -18,7 +18,7 @@ import EmbeddedWebchat from './components/presentational/EmbeddedWebchat';
 
 
 
-const initWebchat = async (webchatConfigUrl: string) => {
+const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentProps<typeof EmbeddedWebchat>['options']) => {
     // @ts-ignore
     const messagePlugins = (window.cognigyWebchatMessagePlugins || [])
         .map(plugin => typeof plugin === 'function'
@@ -44,7 +44,7 @@ const initWebchat = async (webchatConfigUrl: string) => {
         (
             <EmbeddedWebchat
                 url={webchatConfigUrl}
-                options={{ userId: 'user-robin', sessionId: 'session-a' }}
+                options={options}
                 messagePlugins={messagePlugins}
                 inputPlugins={inputPlugins}
             />

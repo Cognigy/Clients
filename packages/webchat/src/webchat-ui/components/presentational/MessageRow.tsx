@@ -9,13 +9,13 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
     let paddingLeft = theme.unitSize * 2;
     let paddingRight = theme.unitSize * 2;
     let flexDirection;
-    let childMargin = {};
+    let avatarStyles: any = {};
     
     switch (align) {
         case 'right': {
             paddingLeft = theme.blockSize;
             flexDirection = 'row-reverse';
-            childMargin = {
+            avatarStyles = {
                 marginLeft: theme.unitSize
             }
             break;
@@ -24,7 +24,7 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
         case 'left':
         default: {
             paddingRight = theme.blockSize;
-            childMargin = {
+            avatarStyles = {
                 marginRight: theme.unitSize
             }
         }
@@ -42,6 +42,15 @@ export default styled.div<IAlignmentProps>(({ theme, align }) => {
             marginBottom: theme.unitSize
         },
 
-        '&>*:nth-of-type(n+1)': childMargin
+        '&>:first-child': {
+            ...avatarStyles,
+            flexGrow: 0,
+            flexShrink: 0,
+            flexBasis: 26
+        },
+        '&>:nth-child(n+2)': {
+            // flexGrow: 1,
+            minWidth: 0
+        }
     }
 })

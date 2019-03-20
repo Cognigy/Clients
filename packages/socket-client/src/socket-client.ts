@@ -189,6 +189,7 @@ export class SocketClient extends EventEmitter {
                 URLToken: this.socketURLToken,
                 userId: this.socketOptions.userId,
                 sessionId: this.socketOptions.sessionId,
+                channel: this.socketOptions.channel,
                 source: "device",
                 passthroughIP: this.socketOptions.passthroughIP,
                 reloadFlow: !!this.socketOptions.reloadFlow,

@@ -20,10 +20,13 @@ import MessagePluginRenderer from './plugins/MessagePluginRenderer';
 import TypingIndicator from './presentational/TypingIndicator';
 import regularMessagePlugin from './plugins/message/regular';
 import { InputPlugin } from '../../common/interfaces/input-plugin';
+import TypingIndicatorBubble from './presentational/TypingIndicatorBubble';
 
 export interface WebchatUIProps {
     messages: IMessage[];
     fullscreenMessage?: IMessage;
+    onSetFullscreenMessage: (message: IMessage) => void;
+
     onSendMessage: (text?: string, data?: any) => void;
     config: IWebchatConfig;
     typingIndicator: boolean;
@@ -108,7 +111,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, ...restProps } = props;
+        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, onSetFullscreenMessage, ...restProps } = props;
         const { theme } = state;
 
         return (
@@ -162,9 +165,14 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 onSendMessage={onSendMessage}
                 config={config}
                 plugins={messagePlugins}
+                onSetFullscreen={() => {}}
                 message={fullscreenMessage as IMessage}
             />
         )
+    }
+
+    getBotAvatar() {
+        return this.props.config.settings.messageLogoUrl || defaultBotAvatar;
     }
 
     renderHistory() {
@@ -178,13 +186,14 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                         <Avatar
                             src={
                                 message.source === 'bot'
-                                    ? config.settings.messageLogoUrl || defaultBotAvatar
+                                    ? this.getBotAvatar()
                                     : defaultUserImg
                             }
                         />
                         <MessagePluginRenderer
                             message={message}
                             onSendMessage={onSendMessage}
+                            onSetFullscreen={() => this.props.onSetFullscreenMessage(message)}
                             config={config}
                             plugins={messagePlugins}
                         />
@@ -192,7 +201,8 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 ))}
                 {typingIndicator && (
                     <MessageRow align='left'>
-                        <TypingIndicator />
+                        <Avatar src={this.getBotAvatar()} />
+                        <TypingIndicatorBubble />
                     </MessageRow>
                 )}
             </>

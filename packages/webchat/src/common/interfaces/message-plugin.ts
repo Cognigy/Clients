@@ -8,6 +8,8 @@ export interface MessageComponentProps {
     message: IMessage;
     config: IWebchatConfig;
     onSendMessage: MessageSender;
+    onSetFullscreen: () => void;
+    isFullscreen?: boolean;
     attributes?: React.HTMLProps<HTMLDivElement>;
 }
 

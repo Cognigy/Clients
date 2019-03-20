@@ -27,22 +27,12 @@ export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Me
             ? getPluginsForMessage(props.messagePlugins || [])(lastMessage)
             : [];
 
-        console.log({ matchedPlugins })
-        
         const lastPlugin = matchedPlugins.slice(-1)[0];
 
 
         const fullscreenMessage = lastPlugin && isFullscreenPlugin(lastPlugin)
             ? lastMessage
-            : undefined
-
-        console.log({
-            messagePlugins: props.messagePlugins,
-            lastMessage,
-            matchedPlugins,
-            lastPlugin,
-            fullscreenMessage
-        });
+            : undefined;
 
         return {
             ...state,

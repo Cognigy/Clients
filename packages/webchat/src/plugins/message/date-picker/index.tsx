@@ -36,9 +36,10 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     border: "none",
     fontSize: "100%",
     fontFamily: "Helvetica",
-    borderRadius: "3%",
+    borderRadius: "10px",
     cursor: "pointer",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
+    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+    height: "40px"
 
   }));
 
@@ -48,9 +49,18 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     width: "20%",
     fontSize: "100%",
     fontFamily: "Helvetica",
-    borderRadius: "3%",
+    borderRadius: "10px",
     cursor: "pointer",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
+    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+    height: "40px"
+  }));
+
+  const OpenDatepickerButton = styled.button(({ theme }) => ({
+    fontSize: "16px",
+    fontFamily: "Arial",
+    padding: "2%",
+    borderRadius: "10px",
+    cursor: "pointer"
   }));
 
   class DatePicker extends React.Component<MessageComponentProps, IState> {
@@ -100,7 +110,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       const { date } = this.state;
   
       if (!isFullscreen) {
-        return <button onClick={onSetFullscreen}>{dateButtonText}</button>
+        return <OpenDatepickerButton onClick={onSetFullscreen}>{dateButtonText}</OpenDatepickerButton>
       }
   
       return (

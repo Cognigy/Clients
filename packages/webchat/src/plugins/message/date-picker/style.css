@@ -37,24 +37,3 @@
     height: 5%;
     padding: 3%;
 }
-
-[data-cognigy-webchat-root] .cancelButton {
-    width: 20%;
-    color: rgb(0,0,0,0.7);
-    background-color: transparent;
-    border: 1px solid rgb(0,0,0,0.7);
-    font-size: 100%;
-    font-family: Helvetica;
-    border-radius: 3%;
-    cursor: pointer;
-}
-
-[data-cognigy-webchat-root] .submitButton {
-    width: 40%;
-    color: white;
-    border: none;
-    font-size: 100%;
-    font-family: Helvetica;
-    border-radius: 3%;
-    cursor: pointer;
-}

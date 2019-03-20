@@ -9,92 +9,139 @@ import './flatpickr.css';
 import l10n from './langHelper';
 import moment from 'moment';
 
-import { MessageComponentProps, MessagePlugin } from "../../../common/interfaces/message-plugin";
+import { MessageComponentProps, MessagePlugin, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
+
+const datePickerDaySelector = ".flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay";
 
 interface IState {
   date: Date[]
 }
 
-class DatePicker extends React.Component<MessageComponentProps, IState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: [new Date()],
-    };
-  }
+const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
-  handleSubmit = () => {
-    const { message } = this.props
-    moment.locale(message.data._plugin.data.locale);
-    console.log(this.state.date)
 
-    this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
-      _plugin: "date-picker",
-      date: this.state.date,
-      abort: false
-    });
-  }
+  const DatePickerRoot = styled.div(({ theme }) => ({
+    [datePickerDaySelector]: {
+      backgroundColor: theme.primaryColor,
+      color: theme.primaryContrastColor,
+      borderColor: theme.primaryStrongColor
+    }
+  }));
 
-  handleAbort = () => {
-    this.props.onSendMessage("", {
-      _plugin: "date-picker",
-      date: null,
-      abort: true
-    });
-  }
+  const SubmitButton = styled.button(({ theme }) => ({
+    backgroundColor: theme.primaryColor,
+    color: theme.primaryContrastColor,
+    width: "40%",
+    border: "none",
+    fontSize: "100%",
+    fontFamily: "Helvetica",
+    borderRadius: "3%",
+    cursor: "pointer",
+    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
 
-  render() {
-    const { onSendMessage, message, config, attributes } = this.props;
-   
-    // Message Data
-    const enableTime = message.data._plugin.data.enableTime;
-    const mode = message.data._plugin.data.mode;
-    const disable = message.data._plugin.data.disable;
-    const event = message.data._plugin.data.eventName;
-    const minDate = message.data._plugin.data.minDate;
-    const maxDate = message.data._plugin.data.maxDate;
-    const locale = message.data._plugin.data.locale;
+  }));
 
-    const primaryColor = "red"
+  const CancelButton = styled.button(({ theme }) => ({
+    backgroundColor: theme.greyColor,
+    color: theme.greyContrastColor,
+    width: "20%",
+    fontSize: "100%",
+    fontFamily: "Helvetica",
+    borderRadius: "3%",
+    cursor: "pointer",
+    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)"
+  }));
 
-    const { date } = this.state;
-
-    return (
-      <div {...attributes} style={{ display: "flex", flexDirection: "column" }}>
-        <div className="info">
-          <h2 className="title">{event}</h2>
-        </div>
-        <div className="datepicker">
-          <Flatpickr
-            value={date}
-            onChange={date => { this.setState({ date }) }}
-            options={
-              {
-                locale: l10n[locale],
-                inline: true,
-                static: true,
-                enableTime: enableTime,
-                mode: mode,
-                disable: disable,
-                minDate: minDate,
-                maxDate: maxDate
+  class DatePicker extends React.Component<MessageComponentProps, IState> {
+    constructor(props) {
+      super(props);
+      this.state = {
+        date: [new Date()],
+      };
+    }
+  
+    handleSubmit = () => {
+      const { message } = this.props
+      moment.locale(message.data._plugin.data.locale);
+      console.log(this.state.date)
+  
+      this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
+        _plugin: "date-picker",
+        date: this.state.date,
+        abort: false
+      });
+    }
+  
+    handleAbort = () => {
+      this.props.onSendMessage("", {
+        _plugin: "date-picker",
+        date: null,
+        abort: true
+      });
+    }
+  
+    render() {
+      const { onSendMessage, message, config, attributes, isFullscreen, onSetFullscreen } = this.props;
+  
+      // Message Data
+      const enableTime = message.data._plugin.data.enableTime;
+      const mode = message.data._plugin.data.mode;
+      const disable = message.data._plugin.data.disable;
+      const event = message.data._plugin.data.eventName;
+      const minDate = message.data._plugin.data.minDate;
+      const maxDate = message.data._plugin.data.maxDate;
+      const locale = message.data._plugin.data.locale;
+  
+  
+      const dateButtonText = "Pick a date";
+      const cancelButtonText = "Cancel";
+      const submitButtonText = "Submit";
+      const { date } = this.state;
+  
+      if (!isFullscreen) {
+        return <button onClick={onSetFullscreen}>{dateButtonText}</button>
+      }
+  
+      return (
+        <DatePickerRoot {...attributes} style={{ display: "flex", flexDirection: "column" }}>
+          <div className="info">
+            <h2 className="title">{event}</h2>
+          </div>
+          <div className="datepicker">
+            <Flatpickr
+              value={date}
+              onChange={date => { this.setState({ date }) }}
+              options={
+                {
+                  locale: l10n[locale],
+                  inline: true,
+                  static: true,
+                  enableTime: enableTime,
+                  mode: mode,
+                  disable: disable,
+                  minDate: minDate,
+                  maxDate: maxDate
+                }
               }
-            }
-          />
-        </div>
-        <div className="controlButtons">
-          <button onClick={this.handleAbort} className="cancelButton">cancel</button>
-          <button onClick={this.handleSubmit} className="submitButton" style={{    
-            backgroundColor: `${primaryColor}`
-          }} >submit</button>
-        </div>
-      </div>
-    );
+            />
+          </div>
+          <div className="controlButtons">
+            <CancelButton onClick={this.handleAbort} className="cancelButton">{cancelButtonText}</CancelButton>
+            <SubmitButton onClick={this.handleSubmit} className="submitButton">{submitButtonText}</SubmitButton>
+          </div>
+        </DatePickerRoot>
+      );
+    }
   }
-}
 
-const datePickerPlugin = createMessagePlugin('date-picker', DatePicker, { fullscreen: true });
+  const plugin = {
+    match: "date-picker",
+    component: DatePicker
+  }
+
+  return plugin;
+}
 
 registerMessagePlugin(datePickerPlugin);
 

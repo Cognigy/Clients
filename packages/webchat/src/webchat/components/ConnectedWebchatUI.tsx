@@ -6,6 +6,7 @@ import { sendMessage } from '../store/messages/message-middleware';
 import { setInputMode } from '../store/ui/ui-reducer';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { IMessage } from '../../common/interfaces/message';
+import { getPluginsForMessage, isFullscreenPlugin } from '../../plugins/helper';
 
 type FromState = Pick<WebchatUIProps, 'messages' | 'open' | 'typingIndicator' | 'inputMode'>;
 type FromDispatch = Pick<WebchatUIProps, 'onSendMessage' | 'onSetInputMode'>;
@@ -14,25 +15,34 @@ type Merge = FromState & FromDispatch & FromProps & Pick<WebchatUIProps, 'fullsc
 
 export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Merge, StoreState>(
     ({ messages, ui: { open, typing, inputMode } }) => ({ messages, open, typingIndicator: typing, inputMode }),
-    dispatch => ({ 
+    dispatch => ({
         onSendMessage: (text, data) => dispatch(sendMessage({ text, data })),
         onSetInputMode: inputMode => dispatch(setInputMode(inputMode))
     }),
     (state, dispatch, props) => {
 
-        // TODO move into selector
-        const getPluginForMessage = (message: IMessage, plugins: MessagePlugin[] = []) =>
-            plugins.find(plugin => plugin.match(message));
-
-        const isFullscreenPlugin = (plugin?: MessagePlugin) => plugin
-            ? plugin.options && plugin.options.fullscreen
-            : false;
-
         const lastMessage = state.messages.slice(-1)[0];
 
-        const fullscreenMessage = lastMessage && isFullscreenPlugin(getPluginForMessage(lastMessage, props.messagePlugins))
+        const matchedPlugins = lastMessage 
+            ? getPluginsForMessage(props.messagePlugins || [])(lastMessage)
+            : [];
+
+        console.log({ matchedPlugins })
+        
+        const lastPlugin = matchedPlugins.slice(-1)[0];
+
+
+        const fullscreenMessage = lastPlugin && isFullscreenPlugin(lastPlugin)
             ? lastMessage
             : undefined
+
+        console.log({
+            messagePlugins: props.messagePlugins,
+            lastMessage,
+            matchedPlugins,
+            lastPlugin,
+            fullscreenMessage
+        });
 
         return {
             ...state,

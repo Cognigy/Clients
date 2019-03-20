@@ -1,21 +1,26 @@
 import * as React from 'react';
 import { keyframes } from '@emotion/core';
 import { styled, IWebchatTheme } from '../../style';
+import tinycolor from 'tinycolor2';
 
 const bounce = (theme: IWebchatTheme) => keyframes({
     '0%': {
         transform: 'translateY(0px)',
-        backgroundColor: theme.primaryColor
+        backgroundColor: tinycolor(theme.primaryContrastColor).setAlpha(.54).toString()
     },
     '28%': {
         transform: `translateY(-${theme.unitSize}px)`,
-        backgroundColor: theme.primaryStrongColor
+        backgroundColor: tinycolor(theme.primaryContrastColor).setAlpha(.8).toString()
     },
     '44%': {
         transform: 'translateY(0px)',
-        backgroundColor: theme.primaryStrongColor
+        backgroundColor: tinycolor(theme.primaryContrastColor).setAlpha(.8).toString()
     }
 });
+
+const Container = styled.div(({ theme }) => ({
+    paddingTop: theme.unitSize
+}))
 
 const Dot = styled.div(({ theme }) => ({
     animation: `${bounce(theme)} 1.5s infinite ease-out`,
@@ -24,7 +29,7 @@ const Dot = styled.div(({ theme }) => ({
     height: theme.unitSize,
     width: theme.unitSize,
     marginRight: theme.unitSize / 2,
-    backgroundColor: theme.primaryWeakColor,
+    backgroundColor: tinycolor(theme.primaryContrastColor).setAlpha(.24).toString(),
 
     '&:nth-of-type(1)': {
         animationDelay: '200ms'
@@ -40,9 +45,9 @@ const Dot = styled.div(({ theme }) => ({
 }));
 
 export default () => (
-    <div>
+    <Container>
         <Dot />
         <Dot />
         <Dot />
-    </div>
+    </Container>
 )

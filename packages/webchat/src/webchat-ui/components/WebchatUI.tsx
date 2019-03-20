@@ -20,6 +20,7 @@ import MessagePluginRenderer from './plugins/MessagePluginRenderer';
 import TypingIndicator from './presentational/TypingIndicator';
 import regularMessagePlugin from './plugins/message/regular';
 import { InputPlugin } from '../../common/interfaces/input-plugin';
+import TypingIndicatorBubble from './presentational/TypingIndicatorBubble';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -167,6 +168,10 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         )
     }
 
+    getBotAvatar() {
+        return this.props.config.settings.messageLogoUrl || defaultBotAvatar;
+    }
+
     renderHistory() {
         const { messages, typingIndicator, config, onSendMessage } = this.props;
         const { messagePlugins = [] } = this.state;
@@ -178,7 +183,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                         <Avatar
                             src={
                                 message.source === 'bot'
-                                    ? config.settings.messageLogoUrl || defaultBotAvatar
+                                    ? this.getBotAvatar()
                                     : defaultUserImg
                             }
                         />
@@ -192,7 +197,8 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 ))}
                 {typingIndicator && (
                     <MessageRow align='left'>
-                        <TypingIndicator />
+                        <Avatar src={this.getBotAvatar()} />
+                        <TypingIndicatorBubble />
                     </MessageRow>
                 )}
             </>

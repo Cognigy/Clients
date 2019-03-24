@@ -22,12 +22,12 @@ const EmbeddedWebchat = styled(Webchat)({
         bottom: 64,
         right: 64,
         
-        width: 480,
-        height: 640,
+        width: 380,
+        height: 540,
 
-        borderRadius: 4,
-
-        boxShadow: '0px 2px 5px hsla(0, 0%, 0%, .35)',
+        borderRadius: 16,
+        boxShadow: '0 5px 18px 0 rgba(151, 124, 156, 0.2), 0 5px 32px 0 rgba(203, 195, 212, 0.2), 0 8px 58px 0 rgba(216, 212, 221, 0.1)'
+        // boxShadow: '0px 2px 5px hsla(0, 0%, 0%, .35)',
     }
 });
 

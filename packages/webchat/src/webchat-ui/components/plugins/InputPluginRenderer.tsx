@@ -13,11 +13,18 @@ export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDiv
 }
 
 const SmallToolbar = styled(Toolbar)({
-    minHeight: 0,
+    position: 'absolute',
+    bottom: '100%',
+    height: 0,
     '&>*': {
         flexShrink: 0
     }
 })
+
+const InputRoot = styled.div(({ theme }) => ({
+    position: 'relative', 
+    boxShadow: theme.shadow
+}))
 
 export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInputMode, ...props }: InputProps): JSX.Element => {
     const results: any[] = [];
@@ -62,7 +69,7 @@ export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInpu
     );
 
     return (
-        <>
+        <InputRoot>
             {tabs}
             {matchedSelectInput && (
                 <matchedSelectInput.component
@@ -71,6 +78,6 @@ export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInpu
                     attributes={attributes}
                 />
             )}
-        </>
+        </InputRoot>
     )
 }

@@ -3,7 +3,7 @@ import { styled, IColorProps } from '../../style';
 import { IAlignmentProps } from './MessageRow';
 
 export default styled.div<IColorProps & IAlignmentProps>(({ color, theme, align }) => ({
-    padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
+    padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
 
     // prevent horizontal overflow
     minWidth: 0,
@@ -12,12 +12,11 @@ export default styled.div<IColorProps & IAlignmentProps>(({ color, theme, align 
     // render line breaks in text
     whiteSpace: 'pre-wrap',
 
-    borderRadius: theme.unitSize,
+    borderRadius: theme.unitSize * 2,
     ...({ [align === 'left' ? 'borderBottomLeftRadius' : 'borderBottomRightRadius']: 0 }),
-    borderWidth: 1,
-    borderStyle: 'solid',
+    boxShadow: theme.shadow,
 
-    backgroundColor: color === 'primary' ? theme.primaryColor : theme.greyColor,
-    borderColor: color === 'primary' ? theme.primaryStrongColor : theme.greyStrongColor,
+
+    background: color === 'primary' ? theme.primaryGradient : 'white',
     color: color === 'primary' ? theme.primaryContrastColor : theme.greyContrastColor
 }))

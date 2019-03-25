@@ -2,8 +2,6 @@ import { styled, IColorProps } from "../../style";
 import tinycolor from 'tinycolor2'
 
 export default styled.div<IColorProps>(({ color, theme }) => {
-    console.log({ theme })
-
     switch (color) {
         case 'primary':
             return {

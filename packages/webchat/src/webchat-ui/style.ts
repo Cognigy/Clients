@@ -48,15 +48,12 @@ const weak = (color: string) =>
 const getGradient = (color: string) => {
 
     const base = tinycolor(color);
-    const analog = base.analogous(2, .3);
 
-    const amount = 15;
-    const left = base.clone().spin(-amount).brighten(1);
+    const amount = 12;
+    const left = base.clone().spin(-amount).brighten(4);
     const right = base.clone().spin(amount);
 
-    const gradient = `linear-gradient(190deg, ${left}, ${right})`;
-
-    console.log({ base, analog, gradient });
+    const gradient = `linear-gradient(185deg, ${left}, ${right})`;
 
     return gradient;
 }

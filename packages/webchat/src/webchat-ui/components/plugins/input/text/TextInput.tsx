@@ -24,12 +24,14 @@ const Input = styled.input(({ theme }) => ({
     paddingLeft: theme.unitSize * 3,
     paddingRight: theme.unitSize * 9,
     outline: 'none',
-    borderBottom: '2px solid transparent',
+    borderBottom: '3px solid transparent',
     borderBottomLeftRadius: theme.unitSize * 2,
     borderBottomRightRadius: theme.unitSize * 2,
+    transition: 'border-bottom .2s ease-out',
+    marginBottom: -1,
 
     '&:focus': {
-        borderBottom: `2px solid ${theme.primaryColor}`
+        borderBottomColor: theme.primaryColor
     }
 }));
 

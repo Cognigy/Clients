@@ -29,6 +29,18 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     }
   }));
 
+  const NotFullscreen = styled.button(({ theme }) => ({
+    backgroundColor: theme.primaryColor,
+    color: theme.primaryContrastColor,
+    border: "none",
+    fontSize: "100%",
+    fontFamily: "Helvetica",
+    borderRadius: "10px",
+    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+    height: "40px"
+  
+  }));
+
   const SubmitButton = styled.button(({ theme }) => ({
     backgroundColor: theme.primaryColor,
     color: theme.primaryContrastColor,
@@ -62,6 +74,8 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     cursor: "pointer"
   }));
 
+  let datepickerWasOpen = false;
+
   class DatePicker extends React.Component<MessageComponentProps, IState> {
     constructor(props) {
       super(props);
@@ -73,13 +87,14 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     handleSubmit = () => {
       const { message } = this.props
       moment.locale(message.data._plugin.data.locale);
-      console.log(this.state.date)
   
       this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
         _plugin: "date-picker",
         date: this.state.date,
         abort: false
       });
+
+      datepickerWasOpen = true;
     }
   
     handleAbort = () => {
@@ -88,6 +103,8 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         date: null,
         abort: true
       });
+
+      datepickerWasOpen = true;
     }
   
     render() {
@@ -108,6 +125,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       const { date } = this.state;
   
       if (!isFullscreen) {
+        if (datepickerWasOpen) {
+          return <NotFullscreen>{event}</NotFullscreen>
+        }
         return <OpenDatepickerButton onClick={onSetFullscreen}>{dateButtonText}</OpenDatepickerButton>
       }
   

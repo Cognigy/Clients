@@ -5,7 +5,7 @@ export const getMessengerFrame = ({ React, styled }: MessagePluginFactoryProps) 
         width: 250,
         borderRadius: 10,
         overflow: 'hidden',
-        border: `1px solid ${theme.greyWeakColor}`,
+        // border: `1px solid ${theme.greyWeakColor}`,
         // boxShadow: theme.shadows[3],
         backgroundColor: 'hsl(0, 0%, 95%)',
         color: 'hsla(0, 0%, 0%, .8)',

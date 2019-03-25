@@ -30,7 +30,7 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
 
     const CarouselRoot = styled(Carousel)(({ theme }) => ({
         marginBottom: -32,
-        
+
         '.slide': {
             paddingLeft: theme.unitSize * 2,
             paddingRight: theme.unitSize * 2,
@@ -60,6 +60,10 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundImage: `url('${url}')`
+    }));
+
+    const SingleRoot = styled.div(({ theme }) => ({
+        paddingLeft: theme.unitSize * 2
     }));
 
     const MessengerGenericTemplate = class MessengerGenericTemplate extends React.Component<IMessengerGenericTemplateProps & React.HTMLProps<HTMLDivElement>, IMessengerGenericTemplateState> {
@@ -115,7 +119,11 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
                 return null;
 
             if (elements.length === 1)
-                return this.renderElement(elements[0]);
+                return (
+                    <SingleRoot>
+                        {this.renderElement(elements[0])}
+                    </SingleRoot>
+                );
 
             return (
                 <CarouselRoot

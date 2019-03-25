@@ -20,7 +20,9 @@ export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
 
 const FullWidthMessageRow = styled.div(({ theme }) => ({
     marginTop: theme.unitSize,
-    marginBottom: theme.unitSize
+    marginBottom: theme.unitSize,
+    paddingTop: theme.unitSize,
+    paddingBottom: theme.unitSize
 }))
 
 export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFullscreen, ...props }: MessageProps): JSX.Element => {

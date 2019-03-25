@@ -18,10 +18,10 @@
     "packages/webchat"
   ],
   "scripts": {
-    "build:socket-client": "cd packages/socket-client && npm run build",
-    "build:webchat-client": "cd packages/webchat-client && npm run build",
-    "build:webchat": "cd packages/webchat && npm run bundle && npm run bundle:datepicker-plugin",
-    "build": "npm run build:socket-client && npm run build:webchat-client && npm run build:webchat",
+    "build:socket-client": "cd packages/socket-client && yarn build",
+    "build:webchat-client": "cd packages/webchat-client && yarn build",
+    "build:webchat": "cd packages/webchat && yarn bundle",
+    "build": "yarn build:socket-client && yarn build:webchat-client && yarn build:webchat",
     "clean": "rm -rf ./packages/*/lib && rm -f ./packages/webchat/dist/*.js"
   },
   "dependencies": {

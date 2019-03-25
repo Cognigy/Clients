@@ -46,7 +46,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
   const CancelButton = styled.button(({ theme }) => ({
     backgroundColor: theme.greyColor,
     color: theme.greyContrastColor,
-    width: "20%",
     fontSize: "100%",
     fontFamily: "Helvetica",
     borderRadius: "10px",

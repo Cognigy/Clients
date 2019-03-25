@@ -28,6 +28,42 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
     })
 }
 
+
+const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
+
+    const MessengerPreview = getMessengerPreview({ React, styled });
+
+    return ({
+        match: ({ data }) => {
+            try {
+                return data._cognigy._facebook.message.attachment.payload.template_type === 'generic'
+            } catch (e) {
+                return false;
+            }
+        },
+        component: ({ message, onSendMessage }: MessageComponentProps) => (
+            <MessengerPreview
+                message={message.data._cognigy._facebook.message}
+                onAction={(e, action) => {
+                    console.log(action);
+
+                    // @ts-ignore
+                    if (action.type === 'postback' || action.content_type === 'text') {
+                        // @ts-ignore
+                        const { payload } = action;
+
+                        onSendMessage(payload);
+                    }
+                }}
+            />
+        ),
+        options: {
+            fullwidth: true
+        }
+    })
+}
+
+registerMessagePlugin(messengerGenericPlugin);
 registerMessagePlugin(messengerPlugin);
 
-export default messengerPlugin;
+// export default messengerPlugin;

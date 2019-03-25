@@ -8,7 +8,8 @@ export const getMessengerFrame = ({ React, styled }: MessagePluginFactoryProps) 
         border: `1px solid ${theme.greyWeakColor}`,
         // boxShadow: theme.shadows[3],
         backgroundColor: 'hsl(0, 0%, 95%)',
-        color: 'hsla(0, 0%, 0%, .8)'
+        color: 'hsla(0, 0%, 0%, .8)',
+        boxShadow: theme.shadow
     }));
 
     return MessengerFrame;

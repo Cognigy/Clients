@@ -4,6 +4,10 @@ import { MessagePlugin } from '../../../common/interfaces/message-plugin';
 import { MessageSender } from '../../interfaces';
 import { IWebchatConfig } from '@cognigy/webchat-client/src/interfaces/webchat-config';
 import { getPluginsForMessage } from '../../../plugins/helper';
+import MessageRow from '../presentational/MessageRow';
+import Avatar from '../presentational/Avatar';
+import { defaultBotAvatar, defaultUserImg } from '../WebchatUI';
+import { styled } from '../../style';
 
 export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
     message: IMessage;
@@ -14,6 +18,11 @@ export interface MessageProps extends React.HTMLProps<HTMLDivElement> {
     isFullscreen?: boolean;
 }
 
+const FullWidthMessageRow = styled.div(({ theme }) => ({
+    marginTop: theme.unitSize,
+    marginBottom: theme.unitSize
+}))
+
 export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFullscreen, ...props }: MessageProps): JSX.Element => {
     const attributes = Object.keys(props).length > 0
         ? props
@@ -23,17 +32,45 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFu
 
     return (
         <>
-            {matchedPlugins.map(({ component: Component }, index) => (
-                <Component
-                    key={index}
-                    config={config}
-                    message={message}
-                    onSendMessage={onSendMessage}
-                    onSetFullscreen={onSetFullscreen}
-                    attributes={attributes}
-                    isFullscreen={isFullscreen}
-                />
-            ))}
+            {matchedPlugins.map(({ component: Component, options }, index) => {
+                const messageElement = (
+                    <Component
+                        key={index}
+                        config={config}
+                        message={message}
+                        onSendMessage={onSendMessage}
+                        onSetFullscreen={onSetFullscreen}
+                        attributes={attributes}
+                        isFullscreen={isFullscreen}
+                    />
+                );
+
+                const key = `${index}:${JSON.stringify(message)}`
+
+                if (options && options.fullwidth)
+                    return (
+                        <FullWidthMessageRow
+                            key={key}
+                        >
+                            {messageElement}
+                        </FullWidthMessageRow>
+                    )
+
+                const avatarImg = message.source === 'bot'
+                    ? config.settings.messageLogoUrl || defaultBotAvatar
+                    : defaultUserImg;
+
+
+                return (
+                    <MessageRow
+                        key={key}
+                        align={message.source === 'bot' ? 'left' : 'right'}
+                    >
+                        <Avatar src={avatarImg} />
+                        {messageElement}
+                    </MessageRow>
+                )
+            })}
         </>
     );
 }

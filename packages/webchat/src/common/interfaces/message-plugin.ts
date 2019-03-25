@@ -17,6 +17,7 @@ export type MessageMatcher = (message: IMessage) => boolean;
 
 export interface MessagePluginOptions {
     fullscreen: boolean;
+    fullwidth: boolean;
     passthrough: boolean;
 }
 

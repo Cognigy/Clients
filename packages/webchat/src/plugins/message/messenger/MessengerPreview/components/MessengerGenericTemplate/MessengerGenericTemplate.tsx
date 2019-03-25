@@ -28,10 +28,27 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
     const MessengerButton = getMessengerButton({ React, styled });
     const Divider = getDivider({ React, styled });
 
+    const CarouselRoot = styled(Carousel)(({ theme }) => ({
+        marginBottom: -32,
+        
+        '.slide': {
+            paddingLeft: theme.unitSize * 2,
+            paddingRight: theme.unitSize * 2,
+            paddingBottom: 32
+        },
+
+
+        // '.slide:first-child': {
+        //     paddingLeft: theme.unitSize * 6
+        // },
+
+        // '.slide:last-child': {
+        //     paddingRight: theme.unitSize * 7
+        // }
+    }))
+
     const ElementRoot = styled.div(({ theme }) => ({
         display: 'flex',
-        // justifyContent: 'center',
-        marginRight: -theme.unitSize * 2
     }));
 
     const Frame = styled(MessengerFrame)({
@@ -101,15 +118,14 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
                 return this.renderElement(elements[0]);
 
             return (
-                <Carousel
+                <CarouselRoot
                     showThumbs={false}
                     showIndicators={false}
                     showStatus={false}
                     centerMode={true}
-                // width='250px'
                 >
                     {elements.map(element => this.renderElement(element))}
-                </Carousel>
+                </CarouselRoot>
             )
         }
     }

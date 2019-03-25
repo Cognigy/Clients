@@ -1,17 +1,51 @@
 import * as React from 'react';
-import Input from '../../../presentational/Input';
 import Button from '../../../presentational/Button';
 import Toolbar from '../../../presentational/Toolbar';
 import { styled } from '../../../../style';
 import { InputComponentProps } from '../../../../../common/interfaces/input-plugin';
+import SendIcon from './baseline-send-24px.svg';
 
 export interface TextInputState {
     text: string;
 }
 
-const InputForm = styled(Toolbar)({
+const InputForm = styled.form({
+    display: 'block',
+    position: 'relative',
     marginBottom: 0
-}).withComponent('form');
+});
+
+const Input = styled.input(({ theme }) => ({
+    display: 'block',
+    height: theme.blockSize * 1.5,
+    border: 'none',
+    width: '100%',
+    boxSizing: 'border-box',
+    paddingLeft: theme.unitSize * 3,
+    paddingRight: theme.unitSize * 9,
+    outline: 'none',
+    borderBottom: '2px solid transparent',
+    borderBottomLeftRadius: theme.unitSize * 2,
+    borderBottomRightRadius: theme.unitSize * 2,
+
+    '&:focus': {
+        borderBottom: `2px solid ${theme.primaryColor}`
+    }
+}));
+
+const Submit = styled.button(({ theme }) => ({
+    display: 'block',
+    width: theme.unitSize * 5,
+    height: theme.unitSize * 5,
+    
+    position: 'absolute',
+    right: theme.unitSize * 3,
+    top: '50%',
+    marginTop: - theme.unitSize * 5 / 2,
+    backgroundColor: 'transparent',
+    border: 'none',
+    fill: 'hsla(0, 0%, 0%, .2)',
+}))
 
 export class TextInput extends React.PureComponent<InputComponentProps, TextInputState> {
     state = { text: '' }
@@ -48,16 +82,11 @@ export class TextInput extends React.PureComponent<InputComponentProps, TextInpu
                     autoFocus
                     value={text}
                     onChange={this.handleChangeState}
-                    style={{ flexGrow: 1 }}
                     placeholder={props.config.settings.inputPlaceholder}
                 />
-                <Button
-                    disabled={!text}
-                    color='primary'
-                    type='submit'
-                >
-                    send
-                </Button>
+                <Submit>
+                    <SendIcon />
+                </Submit>
             </InputForm>
         )
     }

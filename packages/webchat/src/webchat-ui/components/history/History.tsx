@@ -13,7 +13,7 @@ export interface HistoryProps {
 
 const StyledChatScroller = styled(ChatScroller)(({ theme }) => ({
     paddingTop: theme.unitSize * 2,
-    paddingBottom: theme.unitSize * 2
+    paddingBottom: theme.unitSize * 6
 }));
 
 export const History = ({ messages, ref, typingIndicator, ...props }: HistoryProps & React.HTMLProps<HTMLDivElement>) => (

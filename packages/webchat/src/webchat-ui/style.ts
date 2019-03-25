@@ -1,16 +1,20 @@
 import styledOriginal, { CreateStyled } from '@emotion/styled';
 import tinycolor from 'tinycolor2';
+import { join } from 'path';
 
 export interface IWebchatTheme {
     primaryColor: string;
     primaryStrongColor: string;
     primaryWeakColor: string;
     primaryContrastColor: string;
+    primaryGradient: string;
 
     greyColor: string;
     greyStrongColor: string;
     greyWeakColor: string;
     greyContrastColor: string;
+
+    shadow: string;
 
     unitSize: number;
     blockSize: number;
@@ -41,6 +45,22 @@ const weak = (color: string) =>
         : tinycolor(color).lighten())
         .toHslString()
 
+const getGradient = (color: string) => {
+
+    const base = tinycolor(color);
+    const analog = base.analogous(2, .3);
+
+    const amount = 15;
+    const left = base.clone().spin(-amount).brighten(1);
+    const right = base.clone().spin(amount);
+
+    const gradient = `linear-gradient(190deg, ${left}, ${right})`;
+
+    console.log({ base, analog, gradient });
+
+    return gradient;
+}
+
 const cognigyBlue = '#3f51b5';
 
 
@@ -56,6 +76,14 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
 
     if (!theme.primaryContrastColor)
         theme.primaryContrastColor = getContrastColor(theme.primaryColor);
+
+    if (!theme.primaryGradient)
+        theme.primaryGradient = getGradient(theme.primaryColor);
+
+    
+    if (!theme.shadow)
+        theme.shadow = '0 5px 18px 0 rgba(151, 124, 156, 0.2), 0 5px 32px 0 rgba(203, 195, 212, 0.2), 0 8px 58px 0 rgba(216, 212, 221, 0.1)';
+
 
 
     if (!theme.greyColor)
@@ -88,6 +116,6 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
     return theme as IWebchatTheme;
 }
 
-export interface IColorProps { color?: 'primary' | 'default' };
+export interface IColorProps { color?: 'primary' | 'default' | 'grey' };
 
 export const styled = styledOriginal as CreateStyled<IWebchatTheme>;

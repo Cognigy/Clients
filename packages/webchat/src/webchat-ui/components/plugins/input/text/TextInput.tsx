@@ -46,7 +46,13 @@ const Submit = styled.button(({ theme }) => ({
     marginTop: - theme.unitSize * 5 / 2,
     backgroundColor: 'transparent',
     border: 'none',
-    fill: 'hsla(0, 0%, 0%, .2)',
+    fill: 'hsla(0, 0%, 0%, .54)',
+    cursor: 'pointer',
+    
+    '&[disabled]': {
+        fill: 'hsla(0, 0%, 0%, .2)',
+        cursor: 'default'
+    }
 }))
 
 export class TextInput extends React.PureComponent<InputComponentProps, TextInputState> {
@@ -86,7 +92,9 @@ export class TextInput extends React.PureComponent<InputComponentProps, TextInpu
                     onChange={this.handleChangeState}
                     placeholder={props.config.settings.inputPlaceholder}
                 />
-                <Submit>
+                <Submit
+                    disabled={this.state.text === ''}
+                >
                     <SendIcon />
                 </Submit>
             </InputForm>

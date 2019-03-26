@@ -4,7 +4,7 @@ import { styled } from '../webchat-ui/style';
 
 // load plugins
 import '../plugins/input/get-started';
-import '../plugins/input/speech';
+// import '../plugins/input/speech';
 
 // import '../plugins/message/date-picker';
 // import '../plugins/message/messenger';

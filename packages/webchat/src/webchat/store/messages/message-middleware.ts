@@ -6,10 +6,16 @@ import { addMessage } from "./message-reducer";
 import { Omit } from "react-redux";
 import { setFullscreenMessage } from "../ui/ui-reducer";
 
+export interface ISendMessageOptions {
+    /* overrides the displayed text within a chat bubble. useful for e.g. buttons */
+    label: string;
+}
+
 const SEND_MESSAGE = 'SEND_MESSAGE';
-export const sendMessage = (message: Omit<IMessage, 'source'>) => ({
+export const sendMessage = (message: Omit<IMessage, 'source'>, options: Partial<ISendMessageOptions> = {}) => ({
     type: SEND_MESSAGE as 'SEND_MESSAGE',
-    message: { ...message, source: 'user' } as IMessage
+    message: { ...message, source: 'user' } as IMessage,
+    options
 });
 export type SendMessageAction = ReturnType<typeof sendMessage>;
 
@@ -17,13 +23,18 @@ export type SendMessageAction = ReturnType<typeof sendMessage>;
 export const createMessageMiddleware = (client: WebchatClient): Middleware<{}, StoreState> => store => next => (action: SendMessageAction) => {
     switch (action.type) {
         case 'SEND_MESSAGE': {
-            const { message } = action;
+            const { message, options } = action;
             const { text, data } = message;
 
             client.sendMessage(text || '', data);
 
+            const displayMessage = { ...message };
+
+            if (options.label)
+                displayMessage.text = options.label;
+
             next(setFullscreenMessage(undefined));
-            return next(addMessage(action.message));
+            return next(addMessage(displayMessage));
         }
     }
 

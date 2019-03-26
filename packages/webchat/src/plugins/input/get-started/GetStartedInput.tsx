@@ -7,7 +7,7 @@ export default ({ onSendMessage, config }: InputComponentProps) => (
     <Toolbar>
         <Button
             style={{ flexGrow: 1 }}
-            onClick={() => onSendMessage(config.settings.getStartedPayload)}
+            onClick={() => onSendMessage(config.settings.getStartedPayload, null, { label: config.settings.getStartedText })}
             color='primary'
         >
             {config.settings.getStartedButtonText}

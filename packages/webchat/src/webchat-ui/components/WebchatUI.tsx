@@ -22,13 +22,14 @@ import { InputPlugin } from '../../common/interfaces/input-plugin';
 
 import TypingIndicatorBubble from './presentational/TypingIndicatorBubble';
 import '../utils/normalize.css';
+import { MessageSender } from '../interfaces';
 
 export interface WebchatUIProps {
     messages: IMessage[];
     fullscreenMessage?: IMessage;
     onSetFullscreenMessage: (message: IMessage) => void;
 
-    onSendMessage: (text?: string, data?: any) => void;
+    onSendMessage: MessageSender;
     config: IWebchatConfig;
     typingIndicator: boolean;
 

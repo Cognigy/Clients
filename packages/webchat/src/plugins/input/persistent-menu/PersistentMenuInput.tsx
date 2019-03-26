@@ -34,8 +34,8 @@ export const getPersistentMenuInput = ({ React, styled }: InputPluginFactoryProp
     }))
 
     return class PersistentMenuInput extends React.Component<InputComponentProps> {
-        sendMessage = (text: string) => () => {
-            this.props.onSendMessage(text);
+        sendMessage = (item) => () => {
+            this.props.onSendMessage(item.payload, null, { label: item.title });
         }
 
         render() {
@@ -52,7 +52,7 @@ export const getPersistentMenuInput = ({ React, styled }: InputPluginFactoryProp
                         {menuItems.map((item, index) => (
                             <MenuItem
                                 key={index}
-                                onClick={this.sendMessage(item.payload)}
+                                onClick={this.sendMessage(item)}
                             >
                                 {item.title}
                             </MenuItem>

@@ -22,7 +22,7 @@ export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Me
         fullscreenMessage
     }),
     dispatch => ({
-        onSendMessage: (text, data) => dispatch(sendMessage({ text, data })),
+        onSendMessage: (text, data, options) => dispatch(sendMessage({ text, data }, options)),
         onSetInputMode: inputMode => dispatch(setInputMode(inputMode)),
         onSetFullscreenMessage: message => dispatch(setFullscreenMessage(message))
     }),

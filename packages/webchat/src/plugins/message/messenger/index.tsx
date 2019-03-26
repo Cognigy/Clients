@@ -3,6 +3,7 @@ import { MessageComponentProps, MessagePluginFactory } from "../../../common/int
 import { getMessengerPreview } from "./MessengerPreview/MessengerPreview";
 import { registerMessagePlugin } from '../../helper';
 
+
 const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
 
     const MessengerPreview = getMessengerPreview({ React, styled });
@@ -13,14 +14,12 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
             <MessengerPreview
                 message={message.data._cognigy._facebook.message}
                 onAction={(e, action) => {
-                    console.log(action);
-
                     // @ts-ignore
                     if (action.type === 'postback' || action.content_type === 'text') {
                         // @ts-ignore
-                        const { payload } = action;
+                        const { payload, title } = action;
 
-                        onSendMessage(payload);
+                        onSendMessage(payload, null, { label: title });
                     }
                 }}
             />
@@ -45,14 +44,12 @@ const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
             <MessengerPreview
                 message={message.data._cognigy._facebook.message}
                 onAction={(e, action) => {
-                    console.log(action);
-
                     // @ts-ignore
                     if (action.type === 'postback' || action.content_type === 'text') {
                         // @ts-ignore
-                        const { payload } = action;
+                        const { payload, title } = action;
 
-                        onSendMessage(payload);
+                        onSendMessage(payload, null, { label: title });
                     }
                 }}
             />

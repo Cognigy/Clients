@@ -14,7 +14,7 @@ export default styled.div<IColorProps & IAlignmentProps>(({ color, theme, align 
 
     borderRadius: theme.unitSize * 2,
     ...({ [align === 'left' ? 'borderBottomLeftRadius' : 'borderBottomRightRadius']: 0 }),
-    boxShadow: theme.shadow,
+    boxShadow: theme.messageShadow,
 
 
     background: color === 'primary' ? theme.primaryGradient : 'white',

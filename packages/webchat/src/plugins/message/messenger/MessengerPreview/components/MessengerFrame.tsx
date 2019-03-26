@@ -9,7 +9,7 @@ export const getMessengerFrame = ({ React, styled }: MessagePluginFactoryProps) 
         // boxShadow: theme.shadows[3],
         backgroundColor: 'hsl(0, 0%, 95%)',
         color: 'hsla(0, 0%, 0%, .8)',
-        boxShadow: theme.shadow
+        boxShadow: theme.messageShadow
     }));
 
     return MessengerFrame;

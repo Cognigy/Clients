@@ -13,9 +13,11 @@ export interface InputProps extends InputComponentProps, React.HTMLProps<HTMLDiv
 }
 
 const SmallToolbar = styled(Toolbar)({
-    position: 'absolute',
-    bottom: '100%',
-    height: 0,
+    // position: 'absolute',
+    // bottom: '100%',
+    // height: 0,
+    minHeight: 'auto',
+    height: 40,
     '&>*': {
         flexShrink: 0
     }
@@ -59,7 +61,7 @@ export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInpu
             {selectInputs.map(input => (
                 <IconButton
                     key={input.id}
-                    disabled={input === matchedSelectInput}
+                    className={input === matchedSelectInput ? 'active' : ''}
                     onClick={() => onSetInputMode(input.id)}
                 >
                     <input.icon />

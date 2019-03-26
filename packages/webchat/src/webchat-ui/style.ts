@@ -15,6 +15,7 @@ export interface IWebchatTheme {
     greyContrastColor: string;
 
     shadow: string;
+    messageShadow: string;
 
     unitSize: number;
     blockSize: number;
@@ -50,8 +51,8 @@ const getGradient = (color: string) => {
     const base = tinycolor(color);
 
     const amount = 12;
-    const left = base.clone().spin(-amount).brighten(4);
-    const right = base.clone().spin(amount);
+    const left = base.clone().brighten(4);
+    const right = base.clone();
 
     const gradient = `linear-gradient(185deg, ${left}, ${right})`;
 
@@ -81,6 +82,8 @@ export const createWebchatTheme = (theme: Partial<IWebchatTheme> = {}): IWebchat
     if (!theme.shadow)
         theme.shadow = '0 5px 18px 0 rgba(151, 124, 156, 0.2), 0 5px 32px 0 rgba(203, 195, 212, 0.2), 0 8px 58px 0 rgba(216, 212, 221, 0.1)';
 
+    if (!theme.messageShadow)
+        theme.messageShadow = '0 5px 9px 0 rgba(151,124,156,0.1), 0 5px 16px 0 rgba(203,195,212,0.1), 0 8px 20px 0 rgba(216,212,221,0.1)';
 
 
     if (!theme.greyColor)

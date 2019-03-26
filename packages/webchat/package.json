@@ -31,6 +31,7 @@
         "emotion": "^10.0.6",
         "emotion-theming": "^10.0.6",
         "react": "^16.7.0",
+        "react-animate-height": "^2.0.8",
         "react-dom": "^16.7.0",
         "react-emotion": "^10.0.0",
         "react-player": "^1.9.3",

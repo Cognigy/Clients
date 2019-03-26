@@ -6,8 +6,11 @@ import { styled } from '../../style';
 const HeaderBar = styled(Toolbar)(({ theme }) => ({
     boxShadow: '0 5px 18px 0 rgba(0, 0, 0, 0.08), 0 5px 32px 0 rgba(0, 0, 0, 0.08), 0 8px 58px 0 rgba(0, 0, 0, 0.08)',
     zIndex: 2,
-    height: theme.unitSize * 9,
-    flexBasis: theme.unitSize * 9
+    minHeight: 'auto',
+    height: theme.blockSize,
+    flexBasis: theme.blockSize,
+    fontSize: 16,
+    fontWeight: 700
 }))
 
 interface HeaderProps {

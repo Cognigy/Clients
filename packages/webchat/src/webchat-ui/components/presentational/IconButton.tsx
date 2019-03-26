@@ -2,53 +2,37 @@ import { styled, IColorProps } from "../../style";
 import { interactionCss, createTransition } from "../../utils/css";
 import tinycolor from 'tinycolor2'
 
-export default styled.button<IColorProps>(({ color, theme }) => {
-    const colors = {
-        weak: theme.greyWeakColor,
-        main: theme.greyColor,
-        strong: theme.greyStrongColor,
-        contrast: theme.greyContrastColor
-    }
+export default styled.button<IColorProps>(({ theme }) => {
 
-    if (color === 'primary') {
-        colors.weak = theme.primaryWeakColor;
-        colors.main = theme.primaryColor;
-        colors.strong = theme.primaryStrongColor;
-        colors.contrast = theme.primaryContrastColor;
-    }
+    const normal = 'hsla(0, 0%, 0%, .24)';
+    const highlight = 'hsla(0, 0%, 0%, .54)';
 
     return {
         // ...interactionCss,
 
-        borderRadius: theme.blockSize,
         padding: theme.unitSize,
-        margin: `${-theme.unitSize}px 0`,
         boxSizing: 'border-box',
-        color: colors.contrast,
-        fill: colors.contrast,
+        color: normal,
+        fill: normal,
         backgroundColor: 'transparent',
-
         border: 'none',
         outline: 'none',
+        margin: 0,
 
-        cursor: 'pointer',
+        '&:not(.disabled)': {
+            cursor: 'pointer',
+        },
 
         transition: createTransition('background-color', 'color', 'fill'),
 
-        '&:disabled': {
-            cursor: 'default',
+        'svg': {
+            width: 22,
+            height: 22
         },
 
-        '&:hover:not(:disabled)': {
-            backgroundColor: tinycolor(colors.main).setAlpha(.7).toHslString(),
-            color: tinycolor(colors.contrast).setAlpha(.7).toHslString(),
-            fill: tinycolor(colors.contrast).setAlpha(.7).toHslString(),
-        },
-
-        '&:active:not(:disabled)': {
-            backgroundColor: colors.main,
-            color: colors.contrast,
-            fill: colors.contrast
+        '&.active, &:hover': {
+            color: highlight,
+            fill: highlight
         }
     }
 });

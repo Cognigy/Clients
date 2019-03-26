@@ -17,7 +17,7 @@ const InputForm = styled.form({
 
 const Input = styled.input(({ theme }) => ({
     display: 'block',
-    height: theme.blockSize * 1.5,
+    height: theme.blockSize * 1,
     border: 'none',
     width: '100%',
     boxSizing: 'border-box',

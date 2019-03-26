@@ -22,5 +22,6 @@ export interface IWebchatConfig {
             menuItems: any[];
         },
         enablePersistentMenu: boolean;
+        title: string;
     }
 }

@@ -143,7 +143,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 <Header
                     connected={config.active}
                     logoUrl={config.settings.headerLogoUrl}
-                    title='Webchat'
+                    title={config.settings.title || 'Cognigy Webchat'}
                 />
                 <HistoryWrapper
                     messages={messages}

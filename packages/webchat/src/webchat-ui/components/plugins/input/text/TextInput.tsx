@@ -76,12 +76,13 @@ const PersistentMenu = styled.div(({ theme }) => ({
 
 const PersistentMenuTitle = styled.h5(({ theme }) => ({
     color: 'hsla(0, 0%, 0%, .3)',
-    padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
+    padding: `${theme.unitSize * 2}px ${theme.unitSize * 4}px`,
     margin: 0
 }));
 
 const PersistentMenuItem = styled.button(({ theme }) => ({
     display: 'block',
+    position: 'relative',
     width: '100%',
     border: 'none',
     backgroundColor: 'transparent',
@@ -91,16 +92,30 @@ const PersistentMenuItem = styled.button(({ theme }) => ({
     textAlign: 'left',
     color: 'hsla(0, 0%, 0%, .87)',
 
-    padding: `${theme.unitSize}px ${theme.unitSize * 3}px`,
+    padding: `${theme.unitSize}px ${theme.unitSize * 4}px`,
     borderTopLeftRadius: theme.unitSize * 2,
     borderBottomLeftRadius: theme.unitSize * 2,
 
     '&:hover': {
-        backgroundColor: 'hsla(0, 0%, 0%, .03)'
+        backgroundColor: 'hsla(0, 0%, 0%, .08)'
     },
 
     '&:active': {
-        backgroundColor: 'hsla(0, 0%, 0%, .08)'
+        backgroundColor: 'hsla(0, 0%, 0%, .12)'
+    },
+
+    '&:after': {
+        display: 'block',
+        position: 'absolute',
+        left: theme.unitSize * 2,
+        top: '50%',
+        marginTop: -2,
+        marginLeft: -2,
+        width: 4,
+        height: 4,
+        content: '""',
+        backgroundColor: 'hsla(0, 0%, 0%, .24)',
+        borderRadius: 2
     }
 }));
 

@@ -8,18 +8,19 @@ import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { IMessage } from '../../common/interfaces/message';
 import { getPluginsForMessage, isFullscreenPlugin } from '../../plugins/helper';
 
-type FromState = Pick<WebchatUIProps, 'messages' | 'open' | 'typingIndicator' | 'inputMode' | 'fullscreenMessage'>;
+type FromState = Pick<WebchatUIProps, 'messages' | 'open' | 'typingIndicator' | 'inputMode' | 'fullscreenMessage' | 'config'>;
 type FromDispatch = Pick<WebchatUIProps, 'onSendMessage' | 'onSetInputMode' | 'onSetFullscreenMessage'>;
-type FromProps = Pick<WebchatUIProps, 'config' | 'messagePlugins' | 'inputPlugins'>;
+type FromProps = Pick<WebchatUIProps, 'messagePlugins' | 'inputPlugins'>;
 type Merge = FromState & FromDispatch & FromProps & Pick<WebchatUIProps, 'fullscreenMessage'>;
 
 export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Merge, StoreState>(
-    ({ messages, ui: { open, typing, inputMode, fullscreenMessage } }) => ({
+    ({ messages, ui: { open, typing, inputMode, fullscreenMessage }, config }) => ({
         messages,
         open,
         typingIndicator: typing,
         inputMode,
-        fullscreenMessage
+        fullscreenMessage,
+        config
     }),
     dispatch => ({
         onSendMessage: (text, data, options) => dispatch(sendMessage({ text, data }, options)),

@@ -9,6 +9,8 @@ import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-c
 import { createBrowserApi } from '../store/api';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { InputPlugin } from '../../common/interfaces/input-plugin';
+import { sendMessage } from '../store/messages/message-middleware';
+import { setConfig } from '../store/config/config-reducer';
 
 export interface WebchatProps {
     url: string;
@@ -20,7 +22,6 @@ export interface WebchatProps {
 interface WebchatState {
     client: WebchatClient;
     store: Store<StoreState>;
-    config: IWebchatConfig | null;
 }
 
 export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
@@ -37,8 +38,7 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
         this.state = {
             client,
-            store,
-            config: null
+            store
         }
     }
 
@@ -48,9 +48,7 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
         client.connect()
             .then(() => {
                 store.dispatch(setOptions(client.socketOptions));
-                this.setState({
-                    config: client.webchatConfig
-                })
+                store.dispatch(setConfig(client.webchatConfig));
             })
     }
 
@@ -61,10 +59,7 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
 
     render() {
         const { url, options, messagePlugins = [], inputPlugins = [], ...props } = this.props;
-        const { store, config } = this.state;
-
-        if (!config)
-            return null;
+        const { store } = this.state;
 
         return (
             <Provider store={store}>
@@ -72,7 +67,6 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
                     {...props}
                     messagePlugins={messagePlugins}
                     inputPlugins={inputPlugins}
-                    config={config}
                 />
             </Provider>
         )

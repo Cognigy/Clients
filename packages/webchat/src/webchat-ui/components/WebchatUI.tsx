@@ -94,6 +94,14 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         });
     }
 
+    componentDidUpdate(prevProps: WebchatUIProps) {
+        if (this.props.config.settings.colorScheme !== prevProps.config.settings.colorScheme) {
+            this.setState({
+                theme: createWebchatTheme({ primaryColor: this.props.config.settings.colorScheme })
+            })
+        }
+    }
+
     renderInput = () => {
         const { inputPlugins } = this.state;
 

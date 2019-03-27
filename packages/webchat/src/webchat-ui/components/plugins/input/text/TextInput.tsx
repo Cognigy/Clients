@@ -1,62 +1,121 @@
 import * as React from 'react';
-import Button from '../../../presentational/Button';
 import Toolbar from '../../../presentational/Toolbar';
 import { styled } from '../../../../style';
 import { InputComponentProps } from '../../../../../common/interfaces/input-plugin';
 import SendIcon from './baseline-send-24px.svg';
+import MenuIcon from './baseline-menu-24px.svg';
+import { IPersistentMenuItem } from '@cognigy/webchat-client/src/interfaces/webchat-config';
 
-export interface TextInputState {
-    text: string;
-}
 
-const InputForm = styled.form({
-    display: 'block',
+const InputForm = styled.form(({ theme }) => ({
+    display: 'flex',
     position: 'relative',
-    marginBottom: 0
-});
+    marginBottom: 0,
 
-const Input = styled.input(({ theme }) => ({
-    display: 'block',
-    height: theme.blockSize * 1,
-    border: 'none',
-    width: '100%',
-    boxSizing: 'border-box',
-    paddingLeft: theme.unitSize * 3,
-    paddingRight: theme.unitSize * 9,
-    outline: 'none',
-    borderBottom: '3px solid transparent',
+    borderBottom: '2px solid transparent',
     borderBottomLeftRadius: theme.unitSize * 2,
     borderBottomRightRadius: theme.unitSize * 2,
     transition: 'border-bottom .2s ease-out',
-    marginBottom: -1,
 
-    '&:focus': {
+    '&[data-active=true]': {
         borderBottomColor: theme.primaryColor
-    }
+    },
 }));
 
-const Submit = styled.button(({ theme }) => ({
+const Input = styled.input(({ theme }) => ({
+    display: 'block',
+    flexGrow: 1,
+    alignSelf: 'stretch',
+    height: 48,
+
+    border: 'none',
+    boxSizing: 'border-box',
+    paddingLeft: theme.unitSize * 2,
+    paddingRight: theme.unitSize * 2,
+    outline: 'none',
+    backgroundColor: 'transparent'
+}));
+
+const Button = styled.button(({ theme }) => ({
     display: 'block',
     width: theme.unitSize * 5,
     height: theme.unitSize * 5,
-    
-    position: 'absolute',
-    right: theme.unitSize * 3,
-    top: '50%',
-    marginTop: - theme.unitSize * 5 / 2,
+    padding: theme.unitSize,
+    margin: theme.unitSize / 2,
+
     backgroundColor: 'transparent',
     border: 'none',
     fill: 'hsla(0, 0%, 0%, .54)',
     cursor: 'pointer',
-    
+    outline: 'none',
+
     '&[disabled]': {
         fill: 'hsla(0, 0%, 0%, .2)',
         cursor: 'default'
     }
-}))
+}));
+
+const MenuButton = styled(Button)(({ theme }) => ({
+    marginLeft: theme.unitSize,
+    marginRight: 0,
+    alignSelf: 'flex-end'
+}));
+
+const SubmitButton = styled(Button)(({ theme }) => ({
+    marginRight: theme.unitSize,
+    marginLeft: 0
+}));
+
+const PersistentMenu = styled.div(({ theme }) => ({
+    minHeight: 0,
+    flexGrow: 1,
+    maxHeight: theme.blockSize * 3,
+    overflowY: 'auto',
+    paddingBottom: theme.unitSize
+}));
+
+const PersistentMenuTitle = styled.h5(({ theme }) => ({
+    color: 'hsla(0, 0%, 0%, .3)',
+    padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
+    margin: 0
+}));
+
+const PersistentMenuItem = styled.button(({ theme }) => ({
+    display: 'block',
+    width: '100%',
+    border: 'none',
+    backgroundColor: 'transparent',
+    outline: 'none',
+    margin: 0,
+    cursor: 'pointer',
+    textAlign: 'left',
+    color: 'hsla(0, 0%, 0%, .87)',
+
+    padding: `${theme.unitSize}px ${theme.unitSize * 3}px`,
+    borderTopLeftRadius: theme.unitSize * 2,
+    borderBottomLeftRadius: theme.unitSize * 2,
+
+    '&:hover': {
+        backgroundColor: 'hsla(0, 0%, 0%, .03)'
+    },
+
+    '&:active': {
+        backgroundColor: 'hsla(0, 0%, 0%, .08)'
+    }
+}));
+
+export interface TextInputState {
+    text: string;
+    mode: 'text' | 'menu';
+    active: boolean;
+}
 
 export class TextInput extends React.PureComponent<InputComponentProps, TextInputState> {
-    state = { text: '' }
+    state = {
+        text: '',
+        mode: 'text',
+        active: false
+    } as TextInputState;
 
     handleChangeState = (e: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
@@ -68,7 +127,10 @@ export class TextInput extends React.PureComponent<InputComponentProps, TextInpu
         e.preventDefault();
         e.stopPropagation();
 
-        const { text } = this.state;
+        const { text, mode } = this.state;
+
+        if (mode !== 'text')
+            return;
 
         if (!text)
             return;
@@ -80,23 +142,72 @@ export class TextInput extends React.PureComponent<InputComponentProps, TextInpu
         })
     }
 
+    handleMenuButton = () => {
+        this.setState({
+            mode: this.state.mode === 'menu'
+                ? 'text'
+                : 'menu'
+        });
+    }
+
+    handleMenuItem = (item: IPersistentMenuItem) => {
+        this.props.onSendMessage(item.payload, null, { label: item.title });
+    }
+
     render() {
         const { props, state } = this;
-        const { text } = state;
+        const { text, active, mode } = state;
+        const {
+            enablePersistentMenu,
+            persistentMenu
+        } = props.config.settings;
+        const {
+            title,
+            menuItems
+        } = persistentMenu;
 
         return (
-            <InputForm onSubmit={this.handleSubmit}>
-                <Input
-                    autoFocus
-                    value={text}
-                    onChange={this.handleChangeState}
-                    placeholder={props.config.settings.inputPlaceholder}
-                />
-                <Submit
-                    disabled={this.state.text === ''}
-                >
-                    <SendIcon />
-                </Submit>
+            <InputForm
+                data-active={active}
+                onSubmit={this.handleSubmit}
+            >
+                {enablePersistentMenu && (
+                    <MenuButton type='button' onClick={this.handleMenuButton}>
+                        <MenuIcon />
+                    </MenuButton>
+                )}
+                {mode === 'text' && (
+                    <>
+                        <Input
+                            autoFocus
+                            value={text}
+                            onChange={this.handleChangeState}
+                            onFocus={() => this.setState({ active: true })}
+                            onBlur={() => this.setState({ active: false })}
+                            placeholder={props.config.settings.inputPlaceholder}
+                        />
+                        <SubmitButton disabled={this.state.text === ''}>
+                            <SendIcon />
+                        </SubmitButton>
+                    </>
+                )}
+                {mode === 'menu' && (
+                    <PersistentMenu>
+                        {title && (
+                            <PersistentMenuTitle>
+                                {title}
+                            </PersistentMenuTitle>
+                        )}
+                        {menuItems.map(item => (
+                            <PersistentMenuItem
+                                key={`${item.title}${item.payload}`}
+                                onClick={() => this.handleMenuItem(item)}
+                            >
+                                {item.title}
+                            </PersistentMenuItem>
+                        ))}
+                    </PersistentMenu>
+                )}
             </InputForm>
         )
     }

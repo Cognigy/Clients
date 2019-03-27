@@ -122,6 +122,9 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, onSetFullscreenMessage, ...restProps } = props;
         const { theme } = state;
 
+        if (!this.props.config.active)
+            return null;
+
         return (
             <>
                 <ThemeProvider theme={theme}>
@@ -191,6 +194,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
             <>
                 {messages.map((message, index) => (
                     <MessagePluginRenderer
+                        key={index}
                         message={message}
                         onSendMessage={onSendMessage}
                         onSetFullscreen={() => this.props.onSetFullscreenMessage(message)}

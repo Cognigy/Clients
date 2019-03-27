@@ -8,7 +8,7 @@ const getInitialState = (): ConfigState => ({
     active: false,
     settings: {
         backgroundImageUrl: '',
-        colorScheme: '#fab',
+        colorScheme: '',
         designTemplate: 1,
         displayGetStartedButton: false,
         enableFileUpload: false,

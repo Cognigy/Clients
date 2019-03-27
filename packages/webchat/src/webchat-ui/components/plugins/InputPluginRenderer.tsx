@@ -25,7 +25,8 @@ const SmallToolbar = styled(Toolbar)({
 
 const InputRoot = styled.div(({ theme }) => ({
     position: 'relative', 
-    boxShadow: theme.shadow
+    boxShadow: theme.shadow,
+    backgroundColor: 'white'
 }))
 
 export default ({ messages, config, onSendMessage, plugins, inputMode, onSetInputMode, ...props }: InputProps): JSX.Element => {

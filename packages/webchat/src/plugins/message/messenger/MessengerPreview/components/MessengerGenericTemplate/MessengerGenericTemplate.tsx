@@ -75,13 +75,13 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
             return styles;
         }
 
-        renderElement(element: IFBMGenericTemplateElement) {
+        renderElement = (element: IFBMGenericTemplateElement, index?: number) => {
 
             const { onAction, ...divProps } = this.props;
             const { image_url, title, subtitle, buttons, default_action } = element;
 
             return (
-                <ElementRoot>
+                <ElementRoot key={index}>
                     <Frame>
                         {image_url && (
                             <>
@@ -132,7 +132,7 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
                     showStatus={false}
                     centerMode={true}
                 >
-                    {elements.map(element => this.renderElement(element))}
+                    {elements.map(this.renderElement)}
                 </CarouselRoot>
             )
         }

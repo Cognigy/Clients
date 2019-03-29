@@ -11,9 +11,11 @@ import { Carousel } from 'react-responsive-carousel';
 
 import './carousel.css';
 import { element } from 'prop-types';
+import { IWebchatConfig } from '@cognigy/webchat-client/src/interfaces/webchat-config';
 
 export interface IMessengerGenericTemplateProps extends IWithFBMActionEventHandler {
     payload: IFBMGenericTemplatePayload;
+    config: IWebchatConfig;
 }
 
 export interface IMessengerGenericTemplateState {
@@ -34,7 +36,12 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
         '.slide': {
             paddingLeft: theme.unitSize * 2,
             paddingRight: theme.unitSize * 2,
-            paddingBottom: 32
+            paddingBottom: 32,
+            display: 'flex',
+
+            '&>*': {
+                flexGrow: 1
+            }
         },
 
 
@@ -52,7 +59,11 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
     }));
 
     const Frame = styled(MessengerFrame)({
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+
+        '&.wide': {
+            width: 320
+        }
     });
 
     const Image = styled.div<{ url: string }>(({ url }) => ({
@@ -80,9 +91,11 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
             const { onAction, ...divProps } = this.props;
             const { image_url, title, subtitle, buttons, default_action } = element;
 
+            const isCentered = this.props.config.settings.designTemplate === 2
+
             return (
                 <ElementRoot key={index}>
-                    <Frame>
+                    <Frame className={isCentered ? 'wide' : ''}>
                         {image_url && (
                             <>
                                 <Image

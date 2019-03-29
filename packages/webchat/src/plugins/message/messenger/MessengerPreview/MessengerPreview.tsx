@@ -13,11 +13,13 @@ import { transformAttachmentUploadApiMessage } from './lib/transform';
 import { FBMActionEventHandler } from './MessengerPreview.interface';
 import { MessagePluginFactoryProps } from '../../../../common/interfaces/message-plugin';
 import { getMessengerTextWithQuickReplies } from './components/MessengerTextWithQuickReplies/MessengerTextWithQuickReplies';
+import { IWebchatConfig } from '@cognigy/webchat-client/src/interfaces/webchat-config';
 
 export interface IMessengerPreviewProps extends React.HTMLProps<HTMLDivElement> {
     /** input.data._cognigy._facebook */
     message: IFBMMessage;
     onAction?: FBMActionEventHandler;
+    config: IWebchatConfig;
 }
 
 export const getMessengerPreview = ({ React, styled }: MessagePluginFactoryProps) => {
@@ -29,7 +31,7 @@ export const getMessengerPreview = ({ React, styled }: MessagePluginFactoryProps
     const MessengerTextWithQuickReplies = getMessengerTextWithQuickReplies({ React, styled });
 
     const MessengerPreview = (props: IMessengerPreviewProps) => {
-        const { message, onAction: handleAction, ...divProps } = props;
+        const { message, onAction: handleAction, config, ...divProps } = props;
 
         const { attachment } = message as IFBMAttachmentMessage;
 
@@ -65,6 +67,7 @@ export const getMessengerPreview = ({ React, styled }: MessagePluginFactoryProps
                                     {...divProps}
                                     payload={payload as IFBMGenericTemplatePayload}
                                     onAction={onAction}
+                                    config={config}
                                 />
                             )
                         }

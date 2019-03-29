@@ -10,7 +10,7 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
 
     return ({
         match: ({ data }) => data && data._cognigy && data._cognigy._facebook,
-        component: ({ message, onSendMessage }: MessageComponentProps) => (
+        component: ({ message, onSendMessage, config }: MessageComponentProps) => (
             <MessengerPreview
                 message={message.data._cognigy._facebook.message}
                 onAction={(e, action) => {
@@ -22,6 +22,7 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
                         onSendMessage(payload, null, { label: title });
                     }
                 }}
+                config={config}
             />
         )
     })
@@ -40,7 +41,7 @@ const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
                 return false;
             }
         },
-        component: ({ message, onSendMessage }: MessageComponentProps) => (
+        component: ({ message, onSendMessage, config }: MessageComponentProps) => (
             <MessengerPreview
                 message={message.data._cognigy._facebook.message}
                 onAction={(e, action) => {
@@ -52,6 +53,7 @@ const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
                         onSendMessage(payload, null, { label: title });
                     }
                 }}
+                config={config}
             />
         ),
         options: {

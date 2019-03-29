@@ -23,58 +23,93 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
   const DatePickerRoot = styled.div(({ theme }) => ({
     [datePickerDaySelector]: {
-      backgroundColor: theme.primaryColor,
+      background: theme.primaryGradient,
       color: theme.primaryContrastColor,
-      borderColor: theme.primaryStrongColor
     }
   }));
 
-  const NotFullscreen = styled.button(({ theme }) => ({
-    backgroundColor: theme.primaryColor,
-    color: theme.primaryContrastColor,
-    border: "none",
-    fontSize: "100%",
-    fontFamily: "Helvetica",
-    borderRadius: "10px",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-    height: "40px"
-
-  }));
-
-  const SubmitButton = styled.button(({ theme }) => ({
-    backgroundColor: theme.primaryColor,
-    color: theme.primaryContrastColor,
-    width: "40%",
-    border: "none",
-    fontSize: "100%",
-    fontFamily: "Helvetica",
-    borderRadius: "10px",
-    cursor: "pointer",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-    height: "40px"
-
-  }));
-
-  const CancelButton = styled.button(({ theme }) => ({
+  const Button = styled.button(({ theme }) => ({
     backgroundColor: theme.greyColor,
     color: theme.greyContrastColor,
-    fontSize: "100%",
-    fontFamily: "Helvetica",
-    borderRadius: "10px",
+
     cursor: "pointer",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-    height: "40px"
+    border: "none",
+
+    height: 40,
+
+    padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
+    borderRadius: theme.unitSize * 2,
   }));
 
-  const OpenDatepickerButton = styled.button(({ theme }) => ({
-    fontSize: "16px",
-    fontFamily: "Arial",
-    padding: "2%",
-    borderRadius: "10px",
-    cursor: "pointer"
+  const PrimaryButton = styled(Button)(({ theme }) => ({
+    background: theme.primaryGradient,
+    color: theme.primaryContrastColor,
   }));
 
-  let datepickerWasOpen = false;
+  const OutlinedButton = styled(Button)(({ theme }) => ({
+    backgroundColor: 'transparent',
+    border: `1px solid ${theme.primaryColor}`,
+    color: theme.primaryColor
+  }));
+
+  const NotFullscreen = styled.div(({ theme }) => ({
+    background: theme.primaryGradient,
+    borderRadius: theme.unitSize * 2,
+    borderBottomLeftRadius: 0,
+    boxShadow: theme.messageShadow,
+    color: theme.primaryContrastColor,
+    padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
+  }));
+
+  const SubmitButton = styled(PrimaryButton)(({ theme }) => ({
+    flexGrow: 2,
+    marginLeft: theme.unitSize * 2
+  }));
+
+  const CancelButton = styled(Button)(({ theme }) => ({
+    flexGrow: 1
+  }));
+
+  const OpenDatepickerButton = styled(OutlinedButton)(({ theme }) => ({
+    '&[disabled]': {
+      borderColor: theme.greyColor,
+      color: theme.greyColor,
+      cursor: 'default'
+    }
+  }));
+
+  const Padding = styled.div(({ theme }) => ({
+    paddingTop: theme.unitSize,
+    paddingBottom: theme.unitSize,
+    paddingLeft: theme.unitSize * 2,
+    paddingRight: theme.unitSize * 2
+  }));
+
+  const Header = styled(Padding)(({ theme }) => ({
+    background: theme.primaryGradient,
+    color: theme.primaryContrastColor,
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: 'bolder',
+    boxShadow: theme.shadow,
+    zIndex: 2
+  }));
+
+  const Content = styled(Padding)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+  }))
+
+  const Footer = styled(Padding)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    boxShadow: theme.shadow,
+  }));
+
+  const processedMessages: Set<string> = new Set();
 
   class DatePicker extends React.Component<MessageComponentProps, IState> {
     constructor(props) {
@@ -91,25 +126,28 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       } catch (e) {
         moment.locale("en");
       }
-      
+
+      if (message.source === 'bot')
+        processedMessages.add(message.traceId);
 
       this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
         _plugin: "date-picker",
         date: this.state.date,
         abort: false
       });
-
-      datepickerWasOpen = true;
     }
 
     handleAbort = () => {
+      const { message } = this.props;
+
+      if (message.source === 'bot')
+        processedMessages.add(message.traceId);
+
       this.props.onSendMessage("", {
         _plugin: "date-picker",
         date: null,
         abort: true
       });
-
-      datepickerWasOpen = true;
     }
 
     render() {
@@ -150,19 +188,25 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
       const { date } = this.state;
 
+      let datepickerWasOpen = false;
+      if (message.source === 'bot') {
+        datepickerWasOpen = processedMessages.has(message.traceId);
+      }
+
       if (!isFullscreen) {
         if (datepickerWasOpen) {
-          return <NotFullscreen>{options.event}</NotFullscreen>
+          return <OpenDatepickerButton disabled>{dateButtonText}</OpenDatepickerButton>
         }
+
         return <OpenDatepickerButton onClick={onSetFullscreen}>{dateButtonText}</OpenDatepickerButton>
       }
 
       return (
         <DatePickerRoot {...attributes} style={{ display: "flex", flexDirection: "column" }}>
-          <div className="info">
-            <h2 className="title">{options.event}</h2>
-          </div>
-          <div className="datepicker">
+          <Header className="info">
+            <h2>{options.event}</h2>
+          </Header>
+          <Content>
             <Flatpickr
               value={date}
               onChange={date => { this.setState({ date }) }}
@@ -170,11 +214,11 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
                 options
               }
             />
-          </div>
-          <div className="controlButtons">
+          </Content>
+          <Footer>
             <CancelButton onClick={this.handleAbort} className="cancelButton">{cancelButtonText}</CancelButton>
             <SubmitButton onClick={this.handleSubmit} className="submitButton">{submitButtonText}</SubmitButton>
-          </div>
+          </Footer>
         </DatePickerRoot>
       );
     }

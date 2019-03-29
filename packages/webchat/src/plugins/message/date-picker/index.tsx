@@ -7,7 +7,7 @@ import './flatpickr.css';
 
 // languages
 import l10n from './langHelper';
-import moment from 'moment';
+import moment, { locale } from 'moment';
 
 import { MessageComponentProps, MessagePlugin, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
@@ -38,7 +38,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     borderRadius: "10px",
     boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
     height: "40px"
-  
+
   }));
 
   const SubmitButton = styled.button(({ theme }) => ({
@@ -83,11 +83,16 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         date: [new Date()],
       };
     }
-  
+
     handleSubmit = () => {
       const { message } = this.props
-      moment.locale(message.data._plugin.data.locale);
-  
+      try {
+        moment.locale(message.data._plugin.data.locale);
+      } catch (e) {
+        moment.locale("en");
+      }
+      
+
       this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
         _plugin: "date-picker",
         date: this.state.date,
@@ -96,7 +101,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
       datepickerWasOpen = true;
     }
-  
+
     handleAbort = () => {
       this.props.onSendMessage("", {
         _plugin: "date-picker",
@@ -106,51 +111,63 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
       datepickerWasOpen = true;
     }
-  
+
     render() {
       const { onSendMessage, message, config, attributes, isFullscreen, onSetFullscreen } = this.props;
-  
-      // Message Data
-      const enableTime = message.data._plugin.data.enableTime;
-      const mode = message.data._plugin.data.mode;
-      const disable = message.data._plugin.data.disable;
-      const event = message.data._plugin.data.eventName;
-      const minDate = message.data._plugin.data.minDate;
-      const maxDate = message.data._plugin.data.maxDate;
-      const locale = message.data._plugin.data.locale;
-  
-      const dateButtonText = message.data._plugin.data.openPickerButtonText;
-      const cancelButtonText = message.data._plugin.data.cancelButtonText;
-      const submitButtonText = message.data._plugin.data.submitButtonText;
+
+      const options = {
+        event: "Pick a date",
+        locale: l10n["en"],
+        inline: true,
+        static: true,
+        enableTime: true,
+        mode: "single",
+        disable: [],
+        minDate: "",
+        maxDate: ""
+      }
+
+      let dateButtonText = "pick date";
+      let cancelButtonText = "cancel";
+      let submitButtonText = "submit";
+
+      try {
+        // Message Data
+        options.enableTime = message.data._plugin.data.enableTime;
+        options.mode = message.data._plugin.data.mode;
+        options.disable = message.data._plugin.data.disable || [];
+        options.event = message.data._plugin.data.eventName;
+        options.minDate = message.data._plugin.data.minDate;
+        options.maxDate = message.data._plugin.data.maxDate;
+        options.locale = message.data._plugin.data.locale;
+
+        dateButtonText = message.data._plugin.data.openPickerButtonText;
+        cancelButtonText = message.data._plugin.data.cancelButtonText;
+        submitButtonText = message.data._plugin.data.submitButtonText;
+      } catch (e) {
+
+      }
+
       const { date } = this.state;
-  
+
       if (!isFullscreen) {
         if (datepickerWasOpen) {
-          return <NotFullscreen>{event}</NotFullscreen>
+          return <NotFullscreen>{options.event}</NotFullscreen>
         }
         return <OpenDatepickerButton onClick={onSetFullscreen}>{dateButtonText}</OpenDatepickerButton>
       }
-  
+
       return (
         <DatePickerRoot {...attributes} style={{ display: "flex", flexDirection: "column" }}>
           <div className="info">
-            <h2 className="title">{event}</h2>
+            <h2 className="title">{options.event}</h2>
           </div>
           <div className="datepicker">
             <Flatpickr
               value={date}
               onChange={date => { this.setState({ date }) }}
               options={
-                {
-                  locale: l10n[locale],
-                  inline: true,
-                  static: true,
-                  enableTime: enableTime,
-                  mode: mode,
-                  disable: disable,
-                  minDate: minDate,
-                  maxDate: maxDate
-                }
+                options
               }
             />
           </div>

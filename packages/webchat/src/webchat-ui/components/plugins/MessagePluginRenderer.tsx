@@ -47,9 +47,13 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFu
                     />
                 );
 
-                const key = `${index}:${JSON.stringify(message)}`
+                const key = `${index}:${JSON.stringify(message)}`;
 
-                if (options && options.fullwidth)
+                if (isFullscreen) {
+                    return messageElement;
+                }
+
+                if (options && options.fullwidth) {
                     return (
                         <FullWidthMessageRow
                             key={key}
@@ -57,6 +61,7 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFu
                             {messageElement}
                         </FullWidthMessageRow>
                     )
+                }
 
                 const avatarImg = message.source === 'bot'
                     ? config.settings.messageLogoUrl || defaultBotAvatar

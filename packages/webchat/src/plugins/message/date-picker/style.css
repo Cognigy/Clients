@@ -2,22 +2,6 @@
  [data-cognigy-webchat-root] .flatpickr-input{
      display: none;
  }
- 
- 
- [data-cognigy-webchat-root] .info {
-    display: flex;
-    flex-direction: column;
-    margin: 0px;
-    padding: 3%;
-    background-color: white;
-}
-
-[data-cognigy-webchat-root] .title {
-    font-size: 200%;
-    font-family: Helvetica, sans-serif;
-    font-weight: bolder;
-    color: rgb(0,0,0,0.7);
-}
 
 /* Date Picker */
 

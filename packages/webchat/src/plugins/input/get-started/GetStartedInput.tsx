@@ -15,7 +15,7 @@ export default ({ onSendMessage, config }: InputComponentProps) => (
             onClick={() => onSendMessage(config.settings.getStartedPayload, null, { label: config.settings.getStartedText })}
             color='primary'
         >
-            {config.settings.getStartedButtonText}
+            {config.settings.getStartedButtonText || config.settings.getStartedText}
         </GetStartedButton>
     </Toolbar>
 )

@@ -10,7 +10,7 @@ export interface IWebchatSettings {
     enableSTT: boolean;
     enableTTS: boolean;
     enableFileUpload: boolean;
-    displayGetStartedButton: boolean;
+    startBehavior: "none" | "button" | "injection";
     getStartedButtonText: string;
     getStartedPayload: string;
     getStartedText: string;

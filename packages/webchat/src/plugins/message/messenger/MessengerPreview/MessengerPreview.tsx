@@ -95,34 +95,6 @@ export const getMessengerPreview = ({ React, styled }: MessagePluginFactoryProps
 
                     break;
                 }
-
-                // this part checks whether we use the 'messenger upload API'
-                // The API will first upload the image/audio/video/file and then render a 
-                // 'media' template.
-                // we are checking for that syntax here and converting it to a 'media' template
-
-                // TODO: move this somewhere else, SoC
-
-                // @ts-ignore
-                case 'image':
-                // @ts-ignore
-                case 'video':
-                // @ts-ignore
-                case 'audio': {
-                    const newMessage = transformAttachmentUploadApiMessage(message as any)
-                    // @ts-ignore
-                    const payload = newMessage.attachment.payload as IFBMMediaTemplatePayload;
-
-                    return (
-                        <MessengerMediaTemplate
-                            {...divProps}
-                            payload={payload as IFBMMediaTemplatePayload}
-                            onAction={onAction}
-                        />
-                    )
-                }
-
-
             }
         }
 

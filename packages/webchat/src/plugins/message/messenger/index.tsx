@@ -2,6 +2,7 @@
 import { MessageComponentProps, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { getMessengerPreview } from "./MessengerPreview/MessengerPreview";
 import { registerMessagePlugin } from '../../helper';
+import { transformMessage } from "./MessengerPreview/lib/transform";
 
 const getMessengerPayload = message => {
     const { data } = message;
@@ -48,7 +49,7 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
         match: isMessengerPayload,
         component: ({ message, onSendMessage, config }: MessageComponentProps) => (
             <MessengerPreview
-                message={getMessengerPayload(message).message}
+                message={transformMessage(getMessengerPayload(message).message)}
                 onAction={(e, action) => {
                     // @ts-ignore
                     if (action.type === 'postback' || action.content_type === 'text') {
@@ -79,7 +80,7 @@ const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
         match: isMessengerGenericPayload,
         component: ({ message, onSendMessage, config }: MessageComponentProps) => (
             <MessengerPreview
-                message={getMessengerPayload(message).message}
+                message={transformMessage(getMessengerPayload(message).message)}
                 onAction={(e, action) => {
                     // @ts-ignore
                     if (action.type === 'postback' || action.content_type === 'text') {

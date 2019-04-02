@@ -205,11 +205,7 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
     }
 
     handleAbort = () => {
-      this.props.onSendMessage("", {
-        _plugin: "flightseat-picker",
-        selectedSeats: this.state.selectedSeats,
-        abort: true
-      });
+      this.props.onDismissFullscreen();
     }
 
     render() {

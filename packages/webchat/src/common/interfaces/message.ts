@@ -1,14 +1,14 @@
-interface IBaseMessage {
+export interface IBaseMessage {
     text?: string;
     data?: any;
     source: string;
 }
 
-interface IUserMessage extends IBaseMessage {
+export interface IUserMessage extends IBaseMessage {
     source: 'user';
 }
 
-interface IBotMessage extends IBaseMessage {
+export interface IBotMessage extends IBaseMessage {
     source: 'bot';
     traceId: string;
 }

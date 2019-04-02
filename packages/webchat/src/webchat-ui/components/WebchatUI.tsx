@@ -28,6 +28,7 @@ export interface WebchatUIProps {
     messages: IMessage[];
     fullscreenMessage?: IMessage;
     onSetFullscreenMessage: (message: IMessage) => void;
+    onDismissFullscreenMessage: () => void;
 
     onSendMessage: MessageSender;
     config: IWebchatConfig;
@@ -119,7 +120,17 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     render() {
         const { props, state } = this;
-        const { messages, onSendMessage, config, open, fullscreenMessage, typingIndicator, onSetInputMode, onSetFullscreenMessage, ...restProps } = props;
+        const { messages,
+            onSendMessage,
+            config,
+            open,
+            fullscreenMessage,
+            typingIndicator,
+            onSetInputMode,
+            onSetFullscreenMessage,
+            onDismissFullscreenMessage,
+            ...restProps
+        } = props;
         const { theme } = state;
 
         if (!this.props.config.active)
@@ -147,7 +158,11 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
     }
 
     renderRegularLayout() {
-        const { config, messages, typingIndicator } = this.props;
+        const {
+            config,
+            messages,
+            typingIndicator
+        } = this.props;
 
         return (
             <>
@@ -165,7 +180,13 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
     }
 
     renderFullscreenMessageLayout() {
-        const { onSendMessage, config, fullscreenMessage } = this.props;
+        const {
+            onSendMessage,
+            config,
+            fullscreenMessage,
+            onDismissFullscreenMessage
+        } = this.props;
+
         const { messagePlugins } = this.state;
 
         return (
@@ -174,6 +195,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 config={config}
                 plugins={messagePlugins}
                 onSetFullscreen={() => { }}
+                onDismissFullscreen={onDismissFullscreenMessage}
                 message={fullscreenMessage as IMessage}
             />
         )
@@ -195,6 +217,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                         message={message}
                         onSendMessage={onSendMessage}
                         onSetFullscreen={() => this.props.onSetFullscreenMessage(message)}
+                        onDismissFullscreen={() => {}}
                         config={config}
                         plugins={messagePlugins}
                     />

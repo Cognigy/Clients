@@ -9,7 +9,7 @@ import { IMessage } from '../../common/interfaces/message';
 import { getPluginsForMessage, isFullscreenPlugin } from '../../plugins/helper';
 
 type FromState = Pick<WebchatUIProps, 'messages' | 'open' | 'typingIndicator' | 'inputMode' | 'fullscreenMessage' | 'config'>;
-type FromDispatch = Pick<WebchatUIProps, 'onSendMessage' | 'onSetInputMode' | 'onSetFullscreenMessage'>;
+type FromDispatch = Pick<WebchatUIProps, 'onSendMessage' | 'onSetInputMode' | 'onSetFullscreenMessage' | 'onDismissFullscreenMessage'>;
 type FromProps = Pick<WebchatUIProps, 'messagePlugins' | 'inputPlugins'>;
 type Merge = FromState & FromDispatch & FromProps & Pick<WebchatUIProps, 'fullscreenMessage'>;
 
@@ -25,7 +25,8 @@ export const ConnectedWebchatUI = connect<FromState, FromDispatch, FromProps, Me
     dispatch => ({
         onSendMessage: (text, data, options) => dispatch(sendMessage({ text, data }, options)),
         onSetInputMode: inputMode => dispatch(setInputMode(inputMode)),
-        onSetFullscreenMessage: message => dispatch(setFullscreenMessage(message))
+        onSetFullscreenMessage: message => dispatch(setFullscreenMessage(message)),
+        onDismissFullscreenMessage: () => dispatch(setFullscreenMessage(undefined))
     }),
     ({ fullscreenMessage, ...state }, dispatch, props) => {
         if (!fullscreenMessage) {

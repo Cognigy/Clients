@@ -140,14 +140,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     handleAbort = () => {
       const { message } = this.props;
 
-      if (message.source === 'bot')
-        processedMessages.add(message.traceId);
-
-      this.props.onSendMessage("", {
-        _plugin: "date-picker",
-        date: null,
-        abort: true
-      });
+      this.props.onDismissFullscreen();
     }
 
     render() {

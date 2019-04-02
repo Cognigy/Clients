@@ -30,10 +30,34 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFu
         ? props
         : undefined;
 
+    const avatarImg = message.source === 'bot'
+        ? config.settings.messageLogoUrl || defaultBotAvatar
+        : defaultUserImg;
+
     const matchedPlugins = getPluginsForMessage(plugins)(message);
+
+    const regularMessagePlugin = plugins.slice(-1)[0];
+    const lastMatchedPlugin = matchedPlugins.slice(-1)[0];
+    const shouldRenderAdditionalText = lastMatchedPlugin !== regularMessagePlugin && message.text && !isFullscreen;
+
 
     return (
         <>
+            {shouldRenderAdditionalText && (
+                <MessageRow
+                    align={message.source === 'bot' ? 'left' : 'right'}
+                >
+                    <Avatar src={avatarImg} />
+                    <regularMessagePlugin.component
+                        config={config}
+                        message={message}
+                        onSendMessage={onSendMessage}
+                        onSetFullscreen={onSetFullscreen}
+                        attributes={attributes}
+                        isFullscreen={isFullscreen}
+                    />
+                </MessageRow>
+            )}
             {matchedPlugins.map(({ component: Component, options }, index) => {
                 const messageElement = (
                     <Component
@@ -62,10 +86,6 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFu
                         </FullWidthMessageRow>
                     )
                 }
-
-                const avatarImg = message.source === 'bot'
-                    ? config.settings.messageLogoUrl || defaultBotAvatar
-                    : defaultUserImg;
 
 
                 return (

@@ -156,10 +156,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                     logoUrl={config.settings.headerLogoUrl}
                     title={config.settings.title || 'Cognigy Webchat'}
                 />
-                <HistoryWrapper
-                    messages={messages}
-                    typingIndicator={typingIndicator}
-                >
+                <HistoryWrapper>
                     {this.renderHistory()}
                 </HistoryWrapper>
                 {this.renderInput()}

@@ -1,20 +1,15 @@
 import * as React from 'react'
+import { Thumbs } from 'react-responsive-carousel';
 
 
 const CLIENT_HEIGHT_OFFSET = 10;
 
-interface OuterProps extends React.HTMLProps<HTMLDivElement> {
-    lastRelevantMessageId?: string;
-}
-
-interface State {
-    scrollAtBottom: boolean;
-    container: HTMLDivElement | null;
-}
+export interface OuterProps extends React.HTMLProps<HTMLDivElement> {}
 
 type InnerProps = OuterProps;
 
-export class ChatScroller extends React.Component<InnerProps, State> {
+export class ChatScroller extends React.Component<InnerProps> {
+    rootRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: InnerProps) {
         super(props);
@@ -23,79 +18,46 @@ export class ChatScroller extends React.Component<InnerProps, State> {
             scrollAtBottom: true,
             container: null
         }
-    }
 
-    static getDerivedStateFromProps(nextProps: InnerProps, prevState: State) {
-        const { container, scrollAtBottom } = prevState;
-
-        if (!container)
-            return null;
-
-        const { scrollHeight, scrollTop, clientHeight } = container;
-
-        const targetScrollAtBottom = (scrollHeight - scrollTop <= clientHeight + CLIENT_HEIGHT_OFFSET)
-
-        if (scrollAtBottom !== targetScrollAtBottom) {
-            const newState: State = {
-                ...prevState,
-                scrollAtBottom: targetScrollAtBottom
-            }
-
-            return newState;
-        }
-
-        return null;
-    }
-
-    componentDidUpdate(prevProps: InnerProps) {
-        const { container, scrollAtBottom } = this.state;
-
-        // we need the container reference to perform a scroll on it
-        if (!container)
-            return;
-
-        // do not perform a scroll if 
-        if (!scrollAtBottom)
-            return;
-
-
-        const { lastRelevantMessageId: newMessageId } = this.props;
-        const { lastRelevantMessageId: oldMessageId } = prevProps;
-
-        // we only scroll if the relevant message id changed
-        if (oldMessageId === newMessageId)
-            return;
-
-
-        this.scrollToBottom();
-    }
-
-    setContainerRef: React.Ref<HTMLDivElement> = (element) => {
-        this.setState({
-            container: element
-        });
+        this.rootRef = React.createRef();
     }
 
     scrollToBottom = () => {
-        const { container } = this.state;
+        const root = this.rootRef.current;
 
-        if (!container)
+        // we need the container reference to perform a scroll on it
+        if (!root)
             return;
 
-        const { scrollHeight, clientHeight } = container;
+        root.scrollTop = root.scrollHeight - root.clientHeight;
+    }
 
-        const maxScrollTop = scrollHeight - clientHeight;
+    getSnapshotBeforeUpdate() {
+        const root = this.rootRef.current;
+        if (!root)
+            return false;
 
-        container.scrollTop = maxScrollTop;
+        const isScrolledToBottom = root.scrollHeight - root.scrollTop <= root.clientHeight + CLIENT_HEIGHT_OFFSET;
+
+        return isScrolledToBottom
+    }
+
+    componentDidUpdate(prevProps: InnerProps, prevState, wasScrolledToBottom: boolean) {
+        if (wasScrolledToBottom) {
+            this.scrollToBottom();
+        }
+    }
+
+    componentDidMount() {
+        this.scrollToBottom();
     }
 
     render() {
-        const { lastRelevantMessageId, ...divProps } = this.props;
 
         return (
             <div
-                {...divProps}
-                ref={this.setContainerRef}
+                {...this.props}
+                ref={this.rootRef}
             />
         )
     }

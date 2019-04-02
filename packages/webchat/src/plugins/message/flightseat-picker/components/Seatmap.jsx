@@ -50,7 +50,7 @@ export default class Seatmap extends React.Component {
 
     render() {
         const { width } = this.state;
-        return <div style={{ width }}>{ this.renderRows() }</div>;
+        return <div>{ this.renderRows() }</div>;
     };
 
     renderRows() {

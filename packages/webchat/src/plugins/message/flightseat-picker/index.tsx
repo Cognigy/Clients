@@ -9,19 +9,77 @@ interface State {
 }
 
 const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
-  const SubmitButton = styled.button(({ theme }) => ({
-    backgroundColor: theme.primaryColor,
+
+  const Root = styled.div(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+
+    '.Seat': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+
+      width: theme.unitSize * 5,
+      height: theme.unitSize * 5,
+      color: theme.greyContrastColor,
+
+      margin: theme.unitSize / 2,
+
+      borderWidth: 1,
+      borderColor: theme.greyColor,
+      borderStyle: 'solid',
+      borderRadius: theme.unitSize,
+
+      userSelect: 'none',
+    },
+
+    '.Seat--enabled': {
+      backgroundColor: theme.greyColor,
+      color: theme.greyContrastColor,
+      cursor: 'pointer',
+
+      '&:hover': {
+        borderColor: theme.primaryColor,
+        color: theme.primaryColor,
+        backgroundColor: 'transparent'
+      },
+    },
+
+    '.Seat--selected': {
+      background: theme.primaryGradient,
+      color: theme.primaryContrastColor,
+      cursor: 'pointer',
+
+      '&:hover': {
+        backgroundColor: theme.primaryStrongColor
+      }
+    },
+
+    '.Seat--reserved': {
+      color: theme.greyContrastColor,
+
+      cursor: 'not-allowed',
+
+      opacity: .5
+    }
+  }));
+
+  const Padding = styled.div(({ theme }) => ({
+    paddingTop: theme.unitSize,
+    paddingBottom: theme.unitSize,
+    paddingLeft: theme.unitSize * 2,
+    paddingRight: theme.unitSize * 2
+  }));
+
+  const Header = styled(Padding)(({ theme }) => ({
+    background: theme.primaryGradient,
     color: theme.primaryContrastColor,
-    width: "40%",
-    border: "none",
-    fontSize: "100%",
-    fontFamily: "Helvetica",
-    borderRadius: "10px",
-    cursor: "pointer",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-    height: "40px"
-
-
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    boxShadow: theme.shadow,
+    zIndex: 2
   }));
 
   const NotFullscreen = styled.button(({ theme }) => ({
@@ -36,17 +94,62 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
 
   }));
 
-
-  const CancelButton = styled.button(({ theme }) => ({
+  const Button = styled.button(({ theme }) => ({
     backgroundColor: theme.greyColor,
     color: theme.greyContrastColor,
-    width: "20%",
-    fontSize: "100%",
-    fontFamily: "Helvetica",
-    borderRadius: "10px",
+
     cursor: "pointer",
-    boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-    height: "40px"
+    border: "none",
+
+    height: 40,
+
+    padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
+    borderRadius: theme.unitSize * 2,
+  }));
+
+  const PrimaryButton = styled(Button)(({ theme }) => ({
+    background: theme.primaryGradient,
+    color: theme.primaryContrastColor,
+  }));
+
+  const SubmitButton = styled(PrimaryButton)(({ theme }) => ({
+    flexGrow: 2,
+    marginLeft: theme.unitSize * 2
+  }));
+
+  const CancelButton = styled(Button)(({ theme }) => ({
+    flexGrow: 1
+  }));
+
+  const Footer = styled(Padding)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    boxShadow: theme.shadow,
+  }));
+
+  const Content = styled(Padding)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    flexGrow: 1,
+    flexShrink: 0
+  }))
+
+  const HeaderTitle = styled.h1(({ theme }) => ({
+    fontSize: '2em'
+  }));
+
+  const Table = styled.table(({ theme }) => ({ }));
+  const TableRow = styled.tr(({ theme }) => ({ }));
+  const TableHead = styled.td(({ theme }) => ({ 
+    width: '33.3%',
+    color: theme.primaryContrastColor,
+    opacity: .8,
+  }));
+  const TableColumn = styled.td(({ theme }) => ({ 
+    width: '66.6%',
+    color: theme.primaryContrastColor,
   }));
 
   class FlightseatPicker extends React.Component<MessageComponentProps, State> {
@@ -112,28 +215,32 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
       }
         
       if (!isFullscreen) {
-          return <NotFullscreen>{fromCity} ✈️ {toCity}</NotFullscreen>
+          return <NotFullscreen onClick={() => this.props.onSetFullscreen()}>{fromCity} ✈️ {toCity}</NotFullscreen>
         }
 
         return (
-          // <div {...attributes} style={{ display: "flex", flexDirection: "column", justifyContent:"space-around"}}>
-          <div {...attributes} style={{ display: "flex", flexDirection: "column", background: "linear-gradient(to bottom right, rgb(90,175,255,0.7), rgb(255,121,185,0.7))" }}>
-
-            <div className="info">
-              <h2 className="title">{fromCity} ✈️ {toCity}</h2>
-              <div style={{ marginTop: "2%" }}>
-                <div className="infoTextDiv"><p className="infoText">Plane:</p>&ensp;&ensp;{airplane}</div>
-                <div className="infoTextDiv"><p className="infoText">Seats:</p>&ensp;&ensp;{numbermaxReservableSeats}</div>
-              </div>
-            </div>
-            <div className="flightmap">
+          <Root {...this.props.attributes}>
+            <Header>
+              <HeaderTitle>{fromCity} ✈️ {toCity}</HeaderTitle>
+              <Table>
+                <TableRow>
+                  <TableHead>Plane model</TableHead>
+                  <TableColumn>{airplane}</TableColumn>
+                </TableRow>
+                <TableRow>
+                  <TableHead>Seat count</TableHead>
+                  <TableColumn>{numbermaxReservableSeats}</TableColumn>
+                </TableRow>
+              </Table>
+            </Header>
+            <Content>
               <Seatmap addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat} rows={rows} maxReservableSeats={numbermaxReservableSeats} />
-            </div>
-            <div className="controlButtons">
-              <CancelButton onClick={this.handleAbort} className="cancelButton">cancel</CancelButton>
-              <SubmitButton onClick={this.handleSubmit} className="submitButton" disabled={this.state.selectedSeats.length === 0}>submit</SubmitButton>
-            </div>
-          </div>
+            </Content>
+            <Footer>
+              <CancelButton onClick={this.handleAbort}>cancel</CancelButton>
+              <SubmitButton onClick={this.handleSubmit} disabled={this.state.selectedSeats.length === 0}>submit</SubmitButton>
+            </Footer>
+          </Root>
         );
       }
     
@@ -141,9 +248,7 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
     const plugin = {
       match: "flightseat-picker",
       component: FlightseatPicker,
-      options: {
-        fullscreen: true
-      }
+      options: {}
     }
   return plugin
 

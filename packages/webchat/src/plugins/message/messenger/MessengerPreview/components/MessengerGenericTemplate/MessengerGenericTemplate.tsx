@@ -60,6 +60,8 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
 
     const Frame = styled(MessengerFrame)({
         backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'column',
 
         '&.wide': {
             width: 320
@@ -76,6 +78,10 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
     const SingleRoot = styled.div(({ theme }) => ({
         paddingLeft: theme.unitSize * 2
     }));
+
+    const GenericContent = styled(MessengerContent)({
+        flexGrow: 1
+    });
 
     const MessengerGenericTemplate = class MessengerGenericTemplate extends React.Component<IMessengerGenericTemplateProps & React.HTMLProps<HTMLDivElement>, IMessengerGenericTemplateState> {
         getImageStyles(element: IFBMGenericTemplateElement) {
@@ -105,12 +111,12 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
                                 <Divider />
                             </>
                         )}
-                        <MessengerContent
+                        <GenericContent
                             onClick={e => default_action && onAction(e, default_action)}
                         >
                             <MessengerTitle>{title}</MessengerTitle>
                             <MessengerSubtitle>{subtitle}</MessengerSubtitle>
-                        </MessengerContent>
+                        </GenericContent>
                         {buttons && buttons.map((button, index) => (
                             <React.Fragment key={index}>
                                 <Divider />

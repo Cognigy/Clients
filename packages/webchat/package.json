@@ -15,8 +15,6 @@
         "flightseat-picker": "webpack --config webpack.production.js --entry ./src/plugins/message/flightseat-picker/index.tsx --output dist/flightseat-picker.webchat-plugin.js",
         "messenger-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.legacy.js",
         "messenger": "webpack --config webpack.production.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.js",
-        "persistent-menu-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/input/persistent-menu/index.tsx --output dist/persistent-menu.webchat-plugin.legacy.js",
-        "persistent-menu": "webpack --config webpack.production.js --entry ./src/plugins/input/persistent-menu/index.tsx --output dist/persistent-menu.webchat-plugin.js",
         "speech-input-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/input/speech/index.tsx --output dist/speech-input.webchat-plugin.legacy.js",
         "speech-input": "webpack --config webpack.production.js --entry ./src/plugins/input/speech/index.tsx --output dist/speech-input.webchat-plugin.js",
         "speech-output-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/speech-output/index.tsx --output dist/speech-output.webchat-plugin.legacy.js",

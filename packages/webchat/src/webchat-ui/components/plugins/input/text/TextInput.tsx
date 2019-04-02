@@ -172,6 +172,10 @@ export class TextInput extends React.PureComponent<InputComponentProps, TextInpu
 
     handleMenuItem = (item: IPersistentMenuItem) => {
         this.props.onSendMessage(item.payload, null, { label: item.title });
+        
+        this.setState({
+            mode: 'text'
+        });
     }
 
     render() {

@@ -107,6 +107,20 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
     borderRadius: theme.unitSize * 2,
   }));
 
+  const OutlinedButton = styled(Button)(({ theme }) => ({
+    backgroundColor: 'transparent',
+    border: `1px solid ${theme.primaryColor}`,
+    color: theme.primaryColor
+  }));
+
+  const OpenFlightseatPickerButton = styled(OutlinedButton)(({ theme }) => ({
+    '&[disabled]': {
+      borderColor: theme.greyColor,
+      color: theme.greyColor,
+      cursor: 'default'
+    }
+  }));
+
   const PrimaryButton = styled(Button)(({ theme }) => ({
     background: theme.primaryGradient,
     color: theme.primaryContrastColor,
@@ -140,14 +154,17 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
     fontSize: '2em'
   }));
 
-  const Table = styled.table(({ theme }) => ({ }));
-  const TableRow = styled.tr(({ theme }) => ({ }));
-  const TableHead = styled.td(({ theme }) => ({ 
+  const Table = styled.table(({ theme }) => ({}));
+
+  const TableRow = styled.tr(({ theme }) => ({}));
+
+  const TableHead = styled.td(({ theme }) => ({
     width: '33.3%',
     color: theme.primaryContrastColor,
     opacity: .8,
   }));
-  const TableColumn = styled.td(({ theme }) => ({ 
+
+  const TableColumn = styled.td(({ theme }) => ({
     width: '66.6%',
     color: theme.primaryContrastColor,
   }));
@@ -213,43 +230,49 @@ const flightSeatPickerPlugin: MessagePluginFactory = ({ styled }) => {
       } catch (e) {
 
       }
-        
-      if (!isFullscreen) {
-          return <NotFullscreen onClick={() => this.props.onSetFullscreen()}>{fromCity} ✈️ {toCity}</NotFullscreen>
-        }
 
+      if (!isFullscreen) {
         return (
-          <Root {...this.props.attributes}>
-            <Header>
-              <HeaderTitle>{fromCity} ✈️ {toCity}</HeaderTitle>
-              <Table>
-                <TableRow>
-                  <TableHead>Plane model</TableHead>
-                  <TableColumn>{airplane}</TableColumn>
-                </TableRow>
-                <TableRow>
-                  <TableHead>Seat count</TableHead>
-                  <TableColumn>{numbermaxReservableSeats}</TableColumn>
-                </TableRow>
-              </Table>
-            </Header>
-            <Content>
-              <Seatmap addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat} rows={rows} maxReservableSeats={numbermaxReservableSeats} />
-            </Content>
-            <Footer>
-              <CancelButton onClick={this.handleAbort}>cancel</CancelButton>
-              <SubmitButton onClick={this.handleSubmit} disabled={this.state.selectedSeats.length === 0}>submit</SubmitButton>
-            </Footer>
-          </Root>
+          <OpenFlightseatPickerButton
+            onClick={() => this.props.onSetFullscreen()}
+          >
+            Pick a Seat
+          </OpenFlightseatPickerButton>
         );
       }
-    
-  }
-    const plugin = {
-      match: "flightseat-picker",
-      component: FlightseatPicker,
-      options: {}
+
+      return (
+        <Root {...this.props.attributes}>
+          <Header>
+            <HeaderTitle>{fromCity} ✈️ {toCity}</HeaderTitle>
+            <Table>
+              <TableRow>
+                <TableHead>Plane model</TableHead>
+                <TableColumn>{airplane}</TableColumn>
+              </TableRow>
+              <TableRow>
+                <TableHead>Seat count</TableHead>
+                <TableColumn>{numbermaxReservableSeats}</TableColumn>
+              </TableRow>
+            </Table>
+          </Header>
+          <Content>
+            <Seatmap addSeatCallback={this.handleAddSeat} removeSeatCallback={this.handleRemoveSeat} rows={rows} maxReservableSeats={numbermaxReservableSeats} />
+          </Content>
+          <Footer>
+            <CancelButton onClick={this.handleAbort}>cancel</CancelButton>
+            <SubmitButton onClick={this.handleSubmit} disabled={this.state.selectedSeats.length === 0}>submit</SubmitButton>
+          </Footer>
+        </Root>
+      );
     }
+
+  }
+  const plugin = {
+    match: "flightseat-picker",
+    component: FlightseatPicker,
+    options: {}
+  }
   return plugin
 
 }

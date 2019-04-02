@@ -1,7 +1,7 @@
 import { MessagePluginFactoryProps } from '../../../../../common/interfaces/message-plugin';
 
 export const getMessengerBubble = ({ React, styled }: MessagePluginFactoryProps) => {
-    const MessengerBubble = styled.div<{ align: 'left' | 'right' }>(({ theme, align }) => ({
+    const MessengerBubble = styled.div(({ theme }) => ({
         padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
     
         // prevent horizontal overflow

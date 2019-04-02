@@ -32,6 +32,12 @@ export const getMessengerTextWithQuickReplies = ({ React, styled }: MessagePlugi
         }
     });
 
+    const QuickReplyImage = styled.img(({ theme }) => ({
+        width: theme.unitSize * 3,
+        height: theme.unitSize * 3,
+        marginRight: theme.unitSize
+    }));
+
     const MessengerTextWithQuickReplies = ({ message, onAction, ...divProps }: Props & React.HTMLProps<HTMLDivElement>) => {
         const { text, quick_replies } = message;
 
@@ -50,7 +56,8 @@ export const getMessengerTextWithQuickReplies = ({ React, styled }: MessagePlugi
                         {(quick_replies as IFBMQuickReply[]).map((quickReply, index) => {
                             const { content_type } = quickReply;
 
-                            let label: string = ''
+                            let label: string = '';
+                            let image: React.ReactNode;
 
                             switch (content_type) {
                                 case 'location': {
@@ -59,8 +66,12 @@ export const getMessengerTextWithQuickReplies = ({ React, styled }: MessagePlugi
                                 }
 
                                 case 'text': {
-                                    const { title } = quickReply as IFBMTextQuickReply;
+                                    const { title, image_url } = quickReply as IFBMTextQuickReply;
                                     label = title;
+                                    if (image_url)
+                                        image = (
+                                            <QuickReplyImage src={image_url} />
+                                        )
                                     break;
                                 }
 
@@ -80,6 +91,7 @@ export const getMessengerTextWithQuickReplies = ({ React, styled }: MessagePlugi
                                     key={index}
                                     onClick={e => onAction(e, quickReply)}
                                 >
+                                    {image}
                                     {label}
                                 </MessengerQuickReply>
                             );

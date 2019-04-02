@@ -3,7 +3,6 @@ import { MessageComponentProps, MessagePluginFactory } from "../../../common/int
 import { getMessengerPreview } from "./MessengerPreview/MessengerPreview";
 import { registerMessagePlugin } from '../../helper';
 
-
 const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
 
     const MessengerPreview = getMessengerPreview({ React, styled });
@@ -20,6 +19,12 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
                         const { payload, title } = action;
 
                         onSendMessage(payload, null, { label: title });
+                    }
+
+                    // @ts-ignore
+                    if (action.type === 'web_url') {
+                        // @ts-ignore
+                        window.open(action.url, '_blank');
                     }
                 }}
                 config={config}
@@ -51,6 +56,12 @@ const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
                         const { payload, title } = action;
 
                         onSendMessage(payload, null, { label: title });
+                    }
+
+                    // @ts-ignore
+                    if (action.type === 'web_url') {
+                        // @ts-ignore
+                        window.open(action.url, '_blank');
                     }
                 }}
                 config={config}

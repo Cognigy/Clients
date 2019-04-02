@@ -47,8 +47,7 @@ export const getMessengerTextWithQuickReplies = ({ React, styled }: MessagePlugi
 
         return (
             <div {...divProps}>
-                <BorderBubble>
-                    {text}
+                <BorderBubble dangerouslySetInnerHTML={{ __html: text }}>
                 </BorderBubble>
 
                 {hasQuickReplies && (
@@ -92,7 +91,7 @@ export const getMessengerTextWithQuickReplies = ({ React, styled }: MessagePlugi
                                     onClick={e => onAction(e, quickReply)}
                                 >
                                     {image}
-                                    {label}
+                                    <span dangerouslySetInnerHTML={{ __html: label }} />
                                 </MessengerQuickReply>
                             );
                         })}

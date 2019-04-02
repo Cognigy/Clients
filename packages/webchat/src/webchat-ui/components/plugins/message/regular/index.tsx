@@ -6,9 +6,8 @@ const RegularMessage = ({ message: { text, source } }: MessageComponentProps) =>
     <MessageBubble
         color={source === 'bot' ? 'primary' : 'default'}
         align={source === 'bot' ? 'left' : 'right'}
-    >
-        {text}
-    </MessageBubble>
+        dangerouslySetInnerHTML={{ __html: text || '' }}
+    />
 )
 
 const regularMessagePlugin: MessagePlugin = {

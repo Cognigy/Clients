@@ -23,6 +23,7 @@ import { InputPlugin } from '../../common/interfaces/input-plugin';
 import TypingIndicatorBubble from './presentational/TypingIndicatorBubble';
 import '../utils/normalize.css';
 import { MessageSender } from '../interfaces';
+import { ChatScroller } from './history/ChatScroller';
 
 export interface WebchatUIProps {
     messages: IMessage[];
@@ -75,6 +76,14 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
         inputPlugins: []
     };
 
+    history: React.RefObject<ChatScroller>;
+
+    constructor(props) {
+        super(props);
+
+        this.history = React.createRef();
+    }
+
     static getDerivedStateFromProps(props: WebchatUIProps, state: WebchatUIState): WebchatUIState | null {
         const color = props.config && props.config.settings && props.config.settings.colorScheme;
 
@@ -101,6 +110,20 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                 theme: createWebchatTheme({ primaryColor: this.props.config.settings.colorScheme })
             })
         }
+
+        if (this.props.messages !== prevProps.messages) {
+            if (this.history.current) {
+                this.history.current.scrollToBottom();
+            }
+        }
+    }
+
+    sendMessage: MessageSender = (...args) => {
+        if (this.history.current) {
+            this.history.current.scrollToBottom();
+        }
+
+        this.props.onSendMessage(...args);
     }
 
     renderInput = () => {
@@ -110,7 +133,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
             <Input
                 plugins={inputPlugins}
                 messages={this.props.messages}
-                onSendMessage={this.props.onSendMessage}
+                onSendMessage={this.sendMessage}
                 config={this.props.config}
                 onSetInputMode={this.props.onSetInputMode}
                 inputMode={this.props.inputMode}
@@ -171,7 +194,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                     logoUrl={config.settings.headerLogoUrl}
                     title={config.settings.title || 'Cognigy Webchat'}
                 />
-                <HistoryWrapper>
+                <HistoryWrapper ref={this.history}>
                     {this.renderHistory()}
                 </HistoryWrapper>
                 {this.renderInput()}
@@ -181,7 +204,6 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
     renderFullscreenMessageLayout() {
         const {
-            onSendMessage,
             config,
             fullscreenMessage,
             onDismissFullscreenMessage
@@ -191,7 +213,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
 
         return (
             <FullScreenMessage
-                onSendMessage={onSendMessage}
+                onSendMessage={this.sendMessage}
                 config={config}
                 plugins={messagePlugins}
                 onSetFullscreen={() => { }}
@@ -206,7 +228,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
     }
 
     renderHistory() {
-        const { messages, typingIndicator, config, onSendMessage } = this.props;
+        const { messages, typingIndicator, config } = this.props;
         const { messagePlugins = [] } = this.state;
 
         return (
@@ -215,7 +237,7 @@ export class WebchatUI extends React.PureComponent<React.HTMLProps<HTMLDivElemen
                     <MessagePluginRenderer
                         key={index}
                         message={message}
-                        onSendMessage={onSendMessage}
+                        onSendMessage={this.sendMessage}
                         onSetFullscreen={() => this.props.onSetFullscreenMessage(message)}
                         onDismissFullscreen={() => {}}
                         config={config}

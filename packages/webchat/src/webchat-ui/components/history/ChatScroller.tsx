@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { Thumbs } from 'react-responsive-carousel';
-
 
 const CLIENT_HEIGHT_OFFSET = 10;
 
@@ -8,15 +6,18 @@ export interface OuterProps extends React.HTMLProps<HTMLDivElement> {}
 
 type InnerProps = OuterProps;
 
-export class ChatScroller extends React.Component<InnerProps> {
+interface IState {
+    height: number;
+}
+
+export class ChatScroller extends React.Component<InnerProps, IState> {
     rootRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: InnerProps) {
         super(props);
 
         this.state = {
-            scrollAtBottom: true,
-            container: null
+            height: 0
         }
 
         this.rootRef = React.createRef();
@@ -42,7 +43,7 @@ export class ChatScroller extends React.Component<InnerProps> {
         return isScrolledToBottom
     }
 
-    componentDidUpdate(prevProps: InnerProps, prevState, wasScrolledToBottom: boolean) {
+    componentDidUpdate(prevProps: InnerProps, prevState: IState, wasScrolledToBottom: boolean) {
         if (wasScrolledToBottom) {
             this.scrollToBottom();
         }
@@ -53,12 +54,15 @@ export class ChatScroller extends React.Component<InnerProps> {
     }
 
     render() {
+        const { children, ...props } = this.props;
 
         return (
             <div
-                {...this.props}
+                {...props}
                 ref={this.rootRef}
-            />
+            >
+                {children}
+            </div>
         )
     }
 }

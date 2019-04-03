@@ -37,29 +37,8 @@ export default ({ message, config, onSendMessage, plugins, isFullscreen, onSetFu
 
     const matchedPlugins = getPluginsForMessage(plugins)(message);
 
-    const regularMessagePlugin = plugins.slice(-1)[0];
-    const lastMatchedPlugin = matchedPlugins.slice(-1)[0];
-    const shouldRenderAdditionalText = lastMatchedPlugin !== regularMessagePlugin && message.text && !isFullscreen;
-
-
     return (
         <>
-            {shouldRenderAdditionalText && (
-                <MessageRow
-                    align={message.source === 'bot' ? 'left' : 'right'}
-                >
-                    <Avatar src={avatarImg} />
-                    <regularMessagePlugin.component
-                        config={config}
-                        message={message}
-                        onSendMessage={onSendMessage}
-                        onSetFullscreen={onSetFullscreen}
-                        onDismissFullscreen={onDismissFullscreen}
-                        attributes={attributes}
-                        isFullscreen={isFullscreen}
-                    />
-                </MessageRow>
-            )}
             {matchedPlugins.map(({ component: Component, options }, index) => {
                 const messageElement = (
                     <Component

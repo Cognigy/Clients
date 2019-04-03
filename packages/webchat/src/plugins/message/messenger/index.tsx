@@ -3,6 +3,7 @@ import { MessageComponentProps, MessagePluginFactory } from "../../../common/int
 import { getMessengerPreview } from "./MessengerPreview/MessengerPreview";
 import { registerMessagePlugin } from '../../helper';
 import { transformMessage } from "./MessengerPreview/lib/transform";
+import { IFBMGenericTemplatePayload } from "./MessengerPreview/interfaces/GenericTemplatePayload.interface";
 
 const getMessengerPayload = message => {
     const { data } = message;
@@ -20,7 +21,9 @@ const getMessengerPayload = message => {
 
 const isMessengerPayload = message => !!getMessengerPayload(message);
 
-const isMessengerGenericPayload = rawMessage => {
+// return true if a message is a messenger generic template with more than one element
+// one element should be rendered like default
+const isFullscreenMessengerGenericPayload = rawMessage => {
     const messengerPayload = getMessengerPayload(rawMessage);
 
     if (!messengerPayload)
@@ -38,7 +41,12 @@ const isMessengerGenericPayload = rawMessage => {
     if (!payload)
         return false;
 
-    return payload.template_type === 'generic';
+    if (payload.template_type !== 'generic')
+        return false;
+
+    const { elements } = payload as IFBMGenericTemplatePayload;
+
+    return elements.length > 1;
 }
 
 const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
@@ -72,12 +80,12 @@ const messengerPlugin: MessagePluginFactory = ({ React, styled }) => {
 }
 
 
-const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
+const fullscreenMessengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
 
     const MessengerPreview = getMessengerPreview({ React, styled });
 
     return ({
-        match: isMessengerGenericPayload,
+        match: isFullscreenMessengerGenericPayload,
         component: ({ message, onSendMessage, config }: MessageComponentProps) => (
             <MessengerPreview
                 message={transformMessage(getMessengerPayload(message).message)}
@@ -105,7 +113,7 @@ const messengerGenericPlugin: MessagePluginFactory = ({ React, styled }) => {
     })
 }
 
-registerMessagePlugin(messengerGenericPlugin);
+registerMessagePlugin(fullscreenMessengerGenericPlugin);
 registerMessagePlugin(messengerPlugin);
 
 // export default messengerPlugin;

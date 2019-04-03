@@ -42,16 +42,7 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
             '&>*': {
                 flexGrow: 1
             }
-        },
-
-
-        // '.slide:first-child': {
-        //     paddingLeft: theme.unitSize * 6
-        // },
-
-        // '.slide:last-child': {
-        //     paddingRight: theme.unitSize * 7
-        // }
+        }
     }))
 
     const ElementRoot = styled.div(({ theme }) => ({
@@ -73,10 +64,6 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundImage: `url('${url}')`
-    }));
-
-    const SingleRoot = styled.div(({ theme }) => ({
-        paddingLeft: theme.unitSize * 2
     }));
 
     const GenericContent = styled(MessengerContent)({
@@ -138,11 +125,7 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
                 return null;
 
             if (elements.length === 1)
-                return (
-                    <SingleRoot>
-                        {this.renderElement(elements[0])}
-                    </SingleRoot>
-                );
+                return this.renderElement(elements[0])
 
             return (
                 <CarouselRoot

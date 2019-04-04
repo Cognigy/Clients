@@ -119,7 +119,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       };
     }
 
-    handleSubmit = (mode, locale) => {
+    handleSubmit = (mode, locale, dateFormat) => {
       const { message } = this.props
       try {
         moment.locale(message.data._plugin.data.locale);
@@ -152,14 +152,14 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       let dateOutputMessage = "";
       switch (mode) {
         case "single":
-          dateOutputMessage += moment(this.state.date[0]).format('LLL');
+          dateOutputMessage += moment(this.state.date[0]).format(dateFormat);
           break;
         case "multiple":
-          for (let d of this.state.date) dateOutputMessage += moment(d).format('LL') + ", ";
+          for (let d of this.state.date) dateOutputMessage += moment(d).format(dateFormat) + ", ";
           dateOutputMessage = dateOutputMessage.slice(0,-2)
           break;
         case "range":
-          dateOutputMessage += moment(this.state.date[0]).format('LL') + langWord + moment(this.state.date[1]).format('LL')
+          dateOutputMessage += moment(this.state.date[0]).format(dateFormat) + langWord + moment(this.state.date[1]).format('LL')
           break;
       }
 
@@ -193,7 +193,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         enable: [],
         minDate: "",
         maxDate: "",
-        dateFormat: "",
+        dateFormat: "LL",
         time_24hr: false,
       }
 
@@ -211,6 +211,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;
         options.locale = message.data._plugin.data.locale;
+        // uses date format from https://momentjs.com/ (L,LL,...)
         options.dateFormat = message.data._plugin.data.dateFormat;
         options.time_24hr = message.data._plugin.data.time_24hr;
 
@@ -253,7 +254,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           </Content>
           <Footer>
             <CancelButton onClick={this.handleAbort} className="cancelButton">{cancelButtonText}</CancelButton>
-            <SubmitButton onClick={e => this.handleSubmit(options.mode, options.locale)} className="submitButton">{submitButtonText}</SubmitButton>
+            <SubmitButton onClick={e => this.handleSubmit(options.mode, options.locale, options.dateFormat)} className="submitButton">{submitButtonText}</SubmitButton>
           </Footer>
         </DatePickerRoot>
       );

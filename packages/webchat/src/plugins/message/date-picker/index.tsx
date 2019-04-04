@@ -15,7 +15,7 @@ import { createMessagePlugin, registerMessagePlugin } from "../../helper";
 const datePickerDaySelector = ".flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay";
 
 interface IState {
-  date: Date[]
+  msg: string,
 }
 
 const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
@@ -106,72 +106,19 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     constructor(props) {
       super(props);
       this.state = {
-        date: [new Date()],
+        msg: "",
       };
     }
 
-    /*
-    * Sends a message to the chat which includes the chosen date(s) in the chosen locale language
-    * param mode: the chosen mode (single, multiple, range)
-    * param locale: the chosen locale for the date output (de,en,es,...)
-    * param dateFormat: the moment.js dateFormat to use for date output ('L,LL,LLL,...)
-    */
-    handleSubmit = (mode, locale, dateFormat) => {
+    handleSubmit = () => {
       const { message } = this.props
-      try {
-        moment.locale(message.data._plugin.data.locale);
-      } catch (e) {
-        moment.locale("en");
-      }
 
       if (message.source === 'bot')
         processedMessages.add(message.traceId);
 
-      // builds the 'from' and 'to' word for date output; given the chosen language
-      let to = ""
-      let from = ""
-      switch (locale) {
-        case "de":
-          from = "Von "
-          to = " bis ";
-          break;
-        case "en":
-          from = "From "
-          to = " to ";
-          break;
-        case "es":
-          from = "De "
-          to = " a ";
-          break;
-        case "ja":
-          from = "の "
-          to = " へ ";
-          break;
-        default:
-          from = ""
-          to = " to ";
-          break;
-      }
-
-      // builds the date output message for the different modes
-      let dateOutputMessage = "";
-      switch (mode) {
-        case "single":
-          dateOutputMessage += moment(this.state.date[0]).format(dateFormat);
-          break;
-        case "multiple":
-          for (let d of this.state.date) dateOutputMessage += moment(d).format(dateFormat) + ", ";
-          dateOutputMessage = dateOutputMessage.slice(0,-2)
-          break;
-        case "range":
-          dateOutputMessage += from
-          dateOutputMessage += moment(this.state.date[0]).format(dateFormat) + to + moment(this.state.date[1]).format('LL')
-          break;
-      }
-
-      this.props.onSendMessage(dateOutputMessage), {
+      this.props.onSendMessage(this.state.msg), {
         _plugin: "date-picker",
-        date: this.state.date,
+        date: this.state.msg,
         abort: false
       }
     };
@@ -196,8 +143,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         enable: [],
         minDate: "",
         maxDate: "",
-        dateFormat: "LL",
+        dateFormat: "Y-m-d",
         time_24hr: false,
+        defaultDate: new Date()
       }
 
       let dateButtonText = "pick date";
@@ -214,10 +162,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;
         options.locale = message.data._plugin.data.locale;
-        // uses date format from https://momentjs.com/ (L,LL,...)
         options.dateFormat = message.data._plugin.data.dateFormat;
         options.time_24hr = message.data._plugin.data.time_24hr;
-
+        options.defaultDate = message.data._plugin.data.defaultDate;
 
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;
@@ -226,7 +173,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
       }
 
-      const { date } = this.state;
+      const { msg } = this.state;
 
       let datepickerWasOpen = false;
       if (message.source === 'bot') {
@@ -248,8 +195,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           </Header>
           <Content>
             <Flatpickr
-              value={date}
-              onChange={date => { this.setState({ date }) }}
+              onChange={(dates, msg) => { this.setState({ msg })}}
               options={
                 options
               }
@@ -257,7 +203,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           </Content>
           <Footer>
             <CancelButton onClick={this.handleAbort} className="cancelButton">{cancelButtonText}</CancelButton>
-            <SubmitButton onClick={e => this.handleSubmit(options.mode, options.locale, options.dateFormat)} className="submitButton">{submitButtonText}</SubmitButton>
+            <SubmitButton onClick={this.handleSubmit} className="submitButton">{submitButtonText}</SubmitButton>
           </Footer>
         </DatePickerRoot>
       );

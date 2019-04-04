@@ -161,8 +161,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           break;
       }
 
-      console.log(this.state.date)
-
       this.props.onSendMessage(dateOutputMessage), {
         _plugin: "date-picker",
         date: this.state.date,

@@ -109,7 +109,9 @@ const filterButtons = (filter: ButtonFilter): IFBMTransformer => (message) => {
                         ...attachment,
                         payload: {
                             ...payload,
-                            buttons: payload.buttons.filter(filter),
+                            buttons: payload.buttons
+                                ? payload.buttons.filter(filter)
+                                : payload.buttons,
                             elements: payload.elements.map(element => ({
                                 ...element,
                                 buttons: element.buttons

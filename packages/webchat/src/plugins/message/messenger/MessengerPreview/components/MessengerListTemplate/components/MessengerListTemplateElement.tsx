@@ -15,27 +15,27 @@ export const getMessengerListTemplateElement = ({ React, styled }: MessagePlugin
     const MessengerTitle = getMessengerTitle({ React, styled });
     const MessengerContent = getMessengerContent({ React, styled });
 
-    const Root = styled(MessengerContent)({
+    const Root = styled(MessengerContent)(({ theme }) => ({
         display: 'grid',
         gridTemplateColumns: '1fr auto',
-        gridColumnGap: '10px',
+        gridColumnGap: theme.unitSize,
         backgroundColor: 'white',
         cursor: 'pointer'
-    });
+    }));
 
-    const Image = styled.div<{ url: string }>({
-        width: 64,
-        height: 64,
+    const Image = styled.div<{ url: string }>(({ theme }) => ({
+        width: theme.blockSize,
+        height: theme.blockSize,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        borderRadius: 5
-    });
+        borderRadius: theme.unitSize
+    }));
 
     const Button = styled.button(({ theme }) => ({
         backgroundColor: 'transparent',
-        borderRadius: 5,
-        padding: '5px 10px',
-        marginTop: 10,
+        borderRadius: theme.unitSize,
+        padding: `${theme.unitSize}px ${theme.unitSize * 2}px`,
+        marginTop: theme.unitSize,
         color: theme.primaryColor,
         border: `1px solid ${theme.primaryColor}`,
         cursor: 'pointer',
@@ -76,7 +76,7 @@ export const getMessengerListTemplateElement = ({ React, styled }: MessagePlugin
                     )}
                 </div>
                 {image_url && (
-                    <Image url={image_url} />
+                    <Image url={image_url} style={imgStyle} />
                 )}
             </Root>
         )

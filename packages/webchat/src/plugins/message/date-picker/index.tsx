@@ -7,7 +7,7 @@ import './flatpickr.css';
 
 // languages
 import l10n from './langHelper';
-import moment, { locale, lang } from 'moment';
+import moment from 'moment';
 
 import { MessageComponentProps, MessagePlugin, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
@@ -50,15 +50,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     backgroundColor: 'transparent',
     border: `1px solid ${theme.primaryColor}`,
     color: theme.primaryColor
-  }));
-
-  const NotFullscreen = styled.div(({ theme }) => ({
-    background: theme.primaryGradient,
-    borderRadius: theme.unitSize * 2,
-    borderBottomLeftRadius: 0,
-    boxShadow: theme.messageShadow,
-    color: theme.primaryContrastColor,
-    padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
   }));
 
   const SubmitButton = styled(PrimaryButton)(({ theme }) => ({
@@ -165,7 +156,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
       console.log(this.state.date)
 
-      //this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
       this.props.onSendMessage(dateOutputMessage), {
         _plugin: "date-picker",
         date: this.state.date,

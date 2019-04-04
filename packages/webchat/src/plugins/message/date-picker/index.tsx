@@ -110,6 +110,12 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       };
     }
 
+    /*
+    * Sends a message to the chat which includes the chosen date(s) in the chosen locale language
+    * param mode: the chosen mode (single, multiple, range)
+    * param locale: the chosen locale for the date output (de,en,es,...)
+    * param dateFormat: the moment.js dateFormat to use for date output ('L,LL,LLL,...)
+    */
     handleSubmit = (mode, locale, dateFormat) => {
       const { message } = this.props
       try {
@@ -121,6 +127,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       if (message.source === 'bot')
         processedMessages.add(message.traceId);
 
+      // builds the 'from' and 'to' word for date output; given the chosen language
       let to = ""
       let from = ""
       switch (locale) {
@@ -146,6 +153,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           break;
       }
 
+      // builds the date output message for the different modes
       let dateOutputMessage = "";
       switch (mode) {
         case "single":

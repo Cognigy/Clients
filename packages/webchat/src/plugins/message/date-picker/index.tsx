@@ -130,11 +130,12 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       if (message.source === 'bot')
         processedMessages.add(message.traceId);
 
-      this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
+      //this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
+        this.props.onSendMessage("" + this.state.date), {
         _plugin: "date-picker",
         date: this.state.date,
         abort: false
-      });
+      };
     }
 
     handleAbort = () => {

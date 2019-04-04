@@ -121,22 +121,28 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       if (message.source === 'bot')
         processedMessages.add(message.traceId);
 
-      let langWord = ""
+      let to = ""
+      let from = ""
       switch (locale) {
         case "de":
-          langWord = " bis ";
+          from = "Von "
+          to = " bis ";
           break;
         case "en":
-          langWord = " to ";
+          from = "From "
+          to = " to ";
           break;
         case "es":
-          langWord = " hasta ";
+          from = "De "
+          to = " a ";
           break;
         case "ja":
-          langWord = " へ ";
+          from = "の "
+          to = " へ ";
           break;
         default:
-          langWord = " to ";
+          from = ""
+          to = " to ";
           break;
       }
 
@@ -150,7 +156,8 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           dateOutputMessage = dateOutputMessage.slice(0,-2)
           break;
         case "range":
-          dateOutputMessage += moment(this.state.date[0]).format(dateFormat) + langWord + moment(this.state.date[1]).format('LL')
+          dateOutputMessage += from
+          dateOutputMessage += moment(this.state.date[0]).format(dateFormat) + to + moment(this.state.date[1]).format('LL')
           break;
       }
 

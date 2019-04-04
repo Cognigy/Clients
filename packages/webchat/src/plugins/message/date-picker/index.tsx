@@ -155,6 +155,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         enableTime: true,
         mode: "single",
         disable: [],
+        enable: [],
         minDate: "",
         maxDate: "",
         // TODO: does nothing. https://flatpickr.js.org/options/
@@ -171,6 +172,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.enableTime = message.data._plugin.data.enableTime;
         options.mode = message.data._plugin.data.mode;
         options.disable = message.data._plugin.data.disable || [];
+        options.enable = message.data._plugin.data.enable || [];
         options.event = message.data._plugin.data.eventName;
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;

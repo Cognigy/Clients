@@ -7,7 +7,7 @@ import './flatpickr.css';
 
 // languages
 import l10n from './langHelper';
-import moment, { locale } from 'moment';
+import moment, { locale, lang } from 'moment';
 
 import { MessageComponentProps, MessagePlugin, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
@@ -119,7 +119,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       };
     }
 
-    handleSubmit = () => {
+    handleSubmit = (mode, locale) => {
       const { message } = this.props
       try {
         moment.locale(message.data._plugin.data.locale);
@@ -130,13 +130,48 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       if (message.source === 'bot')
         processedMessages.add(message.traceId);
 
+      let langWord = ""
+      switch (locale) {
+        case "de":
+          langWord = " bis ";
+          break;
+        case "en":
+          langWord = " to ";
+          break;
+        case "es":
+          langWord = " hasta ";
+          break;
+        case "ja":
+          langWord = " へ ";
+          break;
+        default:
+          langWord = " to ";
+          break;
+      }
+
+      let dateOutputMessage = "";
+      switch (mode) {
+        case "single":
+          dateOutputMessage += moment(this.state.date[0]).format('LLL');
+          break;
+        case "multiple":
+          for (let d of this.state.date) dateOutputMessage += moment(d).format('LL') + ", ";
+          dateOutputMessage = dateOutputMessage.slice(0,-2)
+          break;
+        case "range":
+          dateOutputMessage += moment(this.state.date[0]).format('LL') + langWord + moment(this.state.date[1]).format('LL')
+          break;
+      }
+
+      console.log(this.state.date)
+
       //this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
-        this.props.onSendMessage("" + this.state.date), {
+      this.props.onSendMessage(dateOutputMessage), {
         _plugin: "date-picker",
         date: this.state.date,
         abort: false
-      };
-    }
+      }
+    };
 
     handleAbort = () => {
       const { message } = this.props;
@@ -161,9 +196,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         // TODO: does nothing. https://flatpickr.js.org/options/
         defaultDate: new Date(),
         dateFormat: "",
-        time_24hr: false
+        time_24hr: false,
       }
-      
+
       let dateButtonText = "pick date";
       let cancelButtonText = "cancel";
       let submitButtonText = "submit";
@@ -181,6 +216,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.defaultDate = message.data._plugin.data.defaultDate;
         options.dateFormat = message.data._plugin.data.dateFormat;
         options.time_24hr = message.data._plugin.data.time_24hr;
+
 
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;
@@ -220,18 +256,18 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           </Content>
           <Footer>
             <CancelButton onClick={this.handleAbort} className="cancelButton">{cancelButtonText}</CancelButton>
-            <SubmitButton onClick={this.handleSubmit} className="submitButton">{submitButtonText}</SubmitButton>
+            <SubmitButton onClick={e => this.handleSubmit(options.mode, options.locale)} className="submitButton">{submitButtonText}</SubmitButton>
           </Footer>
         </DatePickerRoot>
       );
     }
   }
 
-  const plugin = {
-    match: "date-picker",
-    component: DatePicker
-  }
-
+    const plugin = {
+      match: "date-picker",
+      component: DatePicker
+    }
+  
   return plugin;
 }
 

@@ -156,7 +156,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         mode: "single",
         disable: [],
         minDate: "",
-        maxDate: ""
+        maxDate: "",
+        // TODO: does nothing. https://flatpickr.js.org/options/
+        defaultDate: new Date()
       }
 
       let dateButtonText = "pick date";
@@ -172,6 +174,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;
         options.locale = message.data._plugin.data.locale;
+        options.defaultDate = message.data._plugin.data.defaultDate;
 
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;

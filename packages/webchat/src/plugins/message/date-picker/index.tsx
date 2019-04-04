@@ -193,8 +193,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         enable: [],
         minDate: "",
         maxDate: "",
-        // TODO: does nothing. https://flatpickr.js.org/options/
-        defaultDate: new Date(),
         dateFormat: "",
         time_24hr: false,
       }
@@ -213,7 +211,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;
         options.locale = message.data._plugin.data.locale;
-        options.defaultDate = message.data._plugin.data.defaultDate;
         options.dateFormat = message.data._plugin.data.dateFormat;
         options.time_24hr = message.data._plugin.data.time_24hr;
 

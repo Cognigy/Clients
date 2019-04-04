@@ -160,9 +160,10 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         maxDate: "",
         // TODO: does nothing. https://flatpickr.js.org/options/
         defaultDate: new Date(),
-        dateFormat: ""
+        dateFormat: "",
+        time_24hr: false
       }
-
+      
       let dateButtonText = "pick date";
       let cancelButtonText = "cancel";
       let submitButtonText = "submit";
@@ -179,6 +180,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.locale = message.data._plugin.data.locale;
         options.defaultDate = message.data._plugin.data.defaultDate;
         options.dateFormat = message.data._plugin.data.dateFormat;
+        options.time_24hr = message.data._plugin.data.time_24hr;
 
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;

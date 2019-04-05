@@ -113,13 +113,19 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     handleSubmit = () => {
       const { message } = this.props
 
-      if (message.source === 'bot')
-        processedMessages.add(message.traceId);
+      // close plugin if user didn't choose a date
+      if (this.state.msg.length > 0) {
+        if (message.source === 'bot')
+          processedMessages.add(message.traceId);
 
-      this.props.onSendMessage(this.state.msg), {
-        _plugin: "date-picker",
-        date: this.state.msg,
+        this.props.onSendMessage(this.state.msg), {
+          _plugin: "date-picker",
+          date: this.state.msg,
+        }
+      }else {
+        this.props.onDismissFullscreen();
       }
+
     };
 
     handleAbort = () => {

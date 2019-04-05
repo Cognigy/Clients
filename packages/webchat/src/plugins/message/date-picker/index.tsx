@@ -200,6 +200,29 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       } catch (e) {
 
       }
+      
+      // define the maxDate given the users choice
+      try {
+        moment.locale('fr-ca') // for 1970-01-01 format
+        switch (message.data._plugin.data.maxDate) {
+          case "today":
+              options.maxDate = moment().format('L');
+              break;
+          case "tomorrow":
+              options.maxDate = moment().add(1, 'days').format('L');
+              console.log(moment().add(1, 'days').format('L'))
+              break;  
+          case "yesterday":
+          options.maxDate = moment().add(-1, 'days').format('L');
+              break;
+          default:
+            options.maxDate = message.data._plugin.data.maxDate;
+            console.log("default ", options.maxDate)
+        }        
+      } catch (err) {
+
+      }
+
 
       const { msg } = this.state;
 

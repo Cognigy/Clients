@@ -174,7 +174,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         if (message.data._plugin.data.wantDisable) {
           options.disable = message.data._plugin.data.enable_disable || [];
         }else {
-          options.enable = message.data._plugin.data.ensable_disable || [];
+          options.enable = message.data._plugin.data.enable_disable || [];
         }
 
         // disables weekends if user writes "weekends" in the disable field

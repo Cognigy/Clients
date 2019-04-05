@@ -227,18 +227,15 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         switch (message.data._plugin.data.minDate) {
           case "today":
             options.minDate = moment().format('L');
-            console.log(options.minDate)
             break;
           case "tomorrow":
             options.minDate = moment().add(1, 'days').format('L');
-            console.log(moment().add(1, 'days').format('L'))
             break;
           case "yesterday":
             options.minDate = moment().add(-1, 'days').format('L');
             break;
           default:
             options.minDate = message.data._plugin.data.minDate;
-            console.log("default ", options.minDate)
         }
       } catch (err) {
 

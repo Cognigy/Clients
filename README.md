@@ -13,3 +13,10 @@ To install dependencies (and cross-links) for the packages, run `yarn -i` in the
 
 ## Building
 To build (and bundle) the packages, run `yarn build`.
+
+# Plugins
+
+With Cognigy 3.3 you have the ability to develop custom plugins for your specific use case, such as a flight seat picker to let your user check in his/her flight directly in the webchat. 
+
+[Take a look at our built-in plugins!](https://github.com/Cognigy/Clients/tree/master/packages/webchat/src/plugins/message)
+

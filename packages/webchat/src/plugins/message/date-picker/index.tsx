@@ -122,7 +122,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           _plugin: "date-picker",
           date: this.state.msg,
         }
-      }else {
+      } else {
         this.props.onDismissFullscreen();
       }
 
@@ -173,13 +173,13 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         // disable or enable dates given the users boolean
         if (message.data._plugin.data.wantDisable) {
           options.disable = message.data._plugin.data.enable_disable || [];
-        }else {
+        } else {
           options.enable = message.data._plugin.data.enable_disable || [];
         }
 
         // disables weekends if user writes "weekends" in the disable field
         switch (options.disable[0]) {
-          case "weekends": 
+          case "weekends":
             try {
               options.disable = [
                 (date) => {
@@ -190,7 +190,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
               options.disable = []
             }
             break;
-          default: 
+          default:
             options.disable = message.data._plugin.data.disable || [];
         }
 
@@ -200,25 +200,48 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       } catch (e) {
 
       }
-      
+
       // define the maxDate given the users choice
       try {
         moment.locale('fr-ca') // for 1970-01-01 format
         switch (message.data._plugin.data.maxDate) {
           case "today":
-              options.maxDate = moment().format('L');
-              break;
+            options.maxDate = moment().format('L');
+            break;
           case "tomorrow":
-              options.maxDate = moment().add(1, 'days').format('L');
-              console.log(moment().add(1, 'days').format('L'))
-              break;  
+            options.maxDate = moment().add(1, 'days').format('L');
+            console.log(moment().add(1, 'days').format('L'))
+            break;
           case "yesterday":
-          options.maxDate = moment().add(-1, 'days').format('L');
-              break;
+            options.maxDate = moment().add(-1, 'days').format('L');
+            break;
           default:
             options.maxDate = message.data._plugin.data.maxDate;
             console.log("default ", options.maxDate)
-        }        
+        }
+      } catch (err) {
+
+      }
+
+      // define the minDate given the users choice
+      try {
+        moment.locale('fr-ca') // for 1970-01-01 format
+        switch (message.data._plugin.data.minDate) {
+          case "today":
+            options.minDate = moment().format('L');
+            console.log(options.minDate)
+            break;
+          case "tomorrow":
+            options.minDate = moment().add(1, 'days').format('L');
+            console.log(moment().add(1, 'days').format('L'))
+            break;
+          case "yesterday":
+            options.minDate = moment().add(-1, 'days').format('L');
+            break;
+          default:
+            options.minDate = message.data._plugin.data.minDate;
+            console.log("default ", options.minDate)
+        }
       } catch (err) {
 
       }
@@ -246,7 +269,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           </Header>
           <Content>
             <Flatpickr
-              onChange={(dates, msg) => { this.setState({ msg })}}
+              onChange={(dates, msg) => { this.setState({ msg }) }}
               options={
                 options
               }
@@ -261,11 +284,11 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     }
   }
 
-    const plugin = {
-      match: "date-picker",
-      component: DatePicker
-    }
-  
+  const plugin = {
+    match: "date-picker",
+    component: DatePicker
+  }
+
   return plugin;
 }
 

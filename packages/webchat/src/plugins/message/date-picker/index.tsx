@@ -172,22 +172,23 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.defaultDate = message.data._plugin.data.defaultDate;
         console.log(options.disable)
 
-        // TODO: disable weekends for value "weekends" in options.disable
-        // switch (options.disable[0]) {
-        //   case "weekends": 
-        //     try {
-        //       options.disable = [
-        //         (date) => {
-        //           return (date.getDay() === 0 || date.getDay() === 6);
-        //         }
-        //       ]
-        //     } catch (err) {
-        //       options.disable = []
-        //     }
-        //     break;
-        //   default: 
-        //     options.disable = message.data._plugin.data.disable || [];
-        // }
+
+        // disables weekends if user writes "weekends" in the disable field
+        switch (options.disable[0]) {
+          case "weekends": 
+            try {
+              options.disable = [
+                (date) => {
+                  return (date.getDay() === 0 || date.getDay() === 6);
+                }
+              ]
+            } catch (err) {
+              options.disable = []
+            }
+            break;
+          default: 
+            options.disable = message.data._plugin.data.disable || [];
+        }
 
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;

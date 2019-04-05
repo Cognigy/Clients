@@ -7,7 +7,7 @@ import './flatpickr.css';
 
 // languages
 import l10n from './langHelper';
-import moment, { locale } from 'moment';
+import moment from 'moment';
 
 import { MessageComponentProps, MessagePlugin, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
@@ -15,7 +15,7 @@ import { createMessagePlugin, registerMessagePlugin } from "../../helper";
 const datePickerDaySelector = ".flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay";
 
 interface IState {
-  date: Date[]
+  msg: string,
 }
 
 const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
@@ -50,15 +50,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     backgroundColor: 'transparent',
     border: `1px solid ${theme.primaryColor}`,
     color: theme.primaryColor
-  }));
-
-  const NotFullscreen = styled.div(({ theme }) => ({
-    background: theme.primaryGradient,
-    borderRadius: theme.unitSize * 2,
-    borderBottomLeftRadius: 0,
-    boxShadow: theme.messageShadow,
-    color: theme.primaryContrastColor,
-    padding: `${theme.unitSize * 2}px ${theme.unitSize * 3}px`,
   }));
 
   const SubmitButton = styled(PrimaryButton)(({ theme }) => ({
@@ -115,27 +106,27 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     constructor(props) {
       super(props);
       this.state = {
-        date: [new Date()],
+        msg: "",
       };
     }
 
     handleSubmit = () => {
       const { message } = this.props
-      try {
-        moment.locale(message.data._plugin.data.locale);
-      } catch (e) {
-        moment.locale("en");
+
+      // close plugin if user didn't choose a date
+      if (this.state.msg.length > 0) {
+        if (message.source === 'bot')
+          processedMessages.add(message.traceId);
+
+        this.props.onSendMessage(this.state.msg), {
+          _plugin: "date-picker",
+          date: this.state.msg,
+        }
+      } else {
+        this.props.onDismissFullscreen();
       }
 
-      if (message.source === 'bot')
-        processedMessages.add(message.traceId);
-
-      this.props.onSendMessage("" + moment(this.state.date[0]).format('LLLL'), {
-        _plugin: "date-picker",
-        date: this.state.date,
-        abort: false
-      });
-    }
+    };
 
     handleAbort = () => {
       const { message } = this.props;
@@ -153,9 +144,14 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         static: true,
         enableTime: true,
         mode: "single",
+        wantDisable: true,
         disable: [],
+        enable: [],
         minDate: "",
-        maxDate: ""
+        maxDate: "",
+        dateFormat: "Y-m-d",
+        time_24hr: false,
+        defaultDate: new Date()
       }
 
       let dateButtonText = "pick date";
@@ -166,11 +162,37 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         // Message Data
         options.enableTime = message.data._plugin.data.enableTime;
         options.mode = message.data._plugin.data.mode;
-        options.disable = message.data._plugin.data.disable || [];
         options.event = message.data._plugin.data.eventName;
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;
         options.locale = message.data._plugin.data.locale;
+        options.dateFormat = message.data._plugin.data.dateFormat;
+        options.time_24hr = message.data._plugin.data.time_24hr;
+        options.defaultDate = message.data._plugin.data.defaultDate;
+
+        // disable or enable dates given the users boolean
+        if (message.data._plugin.data.wantDisable) {
+          options.disable = message.data._plugin.data.enable_disable || [];
+        } else {
+          options.enable = message.data._plugin.data.enable_disable || [];
+        }
+
+        // disables weekends if user writes "weekends" in the disable field
+        switch (options.disable[0]) {
+          case "weekends":
+            try {
+              options.disable = [
+                (date) => {
+                  return (date.getDay() === 0 || date.getDay() === 6);
+                }
+              ]
+            } catch (err) {
+              options.disable = []
+            }
+            break;
+          default:
+            options.disable = message.data._plugin.data.disable || [];
+        }
 
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;
@@ -179,7 +201,48 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
 
       }
 
-      const { date } = this.state;
+      // define the maxDate given the users choice
+      try {
+        moment.locale('fr-ca') // for 1970-01-01 format
+        switch (message.data._plugin.data.maxDate) {
+          case "today":
+            options.maxDate = moment().format('L');
+            break;
+          case "tomorrow":
+            options.maxDate = moment().add(1, 'days').format('L');
+            break;
+          case "yesterday":
+            options.maxDate = moment().add(-1, 'days').format('L');
+            break;
+          default:
+            options.maxDate = message.data._plugin.data.maxDate;
+        }
+      } catch (err) {
+
+      }
+
+      // define the minDate given the users choice
+      try {
+        moment.locale('fr-ca') // for 1970-01-01 format
+        switch (message.data._plugin.data.minDate) {
+          case "today":
+            options.minDate = moment().format('L');
+            break;
+          case "tomorrow":
+            options.minDate = moment().add(1, 'days').format('L');
+            break;
+          case "yesterday":
+            options.minDate = moment().add(-1, 'days').format('L');
+            break;
+          default:
+            options.minDate = message.data._plugin.data.minDate;
+        }
+      } catch (err) {
+
+      }
+
+
+      const { msg } = this.state;
 
       let datepickerWasOpen = false;
       if (message.source === 'bot') {
@@ -201,8 +264,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
           </Header>
           <Content>
             <Flatpickr
-              value={date}
-              onChange={date => { this.setState({ date }) }}
+              onChange={(dates, msg) => { this.setState({ msg }) }}
               options={
                 options
               }

@@ -144,6 +144,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         static: true,
         enableTime: true,
         mode: "single",
+        wantDisable: true,
         disable: [],
         enable: [],
         minDate: "",
@@ -161,8 +162,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         // Message Data
         options.enableTime = message.data._plugin.data.enableTime;
         options.mode = message.data._plugin.data.mode;
-        options.disable = message.data._plugin.data.disable || [];
-        options.enable = message.data._plugin.data.enable || [];
         options.event = message.data._plugin.data.eventName;
         options.minDate = message.data._plugin.data.minDate;
         options.maxDate = message.data._plugin.data.maxDate;
@@ -170,6 +169,13 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.dateFormat = message.data._plugin.data.dateFormat;
         options.time_24hr = message.data._plugin.data.time_24hr;
         options.defaultDate = message.data._plugin.data.defaultDate;
+
+        // disable or enable dates given the users boolean
+        if (message.data._plugin.data.wantDisable) {
+          options.disable = message.data._plugin.data.enable_disable || [];
+        }else {
+          options.enable = message.data._plugin.data.ensable_disable || [];
+        }
 
         // disables weekends if user writes "weekends" in the disable field
         switch (options.disable[0]) {

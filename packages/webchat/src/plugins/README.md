@@ -4,6 +4,7 @@ With Cognigy 3.3 you have the ability to include any software plugins in your we
 We distinguish two types of plugins:
 * **input** 
 * **message**
+
 The first ones are displayed in the input bar of your webchat, such as the **Send** or **Microphone** button. The second are displayed as a text message written by the Cognigy Bot. 
 
 # Contents

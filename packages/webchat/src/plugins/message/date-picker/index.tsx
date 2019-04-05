@@ -170,8 +170,6 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.dateFormat = message.data._plugin.data.dateFormat;
         options.time_24hr = message.data._plugin.data.time_24hr;
         options.defaultDate = message.data._plugin.data.defaultDate;
-        console.log(options.disable)
-
 
         // disables weekends if user writes "weekends" in the disable field
         switch (options.disable[0]) {

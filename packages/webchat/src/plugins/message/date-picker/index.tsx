@@ -166,6 +166,25 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         options.time_24hr = message.data._plugin.data.time_24hr;
         options.defaultDate = message.data._plugin.data.defaultDate;
 
+        switch (options.disable[0]) {
+          case "weekends": 
+            try {
+              options.disable = [
+                (date) => {
+                  return (date.getDay() === 0 || date.getDay() === 6);
+                }
+              ]
+            } catch (err) {
+              console.log(err)
+              options.disable = []
+            }
+            break;
+          default: 
+            options.disable = message.data._plugin.data.disable || [];
+        }
+
+        console.log("After " + options.disable)
+
         dateButtonText = message.data._plugin.data.openPickerButtonText;
         cancelButtonText = message.data._plugin.data.cancelButtonText;
         submitButtonText = message.data._plugin.data.submitButtonText;

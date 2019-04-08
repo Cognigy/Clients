@@ -9,11 +9,12 @@ The first ones are displayed in the input bar of your webchat, such as the **Sen
 
 # Contents
 * Message Plugins
-	* Examples
-		* Simple Plugin
-		* Return JSX
-		* Get Cognigy Webchat Style
-		* Fullscreen Plugin
+  * Examples
+    * Simple Plugin
+    * Return JSX
+    * Get Cognigy Webchat Style
+    * Fullscreen Plugin
+* Open Plugin in Cognigy.AI
 
 
 ### Message Plugins
@@ -138,3 +139,44 @@ if (isFullscreen) {
 	console.log("is not fullscreen");
 }
 ```
+
+
+
+### Open Plugin in Cognigy.AI
+
+If you're finished with developing your plugin, you need to execute it in your Cognigy.AI Flow to let the user interact with it. For that, you only have to send a **Data Message** via **Say Node**, such as the following example: 
+
+```json
+{
+  "_plugin": {
+    "type": "your-plugin-string",
+    "data": {
+      "key": "value"
+    }
+  }
+}
+```
+
+The entire **Say Node** now looks like this: 
+
+![dataMessage](../../../../assets/dataMessage.png)
+
+With `_plugin.type` the webchat knows which plugin you want to execute since you defined it with this string in your plugin's code. Within the `data` object you define all needed information for your plugin — for example you could send the name of the **Click me!** button as `clickButton: "Click me!"`. 
+
+###### Advanced
+
+If you want to make things easier than sending a data message, you can develop a [Cognigy Custom Module](<https://github.com/Cognigy/CustomModules>) which simply sends a **Data Message** via the following JavaScript command: 
+
+```javascript
+// send the message to open your plugin
+input.actions.output("", {
+	_plugin: {
+		type: "date-picker",
+		data: {
+			key: args.value,
+	}
+});
+```
+
+Note that you now need the users input which is stored in the `args` to define your data's values.
+

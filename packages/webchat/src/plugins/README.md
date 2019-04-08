@@ -174,6 +174,7 @@ input.actions.output("", {
 		type: "date-picker",
 		data: {
 			key: args.value,
+		}
 	}
 });
 ```

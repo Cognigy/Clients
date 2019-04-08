@@ -171,7 +171,7 @@ If you want to make things easier than sending a data message, you can develop a
 // send the message to open your plugin
 input.actions.output("", {
 	_plugin: {
-		type: "date-picker",
+		type: "your-plugin-string",
 		data: {
 			key: args.value,
 		}
@@ -179,5 +179,28 @@ input.actions.output("", {
 });
 ```
 
-Note that you now need the users input which is stored in the `args` to define your data's values.
+Note that you now need the users input which is stored in the `args` to define your data's values. The whole Custom Node could look like this (example in TypeScript): 
+
+```javascript
+/**
+ * Opens your Plugin in the Chat
+ * @arg {CognigyScript} `key` The key of your data
+ */
+async function yourPluginCustomNode(input: IFlowInput, args: { key: string }) {
+    // Check if secret exists and contains correct parameters
+    if (!args.key) return Promise.reject("No key value defined.");
+
+    // send the message to open datepicker
+    input.actions.output("", {
+        _plugin: {
+            type: "your-plugin-string",
+            data: {
+                key: args.key
+            }
+        }
+    });
+}
+
+module.exports.yourPluginCustomNode = yourPluginCustomNode;
+```
 

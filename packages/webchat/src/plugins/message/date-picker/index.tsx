@@ -11,6 +11,7 @@ import moment from 'moment';
 
 import { MessageComponentProps, MessagePlugin, MessagePluginFactory } from "../../../common/interfaces/message-plugin";
 import { createMessagePlugin, registerMessagePlugin } from "../../helper";
+import { IMessage } from "../../../common/interfaces/message";
 
 const datePickerDaySelector = ".flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay";
 
@@ -134,115 +135,80 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       this.props.onDismissFullscreen();
     }
 
-    render() {
-      const { onSendMessage, message, config, attributes, isFullscreen, onSetFullscreen } = this.props;
+    static isWeekendDate(date: string) {
+      // 1 is monday
+      // 7 is sunday
+      return  [1, 7].includes(moment(date).isoWeekday());
+    }
 
+    static transformNamedDate(namedDate: string) {
+      switch (namedDate) {
+        case "today":
+          return moment().format('YYYY-MM-DD');
+
+        case "tomorrow":
+          return moment().add(1, 'days').format('YYYY-MM-DD');
+
+        case "yesterday":
+          return moment().add(-1, 'days').format('YYYY-MM-DD');
+      }
+
+      return namedDate
+    }
+
+    static getOptionsFromMessage (message: IMessage) {
+      const { data } = message.data._plugin;
       const options = {
-        event: "Pick a date",
-        locale: l10n["en"],
-        inline: true,
-        static: true,
-        enableTime: true,
-        mode: "single",
-        wantDisable: true,
+        dateFormat: data.dateFormat || 'YYYY-MM-DD',
+        defaultDate: DatePicker.transformNamedDate(data.defaultDate) 
+          || DatePicker.transformNamedDate(data.minDate) 
+          || moment().format('YYYY-MM-DD'),
         disable: [],
         enable: [],
-        minDate: "",
-        maxDate: "",
-        dateFormat: "Y-m-d",
-        time_24hr: false,
-        defaultDate: new Date()
-      }
+        enableTime: data.enableTime || true,
+        event: data.eventName || 'Pick a date',
+        inline: true,
+        locale: data.locale || l10n['en'],
+        maxDate: DatePicker.transformNamedDate(data.maxDate) || '',
+        minDate: DatePicker.transformNamedDate(data.minDate) || '',
+        mode: data.mode || 'single',
+        static: true,
+        time_24hr: data.time_24hr || false,
+        parseDate: dateString => moment(dateString).toDate(),
+        formatDate: date => moment(date).locale('en').format('L')
+      };
+
+      const mask: string[] = [...(data.enable_disable || [])]
+        // add special rule for weekends
+        .map(dateString => {
+          if (dateString === 'weekends')
+              return DatePicker.isWeekendDate
+
+          return dateString;
+        })
+        // resolve relative date names like today, tomorrow or yesterday
+        .map(DatePicker.transformNamedDate);
+
+        if (!!data.wantDisable) {
+          // add date mask as blacklist
+          options.disable = mask;
+        } else if (mask.length > 0) {
+
+          // add date mask as whitelist
+          options.enable = mask;
+        } 
+
+      return options;
+    }
+
+    render() {
+      const { onSendMessage, message, config, attributes, isFullscreen, onSetFullscreen } = this.props;
 
       let dateButtonText = "pick date";
       let cancelButtonText = "cancel";
       let submitButtonText = "submit";
 
-      try {
-        // Message Data
-        options.enableTime = message.data._plugin.data.enableTime;
-        options.mode = message.data._plugin.data.mode;
-        options.event = message.data._plugin.data.eventName;
-        options.minDate = message.data._plugin.data.minDate;
-        options.maxDate = message.data._plugin.data.maxDate;
-        options.locale = message.data._plugin.data.locale;
-        options.dateFormat = message.data._plugin.data.dateFormat;
-        options.time_24hr = message.data._plugin.data.time_24hr;
-        options.defaultDate = message.data._plugin.data.defaultDate;
-
-        // disable or enable dates given the users boolean
-        if (message.data._plugin.data.wantDisable) {
-          options.disable = message.data._plugin.data.enable_disable || [];
-        } else {
-          options.enable = message.data._plugin.data.enable_disable || [];
-        }
-
-        // disables weekends if user writes "weekends" in the disable field
-        switch (options.disable[0]) {
-          case "weekends":
-            try {
-              options.disable = [
-                (date) => {
-                  return (date.getDay() === 0 || date.getDay() === 6);
-                }
-              ]
-            } catch (err) {
-              options.disable = []
-            }
-            break;
-          default:
-            options.disable = message.data._plugin.data.disable || [];
-        }
-
-        dateButtonText = message.data._plugin.data.openPickerButtonText;
-        cancelButtonText = message.data._plugin.data.cancelButtonText;
-        submitButtonText = message.data._plugin.data.submitButtonText;
-      } catch (e) {
-
-      }
-
-      // define the maxDate given the users choice
-      try {
-        moment.locale('fr-ca') // for 1970-01-01 format
-        switch (message.data._plugin.data.maxDate) {
-          case "today":
-            options.maxDate = moment().format('L');
-            break;
-          case "tomorrow":
-            options.maxDate = moment().add(1, 'days').format('L');
-            break;
-          case "yesterday":
-            options.maxDate = moment().add(-1, 'days').format('L');
-            break;
-          default:
-            options.maxDate = message.data._plugin.data.maxDate;
-        }
-      } catch (err) {
-
-      }
-
-      // define the minDate given the users choice
-      try {
-        moment.locale('fr-ca') // for 1970-01-01 format
-        switch (message.data._plugin.data.minDate) {
-          case "today":
-            options.minDate = moment().format('L');
-            break;
-          case "tomorrow":
-            options.minDate = moment().add(1, 'days').format('L');
-            break;
-          case "yesterday":
-            options.minDate = moment().add(-1, 'days').format('L');
-            break;
-          default:
-            options.minDate = message.data._plugin.data.minDate;
-        }
-      } catch (err) {
-
-      }
-
-
-      const { msg } = this.state;
+      const options = DatePicker.getOptionsFromMessage(message);
 
       let datepickerWasOpen = false;
       if (message.source === 'bot') {

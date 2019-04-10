@@ -18,48 +18,132 @@ The first ones are displayed in the input bar of your webchat, such as the **Sen
 
 
 ### Message Plugins
+A Message Plugin is used to 
+
 If you want to develop your own message plugin you have to follow these steps: 
-* Create a folder and name it like your plugin
+* Create a folder for your plugin
 * Create a file called **index.tsx** 
 	* You don’t have to use Typescript at this point but we recommend using it 
-* Write your awesome plugin
 
-#### Examples
+#### Guide: Your first Message Plugin
 
-##### Simple Plugin
-There are various possibilities to develop and design a plugin, but the easiest way is to write a **React JS** constant and use these rows of code in your file:
+##### Write a simple Message Component
+In it's core, a Message Plugin is made up of a React component that gets the message it should display via `props` and decides how to render it. This `SimpleMessageComponent` just renders a `<div>` containing the message's text.
+
+```javascript
+const SimpleMessageComponent = (props) => {
+    const text = props.message.text;
+
+	return (
+        <div>{text}</div>
+    );
+}
+```
+
+##### Create a simple Message Plugin
+Now that we have a component that renders the message, we can use that to declare a Webchat Message Plugin.
+```javascript
+const simpleMessagePlugin = {
+    match: 'simple-message',
+    component: SimpleMessageComponent
+}
+```
+When included in the Webchat, this Plugin will be used whereever a message arrives where `message.data._plugin.type` equals `'simple-message'`. The rest of the messages will be be ignored by this Plugin.
+
+
+##### Registering the simple Message Plugin
+In order to register the Message Plugin to the Cognigy Webchat, it needs to be put at a certain place the Cognigy Webchat looks at when starting up.
+```javascript
+if (!window.cognigyWebchatMessagePlugins) {
+    window.cognigyWebchatMessagePlugins = [];
+}
+window.cognigyWebchatMessagePlugins.push(simpleMessagePlugin);
+```
+
+##### Wrapping up
+
+
 ```javascript
 import * as React from 'react';
-import { registerMessagePlugin } from "../../helper";
 
-const PluginConst = (props) => {
-  
-	  return (
-        <div></div>
+// create a message component
+const SimpleMessageComponent = (props) => {
+    const text = props.message.text;
+
+	return (
+        <div>{text}</div>
     );
 }
 
-const yourPlugin = {
-    match: 'your-plugin-string',
-    component: PluginConst
+// create a plugin
+const simpleMessagePlugin = {
+    match: 'simple-message',
+    component: SimpleMessageComponent
 }
-registerMessagePlugin(yourPlugin);
+
+// register the plugin
+if (!window.cognigyWebchatMessagePlugins) {
+    window.cognigyWebchatMessagePlugins = [];
+}
+window.cognigyWebchatMessagePlugins.push(simpleMessagePlugin);
 ```
 
-The second import  `import ... from "../../helper"`  uses the **registerMessagePlugin()** method to put your plugin into the webchat. As a parameter it needs a object of your plugin where the **match** key is the string and the **component** the const/class of your plugin — more in section **Open Plugin in Cognigy.AI**
 
-##### Return JSX
-Such as always, you have to return your [JSX](https://reactjs.org/docs/introducing-jsx.html)  code who looks like HTML but is translated to Javascript in the background. You could for example return a simple button which sends a message in the name of the user: 
+#### Example: Rating Interaction
+You can use the `onSendMessage` method from the props to send a message to the bot.
+It will appear on the user side of the chat, such as if the user had written it by himself.
+The message text is defined by your plugin code, you can add a data-object as the second parameter.
 ```javascript
-const { onSendMessage } = props;
+const SenderComopnent = (props) => {
+    return (
+        <div>
+            <button onClick={() => props.onSendMessage('👍')}>
+            👍
+            </button>
+            <button onClick={() => props.onSendMessage('👎')}>
+            👎
+            </button>
+        </div>
+    )
+}
+```
 
-const handleClick = () => {
-	onSendMessage('I clicked the button')
+#### Example: Using custom match rules
+Instead on relying on the convention of using `message.data._plugin.type === 'your-plugin-name'`, you can also define a custom function to match messages for your plugin. it will get the message as an argument and should return a boolean value whether it fits the message or not.
+
+```javascript
+// this will match any message where the message text contains 'reverse'
+const matchReverseText = (message) => message.text.includes('reverse');
+
+const reversePlugin = {
+    match: matchReverseText
+    component: ReverseTextComponent
 }
 
-return (
-	<button onClick={ handleClick }>Click me!</button>
-);
+
+// this will match any message from the user
+const matchUserMessage = (message) => message.source === 'user';
+
+const userMessagePlugin = {
+    match: matchUserMessage,
+    component: UserMessageComponent
+}
+```
+
+
+Such as always, you have to return your [JSX](https://reactjs.org/docs/introducing-jsx.html)  code who looks like HTML but is translated to Javascript in the background. You could for example return a simple button which sends a message in the name of the user: 
+```javascript
+const MessageComponent = (props) => {
+    const { onSendMessage } = props;
+
+    const handleClick = () => {
+        onSendMessage('I clicked the button')
+    }
+
+    return (
+        <button onClick={handleClick}>Click me!</button>
+    );
+}
 ```
 
 If the user clicks the button which is displayed by the plugin, the user writes the message _I clicked the button_. 

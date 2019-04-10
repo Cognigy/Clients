@@ -119,10 +119,12 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         if (message.source === 'bot')
           processedMessages.add(message.traceId);
 
-        this.props.onSendMessage(this.state.msg), {
-          _plugin: "date-picker",
-          date: this.state.msg,
-        }
+        setTimeout(() => {
+          this.props.onSendMessage(this.state.msg), {
+            _plugin: "date-picker",
+            date: this.state.msg,
+          }
+        }, 300);
       } else {
         this.props.onDismissFullscreen();
       }
@@ -138,7 +140,7 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
     static isWeekendDate(date: string) {
       // 1 is monday
       // 7 is sunday
-      return  [1, 7].includes(moment(date).isoWeekday());
+      return [1, 7].includes(moment(date).isoWeekday());
     }
 
     static transformNamedDate(namedDate: string) {
@@ -156,12 +158,13 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       return namedDate
     }
 
-    static getOptionsFromMessage (message: IMessage) {
+    static getOptionsFromMessage(message: IMessage) {
       const { data } = message.data._plugin;
+
       const options = {
         dateFormat: data.dateFormat || 'YYYY-MM-DD',
-        defaultDate: DatePicker.transformNamedDate(data.defaultDate) 
-          || DatePicker.transformNamedDate(data.minDate) 
+        defaultDate: DatePicker.transformNamedDate(data.defaultDate)
+          || DatePicker.transformNamedDate(data.minDate)
           || moment().format('YYYY-MM-DD'),
         disable: [],
         enable: [],
@@ -175,28 +178,32 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
         static: true,
         time_24hr: data.time_24hr || false,
         parseDate: dateString => moment(dateString).toDate(),
-        formatDate: date => moment(date).locale('en').format('L')
+        formatDate: date => moment(date).format('YYYY/MM/DD')
       };
+
+      if (options.enableTime) {
+        options.formatDate = date => moment(date).format('YYYY/MM/DD HH:mm')
+      }
 
       const mask: string[] = [...(data.enable_disable || [])]
         // add special rule for weekends
         .map(dateString => {
           if (dateString === 'weekends')
-              return DatePicker.isWeekendDate
+            return DatePicker.isWeekendDate
 
           return dateString;
         })
         // resolve relative date names like today, tomorrow or yesterday
         .map(DatePicker.transformNamedDate);
 
-        if (!!data.wantDisable) {
-          // add date mask as blacklist
-          options.disable = mask;
-        } else if (mask.length > 0) {
+      if (!!data.wantDisable) {
+        // add date mask as blacklist
+        options.disable = mask;
+      } else if (mask.length > 0) {
 
-          // add date mask as whitelist
-          options.enable = mask;
-        } 
+        // add date mask as whitelist
+        options.enable = mask;
+      }
 
       return options;
     }

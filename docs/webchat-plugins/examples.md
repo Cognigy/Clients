@@ -1,24 +1,26 @@
 # Webchat Plugin Examples
 
-## Text Message (using message text)
+## Text Message
+Renders the message text in red.
 ```jsx
-const TextMessage = (props) => {
+const RedText = (props) => {
     const text = props.message.text
 
     return (
-        <div>
+        <span style={{ color: 'red' }}>
             {text}
-        </div>
+        </span>
     )
 }
 
-const textMessagePlugin = {
+const redTextPlugin = {
     match: 'text-message',
-    component: TextMessage
+    component: RedText
 }
 ```
 
-## Image (using message data)
+## Image
+Renders an inline image with a url from the message. 
 ```jsx
 const Image = (props) => {
     const url = props.message.data._plugin.url
@@ -34,7 +36,8 @@ const imagePlugin = {
 }
 ```
 
-## Button (sending messages)
+## Button
+Renders a button that sends a predefined message from the user when clicked.
 ```jsx
 const Button = (props) => {
     const onSendMessage = props.onSendMessage
@@ -55,7 +58,8 @@ const buttonPlugin = {
 }
 ```
 
-## Message Data (custom matching, passthrough)
+## Message Data
+Displays an additional message output with stringified data if the message has any.
 ```jsx
 const MessageData = (props) => {
     const data = props.message.data
@@ -79,7 +83,9 @@ const messageDataPlugin = {
 }
 ```
 
-## Dialog (fullscreen)
+## Dialog
+Displays a Button that opens a Dialog when clicked.
+The user can then dismiss or submit the dialog with buttons.
 ```jsx
 const Dialog = (props) => {
     const { isFullscreen, onSetFullscreen } = props

@@ -9,6 +9,6 @@ TODO
 
 ---  
   
-- TODO [Get Started]()
+- [Get Started](./get-started.md)
 - [Examples](./examples.md)
 - [API Reference](./api-reference.md)

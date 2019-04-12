@@ -10,5 +10,5 @@ TODO
 ---  
   
 - TODO [Get Started]()
-- [Examples](./examples)
-- [API Reference](./api-reference)
+- [Examples](./examples.md)
+- [API Reference](./api-reference.md)

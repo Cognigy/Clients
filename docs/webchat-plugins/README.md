@@ -1,14 +1,45 @@
-# Webchat Plugin Introduction
+# Introduction
 
-TODO
-- about
-- concepts (middleware)
-- images
+This guide will help getting you started building cognigy webchat plugins.
+While this page is focused primarily on basic condepts, you may want to jump in and [build a plugin](./get-started.md), see some explanatory [examples](./examples.md) or dive into the [API reference](./api-reference.md).
 
-
-
----  
-  
-- [Get Started](./get-started.md)
+- [Get Started](./get-started.md) building 
 - [Examples](./examples.md)
 - [API Reference](./api-reference.md)
+
+
+# Plugin Concepts
+
+## Display Types
+### Inline Message
+By default, messages will get rendered `inline`, with an avatar next to it, aligned to the side of the message origin.
+
+![Inline Message](../../assets/message-plugin-inline.png)  
+
+
+### Fullscreen Message
+Message plugins can utilize a 'fullscreen' mechanism that will render it fullscreen, filling out all the viewport of the webchat. This can be used to create dialog-like mechanics where the user's attention can be locked onto the next step.
+
+![Fullscreen Message](../../assets/message-plugin-fullscreen.png)
+
+## Fullwidth Message
+When displaying content that needs space and is not directly percieved as a message (such as images, event notifications, qr codes), a plugin can be configured to be displayed fullwidth, without an avatar, alignment and padding. 
+
+![Fullwidth Message](../../assets/message-plugin-fullwidth.png)
+
+
+## Plugins as Middlewares
+
+For every message, the webchat decides how to render it by iterating over all the registered message plugins.
+Every plugin contains a mechanism that can decide whether it matches a message or not.
+If a plugin matches a message, the webchat will stop iterating and use that plugin to render the message.
+![Plugin Message](../../assets/plugin-chain-match.png)  
+
+If no matching custom plugin was found, the webchat will fall back to its default message plugin .
+
+![Default Message](../../assets/plugin-chain-default.png)  
+
+When a message is matched by a custom plugin that has the 'passthrough' option enabled, the webchat will render the message with that plugin and then continue iterating, making multiple outputs for a single message possible.
+
+![Passthrough Plugin Message](../../assets/plugin-chain-passthrough.png)
+

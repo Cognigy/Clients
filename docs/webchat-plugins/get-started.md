@@ -35,6 +35,7 @@ Inside that `message` object, we have a `text` property containing the raw text 
 We will return a `<span>` with red font color containing the `text` value of the message.
 ```jsx
 // src/index.jsx
+
 import * as React from 'react'
 
 const RedText = (props) => {

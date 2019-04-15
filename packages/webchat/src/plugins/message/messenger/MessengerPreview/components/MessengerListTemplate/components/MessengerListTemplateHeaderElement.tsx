@@ -16,7 +16,6 @@ export const getMessengerListTemplateHeaderElement = ({ React, styled }: Message
         paddingTop: '50%',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        backgroundImage: `url('${url}')`
     }));
 
     const DarkLayer = styled.div({
@@ -50,10 +49,15 @@ export const getMessengerListTemplateHeaderElement = ({ React, styled }: Message
         const { title, subtitle, image_url, default_action } = element;
         // TODO buttons, default_action
 
+        const styles: React.CSSProperties = {
+            backgroundImage: `url('${image_url}')`
+        }
+
         return (
             <Root
                 url={image_url}
                 onClick={default_action && (e => onAction(e, default_action))}
+                style={styles}
             >
                 <DarkLayer />
                 <Content>

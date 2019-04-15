@@ -63,7 +63,6 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
         paddingTop: '50%',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        backgroundImage: `url('${url}')`
     }));
 
     const GenericContent = styled(MessengerContent)({
@@ -71,7 +70,7 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
     });
 
     const MessengerGenericTemplate = class MessengerGenericTemplate extends React.Component<IMessengerGenericTemplateProps & React.HTMLProps<HTMLDivElement>, IMessengerGenericTemplateState> {
-        getImageStyles(element: IFBMGenericTemplateElement) {
+        getImageStyles = (element: IFBMGenericTemplateElement) => {
             const styles: React.CSSProperties = {
                 backgroundImage: `url('${element.image_url}')`
             }
@@ -94,6 +93,7 @@ export const getMessengerGenericTemplate = ({ React, styled }: MessagePluginFact
                                 <Image
                                     url={image_url}
                                     onClick={e => default_action && onAction(e, default_action)}
+                                    style={this.getImageStyles(element)}
                                 />
                                 <Divider />
                             </>

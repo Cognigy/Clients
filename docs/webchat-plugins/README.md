@@ -33,6 +33,7 @@ When displaying content that needs space and is not directly percieved as a mess
 For every message, the webchat decides how to render it by iterating over all the registered message plugins.
 Every plugin contains a mechanism that can decide whether it matches a message or not.
 If a plugin matches a message, the webchat will stop iterating and use that plugin to render the message.
+
 ![Plugin Message](../../assets/plugin-chain-match.png)  
 
 If no matching custom plugin was found, the webchat will fall back to its default message plugin .
@@ -42,4 +43,3 @@ If no matching custom plugin was found, the webchat will fall back to its defaul
 When a message is matched by a custom plugin that has the 'passthrough' option enabled, the webchat will render the message with that plugin and then continue iterating, making multiple outputs for a single message possible.
 
 ![Passthrough Plugin Message](../../assets/plugin-chain-passthrough.png)
-

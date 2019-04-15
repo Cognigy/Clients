@@ -25,6 +25,5 @@ To build (and bundle) the packages, run `yarn build`.
 
 # Plugins
 
-With Cognigy 3.3 you have the ability to develop custom plugins for your specific use case, such as a flight seat picker to let your user check in his/her flight directly in the webchat. 
-
-[Take a look at our built-in plugins!](./packages/webchat/src/plugins/message)
+With Cognigy 3.3 you have the ability to develop custom plugins for your specific use case, such as a flight seat picker to let your user check in his/her flight directly in the webchat.
+To learn mor about developing Webchat Plugins, follow up on the [Plugin documentation](./docs/webchat-plugins/README.md)

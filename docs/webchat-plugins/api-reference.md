@@ -20,7 +20,8 @@ Can be omitted if not used.
 
 ### Message Component Props
 #### `attributes: object`
-Contains properties that should be forwarded to the root of your component.
+Contains properties that should be spread into the root element of your component.
+As a reference, see our [Dialog example](./examples.md#dialog)
 For example, it will set a className to display fullscreen messages accordingly.
 
 #### `config: object`
@@ -36,7 +37,7 @@ Contains the message that should be rendered by the component.
 #### `onDismissFullscreen: () => void`
 Use this to close a fullscreen message without sending a response.
 
-#### `onSendMessage: (text: string, data?: string, options?: object) => void`
+#### `onSendMessage: (text: string, data?: object, options?: object) => void`
 Sends a message from the user to the bot.
 Will dismiss fullscreen messages (by sending a message, the fullscreen dialog counts as 'resolved')
 

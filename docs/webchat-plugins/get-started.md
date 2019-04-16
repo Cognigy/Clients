@@ -30,7 +30,7 @@ Open your `package.json` file and add a new "build" job at the "scripts" field:
 
 ## Define a Message Component
 In the first step, we will create a React Component that will be used to render a message.
-Via its' `props`, it will get a `message` property representing the content of the message we want to render.
+Via its `props`, it will get a `message` property representing the content of the message we want to render.
 Inside that `message` object, we have a `text` property containing the raw text of the message.
 We will return a `<span>` with red font color containing the `text` value of the message.
 ```jsx

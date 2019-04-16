@@ -1,7 +1,7 @@
 # Introduction
 
 This guide will help getting you started building cognigy webchat plugins.
-While this page is focused primarily on basic condepts, you may want to jump in and [build a plugin](./get-started.md), see some explanatory [examples](./examples.md) or dive into the [API reference](./api-reference.md).
+While this page is focused primarily on basic concepts, you may want to jump in and [build a plugin](./get-started.md), see some explanatory [examples](./examples.md) or dive into the [API reference](./api-reference.md).
 
 - [Get Started](./get-started.md) 
 - [Examples](./examples.md)

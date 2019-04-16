@@ -212,9 +212,9 @@ const datePickerPlugin: MessagePluginFactory = ({ styled }) => {
       const { onSendMessage, message, config, attributes, isFullscreen, onSetFullscreen } = this.props;
 
 
-      let dateButtonText = message.data._plugin.data.openPickerButtonText;
-      let cancelButtonText = message.data._plugin.data.cancelButtonText;
-      let submitButtonText = message.data._plugin.data.submitButtonText;
+      let dateButtonText = message.data._plugin.data.openPickerButtonText || 'pick date';
+      let cancelButtonText = message.data._plugin.data.cancelButtonText || 'cancel';
+      let submitButtonText = message.data._plugin.data.submitButtonText || 'submit';
 
       const options = DatePicker.getOptionsFromMessage(message);
 

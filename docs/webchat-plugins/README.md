@@ -34,9 +34,13 @@ For every message, the webchat decides how to render it by iterating over all th
 Every plugin contains a mechanism that can decide whether it matches a message or not.
 If a plugin matches a message, the webchat will stop iterating and use that plugin to render the message.
 
+In the examples below, we have a total of five webchat plugins.
+The webchat iterates through each plugin from left to right until it finds a match.
+Outlined circles represent plugins that did not match, dark circles represent matched plugins, light circles represent plugins that were not taken into consideration.
+
 ![Plugin Message](../../assets/plugin-chain-match.png)  
 
-If no matching custom plugin was found, the webchat will fall back to its default message plugin .
+If no matching custom plugin was found, the webchat will fall back to its default message plugin (the last one).
 
 ![Default Message](../../assets/plugin-chain-default.png)  
 

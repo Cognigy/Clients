@@ -7,6 +7,8 @@ If you are unfamiliar with `React` or the `jsx` file format, i would recommend t
 Since we are using React, we need a bit of setup before coding.
 The easiest way is to use a bundler called [parcel](https://parceljs.org).
 
+> If your parcel installation is slow, make sure to update to the newest NPM version
+
 
 - `npm init`
 - `npm i -D parcel`

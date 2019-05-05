@@ -112,11 +112,11 @@ const redTextPlugin = {
     component: RedText
 }
 
-if (!window.cognigyWebchatInputPlugins) {
-    window.cognigyWebchatInputPlugins = []
+if (!window.cognigyWebchatMessagePlugins) {
+    window.cognigyWebchatMessagePlugins = []
 }
 
-window.cognigyWebchatPlugins.push(redTextPlugin);
+window.cognigyWebchatMessagePlugins.push(redTextPlugin);
 ```
 
 ## Building the Plugin

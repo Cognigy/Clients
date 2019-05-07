@@ -15,10 +15,11 @@ import '../plugins/message/messenger';
 // import '../plugins/message/demos/uppercase';
 
 import EmbeddedWebchat from './components/presentational/EmbeddedWebchat';
+import { Webchat } from '../webchat/components/Webchat';
 
 
 
-const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentProps<typeof EmbeddedWebchat>['options']) => {
+const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentProps<typeof EmbeddedWebchat>['options'], callback?: (webchat: Webchat) => void) => {
     // @ts-ignore
     const messagePlugins = (window.cognigyWebchatMessagePlugins || [])
         .map(plugin => typeof plugin === 'function'
@@ -40,9 +41,12 @@ const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentPr
     const webchatRoot = document.createElement('div');
     document.body.appendChild(webchatRoot);
 
+    let cognigyWebchat: Webchat | null = null;
+
     ReactDOM.render(
         (
             <EmbeddedWebchat
+                ref={ref => cognigyWebchat = ref}
                 url={webchatConfigUrl}
                 options={options}
                 messagePlugins={messagePlugins}
@@ -52,8 +56,20 @@ const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentPr
         webchatRoot
     );
 
+    // the ref call might not be executed synchronously
+    while (!cognigyWebchat) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    await (cognigyWebchat as Webchat).connect();
+
     // @ts-ignore
-    window.cognigyWebchat.open();
+    // window.cognigyWebchat.open();
+    if (callback) {
+        return callback(cognigyWebchat)
+    }
+
+    return cognigyWebchat;
 };
 
 // @ts-ignore

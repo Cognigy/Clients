@@ -5,12 +5,13 @@ import { StoreState, createWebchatStore } from '../store/store';
 import { Provider } from 'react-redux';
 import { ConnectedWebchatUI } from './ConnectedWebchatUI';
 import { setOptions } from '../store/options/options-reducer';
-import { IWebchatConfig } from '@cognigy/webchat-client/lib/interfaces/webchat-config';
-import { createBrowserApi } from '../store/api';
 import { MessagePlugin } from '../../common/interfaces/message-plugin';
 import { InputPlugin } from '../../common/interfaces/input-plugin';
 import { sendMessage } from '../store/messages/message-middleware';
 import { setConfig } from '../store/config/config-reducer';
+import { MessageSender } from '../../webchat-ui/interfaces';
+import { setOpen, toggleOpen } from '../store/ui/ui-reducer';
+import { IMessage } from '../../common/interfaces/message';
 
 export interface WebchatProps {
     url: string;
@@ -19,12 +20,12 @@ export interface WebchatProps {
     inputPlugins?: InputPlugin[];
 }
 
-interface WebchatState {
-    client: WebchatClient;
-    store: Store<StoreState>;
-}
+export class Webchat extends React.PureComponent<WebchatProps> {
+    public store: Store<StoreState>;
+    public client: WebchatClient;
 
-export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
+
+    // component lifecycle methods
     constructor(props: WebchatProps) {
         super(props);
 
@@ -33,36 +34,58 @@ export class Webchat extends React.PureComponent<WebchatProps, WebchatState> {
         const client = new WebchatClient(url, options);
         const store = createWebchatStore(client);
 
-        // @ts-ignore
-        window.cognigyWebchat = createBrowserApi(store);
-
-        this.state = {
-            client,
-            store
-        }
+        this.client = client;
+        this.store = store;
     }
 
     componentDidMount() {
-        const { client, store } = this.state;
-
-        client.connect()
-            .then(() => {
-                store.dispatch(setOptions(client.socketOptions));
-                store.dispatch(setConfig(client.webchatConfig));
-            })
+        this.connect();
     }
 
     componentWillUnmount() {
-        this.state.client.disconnect();
+        this.client.disconnect();
     }
 
 
+    // component API (for usage via ref)
+    connect = async () => {
+        const { client, store } = this;
+
+        await client.connect()
+
+        store.dispatch(setOptions(client.socketOptions));
+        store.dispatch(setConfig(client.webchatConfig));
+    }
+
+    sendMessage: MessageSender = (text, data, options) => {
+        this.store.dispatch(sendMessage({ text, data }, options));
+    }
+
+    open = () => {
+        this.store.dispatch(setOpen(true));
+    }
+
+    close = () => {
+        this.store.dispatch(setOpen(false));
+    }
+
+    toggle = () => {
+        this.store.dispatch(toggleOpen());
+    }
+    
+    on = (event, handler) => {
+        this.client.on(event, handler);
+    }
+
+    onMessage = (handler: (message) => void) => {
+        this.client.on('output', handler);
+    }
+
     render() {
         const { url, options, messagePlugins = [], inputPlugins = [], ...props } = this.props;
-        const { store } = this.state;
 
         return (
-            <Provider store={store}>
+            <Provider store={this.store}>
                 <ConnectedWebchatUI
                     {...props}
                     messagePlugins={messagePlugins}

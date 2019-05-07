@@ -51,9 +51,6 @@ const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentPr
         ),
         webchatRoot
     );
-
-    // @ts-ignore
-    window.cognigyWebchat.open();
 };
 
 // @ts-ignore

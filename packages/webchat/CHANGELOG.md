@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.2.0
+
+### Breaking Changes
+
+- if not set manually, the webchat will reuse the `userId` from before, persisted in local storage
+
 ## v2.1.0
 
 ### Breaking Changes
@@ -12,7 +18,7 @@ initWebchat("example.url").then(webchat => {
   window.cognigyWebchat = webchat;
 });
 
-// using a callback as the third parameter 
+// using a callback as the third parameter
 // 'null' means no option override here
 initWebchat("example.url", null, webchat => {
   window.cognigyWebchat = webchat;
@@ -28,5 +34,6 @@ initWebchat("example.url").then(webchat => {
 ```
 
 ### New Features
+
 - the webchat exposes a `.on()` function that allows subscribing to events of the underlying `SocketClient`
-- `webchat.onMessage()` is a shorthand method directly subscribing to incoming message events 
+- `webchat.onMessage()` is a shorthand method directly subscribing to incoming message events

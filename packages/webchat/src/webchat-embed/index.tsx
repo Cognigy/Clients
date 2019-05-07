@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { styled } from '../webchat-ui/style';
+import uuid from 'uuid';
 
 // load plugins
 import '../plugins/input/get-started';
@@ -37,6 +38,21 @@ const initWebchat = async (webchatConfigUrl: string, options?: React.ComponentPr
             ? plugin({ React, styled })
             : plugin
         );
+
+    // if no specific userId is provided, try to load one from localStorage, otherwise generate one and persist it in localstorage
+    if ((!options || !options.userId) && localStorage) {
+        let userId = localStorage.getItem('userId');
+
+        if (!userId) {
+            userId = uuid.v4();
+            localStorage.setItem('userId', userId);
+        }
+
+        if (!options)
+            options = {}
+
+        options.userId = userId;
+    }
 
     const webchatRoot = document.createElement('div');
     document.body.appendChild(webchatRoot);

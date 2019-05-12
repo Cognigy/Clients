@@ -25,7 +25,10 @@
     "clean": "rm -rf ./packages/*/lib && rm -f ./packages/webchat/dist/*.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "moment": "^2.24.0",
-    "react-flatpickr": "^3.7.1"
+    "ocr-space-api": "^1.0.1",
+    "react-flatpickr": "^3.7.1",
+    "sharp": "^0.22.1"
   }
 }

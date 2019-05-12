@@ -7,10 +7,12 @@
     "main": "lib/webchat/index.js",
     "scripts": {
         "build": "tsc",
-        "bundle": "yarn webchat && yarn webchat-legacy && yarn speech-input && yarn speech-input-legacy && yarn speech-output && yarn speech-output-legacy && yarn flightseat-picker && yarn flightseat-picker-legacy && yarn date-picker && yarn date-picker-legacy",
+        "bundle": "yarn webchat && yarn webchat-legacy && yarn speech-input && yarn speech-input-legacy && yarn speech-output && yarn speech-output-legacy && yarn flightseat-picker && yarn flightseat-picker-legacy && yarn date-picker && yarn date-picker-legacy && yarn ocr && yarn ocr-legacy",
         "dev": "webpack-dev-server --config webpack.dev.js --content-base dist/ --host 0.0.0.0 --disable-host-check",
         "date-picker-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/date-picker/index.tsx --output dist/date-picker.webchat-plugin.legacy.js",
         "date-picker": "webpack --config webpack.production.js --entry ./src/plugins/message/date-picker/index.tsx --output dist/date-picker.webchat-plugin.js",
+        "ocr-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/ocr/index.tsx --output dist/ocr.webchat-plugin.legacy.js",
+        "ocr": "webpack --config webpack.production.js --entry ./src/plugins/message/ocr/index.tsx --output dist/ocr.webchat-plugin.js",
         "flightseat-picker-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/flightseat-picker/index.tsx --output dist/flightseat-picker.webchat-plugin.legacy.js",
         "flightseat-picker": "webpack --config webpack.production.js --entry ./src/plugins/message/flightseat-picker/index.tsx --output dist/flightseat-picker.webchat-plugin.js",
         "messenger-legacy": "webpack --config webpack.production.legacy.js --entry ./src/plugins/message/messenger/index.tsx --output dist/messenger.webchat-plugin.legacy.js",

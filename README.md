@@ -1,21 +1,15 @@
-# Introduction
+# THIS REPOSITORY MOVED
 
-This repository contains multiple packages. They are in subfolders of `./packages/`.
-These packages have cross-references to each other. Yarn's `workspaces` feature is used to link them automatically.
+The content of this repository has moved to other repositories.
 
-If you don't have `yarn` yet, you can install it via npm.
-```
-npm i -g yarn  
-```
-  
+## Socket Client
+The source code for the socket client was moved from `packages/socket-client` to the [Cognigy Socket Client](https://github.com/cognigy/cognigysocketclient) repository.  
 
-## Installing dependencies
-To install dependencies (and cross-links) for the packages, run `yarn -i` in the project root folder.
+## Webchat Client
+The source code for the webchat client was moved from `packages/webchat-client` to the [Cognigy Webchat Client](https://github.com/cognigy/cognigywebchatclient) repository.  
 
-## Building
-To build (and bundle) the packages, run `yarn build`.
+## Webchat Widget
+The source code for the webchat component the content was moved from `packages/webchat` to the [Cognigy Webchat Widget](https://github.com/cognigy/cognigywebchatwidget) repository. 
 
-# Webchat Plugins
-
-With Cognigy 3.3 you have the ability to develop custom plugins for your specific use case, such as a flight seat picker to let your user check in his/her flight directly in the webchat.
-To learn mor about developing Webchat Plugins, follow up on the [Plugin documentation](./docs/webchat-plugins/README.md)
+## Webchat Plugins
+The source code for non-default webchat plugins from `packages/webchat/src/plugins` as well as documentation and guides on how to develop webchat plugins from `docs/webchat-plugins` were moved to the [Cognigy Webchat Plugins](https://github.com/cognigy/cognigywebchatplugins) repository. 

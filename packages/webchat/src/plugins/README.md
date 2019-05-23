@@ -1,3 +1,6 @@
-# plugins
+# THIS REPOSITORY MOVED
 
-This part contains code for extension plugins that work as an example or are included by default
+The content of this repository has moved to other repositories.
+
+## Webchat Plugins
+The source code for non-default webchat plugins from `packages/webchat/src/plugins` as well as documentation and guides on how to develop webchat plugins from `docs/webchat-plugins` were moved to the [Cognigy Webchat Plugins](https://github.com/cognigy/cognigywebchatplugins) repository. 
